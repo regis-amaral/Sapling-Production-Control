@@ -1,6 +1,7 @@
 package dev.regis.rest.models.entities;
 
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -8,7 +9,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 public class Batch {
@@ -23,11 +27,15 @@ public class Batch {
     @OneToOne(cascade = CascadeType.ALL)
     private Specie specie;
 
+    @Temporal(TemporalType.DATE)
     @Column(nullable = false)
     private Date stakingDate;
 
     @Column(nullable = false)
     private int amount;
+
+    @ManyToMany(mappedBy = "batchList")
+    private List<SaplingSelection> saplingSelection;
 
     public Batch() {
     }
@@ -79,6 +87,5 @@ public class Batch {
     public void setAmount(int amount) {
         this.amount = amount;
     }
-    
-    
+
 }

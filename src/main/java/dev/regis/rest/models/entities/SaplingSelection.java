@@ -9,28 +9,35 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
-public class SeedlingSelection {
+public class SaplingSelection {
 
     @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Temporal(TemporalType.DATE)
     @Column(nullable = false)
     private Date selectionDate;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "SeedlingSelection")
+    @ManyToMany
+    @JoinTable(name = "sapling_selection_has_batch", joinColumns = @JoinColumn(name = "sapling_selection_id"), inverseJoinColumns = @JoinColumn(name = "batch_id"))
     private List<Batch> batchList;
 
     @Column(nullable = false)
     private int totalRootedSeedlings;
 
-    public SeedlingSelection() {
+    public SaplingSelection() {
     }
 
-    public SeedlingSelection(int id, Date selectionDate, List<Batch> batchList, int totalRootedSeedlings) {
+    public SaplingSelection(int id, Date selectionDate, List<Batch> batchList, int totalRootedSeedlings) {
         this.id = id;
         this.selectionDate = selectionDate;
         this.batchList = batchList;
@@ -68,6 +75,5 @@ public class SeedlingSelection {
     public void setTotalRootedSeedlings(int totalRootedSeedlings) {
         this.totalRootedSeedlings = totalRootedSeedlings;
     }
-    
-    
+
 }
