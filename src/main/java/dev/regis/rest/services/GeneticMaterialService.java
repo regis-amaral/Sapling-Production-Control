@@ -1,8 +1,6 @@
 package dev.regis.rest.services;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +15,7 @@ import dev.regis.rest.models.entities.GeneticMaterial;
 import dev.regis.rest.repositories.GeneticMaterialRepository;
 
 @Service
-public class GeneticMaterialService {
+public class GeneticMaterialService extends ServiceAbstract<GeneticMaterial, GeneticMaterialDTO> {
 
 	@Autowired
 	GeneticMaterialRepository geneticMaterialRepository;
@@ -32,74 +30,40 @@ public class GeneticMaterialService {
 	 * Lista todos os Materiais Genéticos existentes
 	 */
 	public List<GeneticMaterialDTO> listAll() {
-		List<GeneticMaterialDTO> geneticMaterialDTO = geneticMaterialRepository
-				.findAll()
-				.stream()
-				.map(geneticMaterial -> mapper.map(geneticMaterial, GeneticMaterialDTO.class))
-				.toList();
-
-		return geneticMaterialDTO;
+		return super.listAll(GeneticMaterialDTO.class);
 	}
 
 	/*
 	 * Retorna um Material Genético pelo ID informado
 	 */
 	public GeneticMaterialDTO findById(Long id) throws Exception {
-		Optional<GeneticMaterial> optional = geneticMaterialRepository.findById(id);
-		if (optional.isPresent()) {
-			return mapper.map(optional.get(), GeneticMaterialDTO.class);
-		} else {
-			throw new Exception("Não encontrado");
-		}
+		return super.findById(id, GeneticMaterialDTO.class);
 	}
 
 	/*
 	 * Insere um novo Material Genético
 	 */
-	public Long create(GeneticMaterialDTO geneticMaterialDTO) throws Exception {
-		System.out.println("novo material genetico");
-		try {
-			// SpecieDTO specieDTO = specieService.findById(geneticMaterialDTO.getSpecieId());
-
-			// if (specieDTO != null) {
-			// 	GeneticMaterial geneticMaterial = new GeneticMaterial();
-			// 	geneticMaterial.setName(geneticMaterialDTO.getName());
-			// 	geneticMaterial.setDescription(geneticMaterialDTO.getDescription());
-			// 	geneticMaterial.set(specieDTO);
-
-			// 	geneticMaterialRepository.save(geneticMaterial);
-			// }
-
-			GeneticMaterial geneticMaterial = mapper.map(geneticMaterialDTO, GeneticMaterial.class);
-			GeneticMaterial created = geneticMaterialRepository.save(geneticMaterial);
-			return created.getId();
-		} catch (Exception e) {
-			throw new Exception(e.getMessage());
-		}
+	public Long create(GeneticMaterialDTO newGeneticMaterialDTO) throws Exception {
+		return super.create(newGeneticMaterialDTO, GeneticMaterial.class);
 	}
 
 	/*
 	 * Remove um Material Genético existente
 	 */
 	public void deleteById(Long id) {
-		geneticMaterialRepository.deleteById(id);
+		super.deleteById(id);
 	}
 
 	/*
 	 * Atualiza um Material Genetico existente
 	 */
 	public Long update(GeneticMaterialDTO newGeneticMaterialDTO) throws Exception {
-		Optional<GeneticMaterial> optional = geneticMaterialRepository.findById(newGeneticMaterialDTO.getId());
-		if (optional.isPresent()) {
-			GeneticMaterial geneticMaterial = optional.get();
-			mapper.map(newGeneticMaterialDTO, geneticMaterial);
-			geneticMaterialRepository.save(geneticMaterial);
-			return geneticMaterial.getId();
-		} else {
-			throw new Exception("Um erro ocorreu");
-		}
+		return super.update(newGeneticMaterialDTO);
 	}
 
+	/*
+	 * Buscar um Material Genético por parte do nome
+	 */
 	public List<GeneticMaterialDTO> search(String partName,
 			Integer page,
 			String orderBy,
@@ -107,14 +71,7 @@ public class GeneticMaterialService {
 			String direction) {
 		Pageable pageable = PageRequest.of(page, itensPerPage, Sort.Direction.fromString(direction), orderBy);
 		Page<GeneticMaterial> geneticMaterials = geneticMaterialRepository.search(partName, pageable);
-		List<GeneticMaterialDTO> geneticMaterialDTOs = new ArrayList<>();
-
-		geneticMaterials.forEach(geneticMaterial -> {
-			GeneticMaterialDTO geneticMaterialDTO = mapper.map(geneticMaterial, GeneticMaterialDTO.class);
-			geneticMaterialDTOs.add(geneticMaterialDTO);
-		});
-
-		return geneticMaterialDTOs;
+		return GeneticMaterialDTO.convert(geneticMaterials.getContent());
 	}
 
 }

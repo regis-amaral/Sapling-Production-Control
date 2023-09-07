@@ -1,7 +1,6 @@
 package dev.regis.rest.models.entities;
 
 import java.util.Date;
-import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

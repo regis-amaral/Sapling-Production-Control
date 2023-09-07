@@ -1,5 +1,6 @@
 package dev.regis.rest.models.entities;
 
+import dev.regis.rest.models.dtos.SpecieDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,9 +20,9 @@ public class Specie {
     public Specie() {
     }
 
-    public Specie(int id, String name) {
-        this.id = id;
-        this.name = name;
+    public Specie(SpecieDTO specie) {
+        id = specie.getId();
+        name = specie.getName();
     }
 
     public long getId() {

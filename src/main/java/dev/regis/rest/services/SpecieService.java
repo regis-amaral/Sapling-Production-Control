@@ -1,7 +1,6 @@
 package dev.regis.rest.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 @Service
-public class SpecieService {
+public class SpecieService extends ServiceAbstract<Specie, SpecieDTO>{
 
     @Autowired
     SpecieRepository specieRepository;
@@ -24,46 +23,44 @@ public class SpecieService {
     @Autowired
     ModelMapper mapper;
 
+    /*
+	 * Lista todas as Espécies existentes
+	 */
     public List<SpecieDTO> listAll() {
-        List<Specie> specieList = specieRepository.findAll();
-        return SpecieDTO.convertList(specieList);
+        return super.listAll(SpecieDTO.class);
     }
 
+    /*
+	 * Retorna uma Espécies pelo ID informado
+	 */
     public SpecieDTO findById(Long id) throws Exception {
-		Optional<Specie> optional = specieRepository.findById(id);
-		if (optional.isPresent()) {
-			return new SpecieDTO(optional.get());
-		} else {
-			throw new Exception("Não encontrado");
-		}
+		return super.findById(id, SpecieDTO.class);
 	}
 
-    public Long create(SpecieDTO specieDTO) throws Exception {
-        try {
-            Specie specie = mapper.map(specieDTO, Specie.class);
-            Specie created = specieRepository.save(specie);
-            return created.getId();
-        } catch (Exception e) {
-            throw new Exception("um erro ocorreu");
-        }
+    /*
+	 * Insere uma nova Espécie
+	 */
+    public Long create(SpecieDTO newSpecieDTO) throws Exception {
+        return super.create(newSpecieDTO, Specie.class);
     }
 
+    /*
+	 * Remove uma Espécie existente
+	 */
     public void deleteById(Long id) {
-        specieRepository.deleteById(id);
+        super.deleteById(id);
     }
 
+    /*
+	 * Atualiza uma Espécie existente
+	 */
     public Long update(SpecieDTO newSpecieDTO) throws Exception {
-        Optional<Specie> optional = specieRepository.findById(newSpecieDTO.getId());
-        if (optional.isPresent()) {
-            Specie specie = optional.get();
-            mapper.map(newSpecieDTO, specie);
-            specieRepository.save(specie);
-            return specie.getId();
-        } else {
-            throw new Exception("Um erro ocorreu");
-        }
+        return super.update(newSpecieDTO);
     }
 
+    /*
+     * Buscar uma Espécie por parte do nome
+     */
     public List<SpecieDTO> search(String partName,
 			Integer page,
 			String orderBy,

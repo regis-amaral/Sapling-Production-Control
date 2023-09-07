@@ -37,6 +37,11 @@ public class SpecieDTO implements Serializable {
         this.name = name;
     }
  
+    /**
+     * Converte uma lista ORM para DTO 
+     * @param speciesList
+     * @return
+     */
     public static List<SpecieDTO> convertList(List<Specie> speciesList){
         return speciesList.stream().map(SpecieDTO::new).collect(Collectors.toList());
     }

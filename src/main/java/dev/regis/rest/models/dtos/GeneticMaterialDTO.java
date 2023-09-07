@@ -59,6 +59,11 @@ public class GeneticMaterialDTO implements Serializable {
         this.specie = specie;
     }
 
+    /**
+     * Converte uma lista ORM para DTO 
+     * @param speciesList
+     * @return
+     */
     public static List<GeneticMaterialDTO> convert(List<GeneticMaterial> speciesList){
         return speciesList.stream().map(GeneticMaterialDTO::new).collect(Collectors.toList());
     }
