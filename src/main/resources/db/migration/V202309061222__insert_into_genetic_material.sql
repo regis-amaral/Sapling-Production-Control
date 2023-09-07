@@ -1,4 +1,4 @@
-INSERT INTO genetic_material (name) VALUES
+INSERT INTO specie (name) VALUES
     ('Eucalipto 1'),
     ('Eucalipto 2'),
     ('Eucalipto 3'),

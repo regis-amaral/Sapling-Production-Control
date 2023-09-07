@@ -1,20 +1,20 @@
 package dev.regis.rest.models.dtos;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import dev.regis.rest.models.entities.Specie;
 
 public class SpecieDTO implements Serializable {
     
     private static final long serialVersionUID = 1L;
 
     private String name;
-    private GeneticMaterialDTO geneticMaterial;
 
-    public SpecieDTO() {
-    }
 
-    public SpecieDTO(String name, GeneticMaterialDTO geneticMaterial) {
-        this.name = name;
-        this.geneticMaterial = geneticMaterial;
+    public SpecieDTO(Specie specie) {
+        this.name = specie.getName();
     }
 
     public String getName() {
@@ -24,14 +24,8 @@ public class SpecieDTO implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-    public GeneticMaterialDTO getGeneticMaterial() {
-        return geneticMaterial;
+ 
+    public static List<SpecieDTO> convert(List<Specie> speciesList){
+        return speciesList.stream().map(SpecieDTO::new).collect(Collectors.toList());
     }
-
-    public void setGeneticMaterial(GeneticMaterialDTO geneticMaterial) {
-        this.geneticMaterial = geneticMaterial;
-    }
-    
-    
 }

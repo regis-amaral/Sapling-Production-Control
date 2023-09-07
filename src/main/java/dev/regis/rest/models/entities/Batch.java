@@ -25,7 +25,7 @@ public class Batch {
     private String code;
 
     @OneToOne(cascade = CascadeType.ALL)
-    private Specie specie;
+    private GeneticMaterial geneticMaterial;
 
     @Temporal(TemporalType.DATE)
     @Column(nullable = false)
@@ -40,12 +40,14 @@ public class Batch {
     public Batch() {
     }
 
-    public Batch(int id, String code, Specie specie, Date stakingDate, int amount) {
+    public Batch(int id, String code, GeneticMaterial geneticMaterial, Date stakingDate, int amount,
+            List<SaplingSelection> saplingSelection) {
         this.id = id;
         this.code = code;
-        this.specie = specie;
+        this.geneticMaterial = geneticMaterial;
         this.stakingDate = stakingDate;
         this.amount = amount;
+        this.saplingSelection = saplingSelection;
     }
 
     public int getId() {
@@ -64,12 +66,12 @@ public class Batch {
         this.code = code;
     }
 
-    public Specie getSpecie() {
-        return specie;
+    public GeneticMaterial getGeneticMaterial() {
+        return geneticMaterial;
     }
 
-    public void setSpecie(Specie specie) {
-        this.specie = specie;
+    public void setGeneticMaterial(GeneticMaterial geneticMaterial) {
+        this.geneticMaterial = geneticMaterial;
     }
 
     public Date getStakingDate() {
@@ -88,4 +90,13 @@ public class Batch {
         this.amount = amount;
     }
 
+    public List<SaplingSelection> getSaplingSelection() {
+        return saplingSelection;
+    }
+
+    public void setSaplingSelection(List<SaplingSelection> saplingSelection) {
+        this.saplingSelection = saplingSelection;
+    }
+
+    
 }

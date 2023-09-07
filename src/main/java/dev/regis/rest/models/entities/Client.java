@@ -7,19 +7,19 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Specie {
+public class Client {
 
     @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
+    
     @Column(nullable = false)
     private String name;
 
-    public Specie() {
+    public Client() {
     }
 
-    public Specie(int id, String name) {
+    public Client(long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -40,4 +40,5 @@ public class Specie {
         this.name = name;
     }
 
+    
 }

@@ -8,16 +8,16 @@ public class BatchDTO implements Serializable{
     private static final long serialVersionUID = 1L;
 
     private String code;
-    private SpecieDTO specie;
+    private GeneticMaterialDTO geneticMaterial;
     private Date stakingDate;
     private int amount;
     
     public BatchDTO() {
     }
 
-    public BatchDTO(String code, SpecieDTO specie, Date stakingDate, int amount) {
+    public BatchDTO(String code, GeneticMaterialDTO geneticMaterial, Date stakingDate, int amount) {
         this.code = code;
-        this.specie = specie;
+        this.geneticMaterial = geneticMaterial;
         this.stakingDate = stakingDate;
         this.amount = amount;
     }
@@ -30,12 +30,12 @@ public class BatchDTO implements Serializable{
         this.code = code;
     }
 
-    public SpecieDTO getSpecie() {
-        return specie;
+    public GeneticMaterialDTO getGeneticMaterial() {
+        return geneticMaterial;
     }
 
-    public void setSpecie(SpecieDTO specie) {
-        this.specie = specie;
+    public void setGeneticMaterial(GeneticMaterialDTO geneticMaterial) {
+        this.geneticMaterial = geneticMaterial;
     }
 
     public Date getStakingDate() {
@@ -53,6 +53,7 @@ public class BatchDTO implements Serializable{
     public void setAmount(int amount) {
         this.amount = amount;
     }
+
 
     
 }

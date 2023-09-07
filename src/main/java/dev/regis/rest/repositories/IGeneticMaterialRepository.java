@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 import dev.regis.rest.models.entities.GeneticMaterial;
 
-public interface GeneticMaterialRepository extends JpaRepository<GeneticMaterial, Long>  {
+public interface IGeneticMaterialRepository extends JpaRepository<GeneticMaterial, Long>  {
     
     Optional<GeneticMaterial> findByName(String name);
 
