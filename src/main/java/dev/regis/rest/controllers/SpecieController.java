@@ -54,11 +54,10 @@ public class SpecieController {
 		}
 	}
 
-    @PutMapping(value = "/update/{id}")
-	public ResponseEntity<Object> update(@Valid @RequestBody SpecieDTO newSpecieDTO, @PathVariable Long id){
-        System.out.println("controller specie -> update id: " + id);
+    @PutMapping(value = "/update")
+	public ResponseEntity<Object> update(@Valid @RequestBody SpecieDTO newSpecieDTO){
         try {
-            return ResponseEntity.ok(service.update(id, newSpecieDTO));
+            return ResponseEntity.ok(service.update(newSpecieDTO));
         } catch (Exception e) {
             System.out.println("ERRO -> controller specie -> update");
             return ResponseEntity.badRequest().body(e.getMessage());

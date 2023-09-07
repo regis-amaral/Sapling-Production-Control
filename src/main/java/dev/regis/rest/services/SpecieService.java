@@ -52,8 +52,8 @@ public class SpecieService {
         specieRepository.deleteById(id);
     }
 
-    public Long update(long id, SpecieDTO newSpecieDTO) throws Exception {
-        Optional<Specie> optional = specieRepository.findById(id);
+    public Long update(SpecieDTO newSpecieDTO) throws Exception {
+        Optional<Specie> optional = specieRepository.findById(newSpecieDTO.getId());
         if (optional.isPresent()) {
             Specie specie = optional.get();
             mapper.map(newSpecieDTO, specie);

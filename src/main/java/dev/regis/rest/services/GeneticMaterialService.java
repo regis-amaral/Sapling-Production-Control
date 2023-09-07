@@ -88,8 +88,8 @@ public class GeneticMaterialService {
 	/*
 	 * Atualiza um Material Genetico existente
 	 */
-	public Long update(long id, GeneticMaterialDTO newGeneticMaterialDTO) throws Exception {
-		Optional<GeneticMaterial> optional = geneticMaterialRepository.findById(id);
+	public Long update(GeneticMaterialDTO newGeneticMaterialDTO) throws Exception {
+		Optional<GeneticMaterial> optional = geneticMaterialRepository.findById(newGeneticMaterialDTO.getId());
 		if (optional.isPresent()) {
 			GeneticMaterial geneticMaterial = optional.get();
 			mapper.map(newGeneticMaterialDTO, geneticMaterial);

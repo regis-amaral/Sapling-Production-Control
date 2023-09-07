@@ -57,10 +57,10 @@ public class GeneticMaterialController {
 		}
 	}
 
-	@PutMapping(value = "/update/{id}")
-	public ResponseEntity<Object> update(@Valid @RequestBody GeneticMaterialDTO newGeneticMaterialDTO, @PathVariable Long id){
+	@PutMapping(value = "/update")
+	public ResponseEntity<Object> update(@Valid @RequestBody GeneticMaterialDTO newGeneticMaterialDTO){
         try {
-            return ResponseEntity.ok(geneticMaterialService.update(id, newGeneticMaterialDTO));
+            return ResponseEntity.ok(geneticMaterialService.update(newGeneticMaterialDTO));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
