@@ -5,9 +5,12 @@ import java.time.Month;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -23,11 +26,15 @@ public class ExpeditionPlan {
     @Column(nullable = true)
     private int realized;
 
-    @Column(nullable = false)
+    @Enumerated
+    @Column(nullable = false, columnDefinition = "smallint")
     private Month month;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private GeneticMaterial geneticMaterial;
+
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Client client;
 
     public ExpeditionPlan() {
     }

@@ -1,6 +1,5 @@
 package dev.regis.rest.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import dev.regis.rest.models.dtos.SpecieDTO;
 import dev.regis.rest.models.entities.Specie;
-import dev.regis.rest.repositories.ISpecieRepository;
+import dev.regis.rest.repositories.SpecieRepository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,20 +19,20 @@ import org.springframework.data.domain.Sort;
 public class SpecieService {
 
     @Autowired
-    ISpecieRepository specieRepository;
+    SpecieRepository specieRepository;
 
     @Autowired
     ModelMapper mapper;
 
     public List<SpecieDTO> listAll() {
         List<Specie> specieList = specieRepository.findAll();
-        return SpecieDTO.convert(specieList);
+        return SpecieDTO.convertList(specieList);
     }
 
     public SpecieDTO findById(Long id) throws Exception {
 		Optional<Specie> optional = specieRepository.findById(id);
 		if (optional.isPresent()) {
-			return mapper.map(optional.get(), SpecieDTO.class);
+			return new SpecieDTO(optional.get());
 		} else {
 			throw new Exception("Não encontrado");
 		}
@@ -72,13 +71,6 @@ public class SpecieService {
 			String direction) {
 		Pageable pageable = PageRequest.of(page, itensPerPage, Sort.Direction.fromString(direction), orderBy);
 		Page<Specie> species = specieRepository.search(partName, pageable);
-		List<SpecieDTO> specieDTOs = new ArrayList<>();
-
-		species.forEach(specie -> {
-			SpecieDTO specieDTO = mapper.map(specie, SpecieDTO.class);
-			specieDTOs.add(specieDTO);
-		});
-
-		return specieDTOs;
+        return SpecieDTO.convertList(species.getContent());
 	}
 }

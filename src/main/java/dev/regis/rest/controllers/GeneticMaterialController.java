@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.regis.rest.models.dtos.GeneticMaterialDTO;
-import dev.regis.rest.models.entities.Specie;
 import dev.regis.rest.services.GeneticMaterialService;
-import dev.regis.rest.services.SpecieService;
 import jakarta.validation.Valid;
 
 @RestController
@@ -51,6 +49,7 @@ public class GeneticMaterialController {
 
 	@PostMapping(value = "/create")
 	public ResponseEntity<Object> create(@Valid @RequestBody GeneticMaterialDTO geneticMaterialDTO) {
+		System.out.println("controller create material genetico");
 		try {
 			return ResponseEntity.ok(geneticMaterialService.create(geneticMaterialDTO));
 		} catch (Exception e) {

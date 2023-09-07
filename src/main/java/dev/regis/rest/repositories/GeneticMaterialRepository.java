@@ -10,11 +10,11 @@ import org.springframework.data.repository.query.Param;
 
 import dev.regis.rest.models.entities.GeneticMaterial;
 
-public interface IGeneticMaterialRepository extends JpaRepository<GeneticMaterial, Long>  {
+public interface GeneticMaterialRepository extends JpaRepository<GeneticMaterial, Long>  {
     
     Optional<GeneticMaterial> findByName(String name);
 
-    @Query("FROM GeneticMaterial gm WHERE LOWER(gm.name) LIKE %:partName%")
+    @Query("FROM GeneticMaterial gm WHERE LOWER(gm.name) ILIKE %:partName%")
     Page<GeneticMaterial> search(@Param("partName") String partName, Pageable pageable);
 
 }

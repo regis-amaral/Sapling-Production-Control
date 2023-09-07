@@ -5,12 +5,11 @@ import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
@@ -25,9 +24,8 @@ public class SaplingSelection {
     @Column(nullable = false)
     private Date selectionDate;
 
-    @ManyToMany
-    @JoinTable(name = "sapling_selection_has_batch", joinColumns = @JoinColumn(name = "sapling_selection_id"), inverseJoinColumns = @JoinColumn(name = "batch_id"))
-    private List<Batch> batchList;
+    @OneToMany(mappedBy = "saplingSelection", fetch = FetchType.EAGER)
+    private List<Batch> listBatchs;
 
     @Column(nullable = false)
     private int totalRootedSeedlings;
@@ -35,10 +33,10 @@ public class SaplingSelection {
     public SaplingSelection() {
     }
 
-    public SaplingSelection(int id, Date selectionDate, List<Batch> batchList, int totalRootedSeedlings) {
+    public SaplingSelection(int id, Date selectionDate, List<Batch> listBatchs, int totalRootedSeedlings) {
         this.id = id;
         this.selectionDate = selectionDate;
-        this.batchList = batchList;
+        this.listBatchs = listBatchs;
         this.totalRootedSeedlings = totalRootedSeedlings;
     }
 
@@ -58,20 +56,20 @@ public class SaplingSelection {
         this.selectionDate = selectionDate;
     }
 
-    public List<Batch> getBatchList() {
-        return batchList;
-    }
-
-    public void setBatchList(List<Batch> batchList) {
-        this.batchList = batchList;
-    }
-
     public int getTotalRootedSeedlings() {
         return totalRootedSeedlings;
     }
 
     public void setTotalRootedSeedlings(int totalRootedSeedlings) {
         this.totalRootedSeedlings = totalRootedSeedlings;
+    }
+
+    public List<Batch> getListBatchs() {
+        return listBatchs;
+    }
+
+    public void setListBatchs(List<Batch> listBatchs) {
+        this.listBatchs = listBatchs;
     }
 
 }

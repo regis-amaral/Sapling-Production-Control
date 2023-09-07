@@ -13,16 +13,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import dev.regis.rest.models.dtos.GeneticMaterialDTO;
-import dev.regis.rest.models.dtos.SpecieDTO;
 import dev.regis.rest.models.entities.GeneticMaterial;
-import dev.regis.rest.models.entities.Specie;
-import dev.regis.rest.repositories.IGeneticMaterialRepository;
+import dev.regis.rest.repositories.GeneticMaterialRepository;
 
 @Service
 public class GeneticMaterialService {
 
 	@Autowired
-	IGeneticMaterialRepository geneticMaterialRepository;
+	GeneticMaterialRepository geneticMaterialRepository;
 
 	@Autowired
 	ModelMapper mapper;
@@ -59,23 +57,24 @@ public class GeneticMaterialService {
 	 * Insere um novo Material Genético
 	 */
 	public Long create(GeneticMaterialDTO geneticMaterialDTO) throws Exception {
+		System.out.println("novo material genetico");
 		try {
-			SpecieDTO specieDTO = specieService.findById(geneticMaterialDTO.getSpecieId());
+			// SpecieDTO specieDTO = specieService.findById(geneticMaterialDTO.getSpecieId());
 
-			if (specieDTO != null) {
-				GeneticMaterial geneticMaterial = new GeneticMaterial();
-				geneticMaterial.setName(geneticMaterialDTO.getName());
-				geneticMaterial.setDescription(geneticMaterialDTO.getDescription());
-				geneticMaterial.set(specieDTO);
+			// if (specieDTO != null) {
+			// 	GeneticMaterial geneticMaterial = new GeneticMaterial();
+			// 	geneticMaterial.setName(geneticMaterialDTO.getName());
+			// 	geneticMaterial.setDescription(geneticMaterialDTO.getDescription());
+			// 	geneticMaterial.set(specieDTO);
 
-				geneticMaterialRepository.save(geneticMaterial);
-			}
+			// 	geneticMaterialRepository.save(geneticMaterial);
+			// }
 
 			GeneticMaterial geneticMaterial = mapper.map(geneticMaterialDTO, GeneticMaterial.class);
 			GeneticMaterial created = geneticMaterialRepository.save(geneticMaterial);
 			return created.getId();
 		} catch (Exception e) {
-			throw new Exception("um erro ocorreu");
+			throw new Exception(e.getMessage());
 		}
 	}
 

@@ -6,11 +6,11 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
@@ -24,7 +24,7 @@ public class Batch {
     @Column(nullable = false)
     private String code;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private GeneticMaterial geneticMaterial;
 
     @Temporal(TemporalType.DATE)
@@ -34,14 +34,14 @@ public class Batch {
     @Column(nullable = false)
     private int amount;
 
-    @ManyToMany(mappedBy = "batchList")
-    private List<SaplingSelection> saplingSelection;
+    @ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private SaplingSelection saplingSelection;
 
     public Batch() {
     }
 
     public Batch(int id, String code, GeneticMaterial geneticMaterial, Date stakingDate, int amount,
-            List<SaplingSelection> saplingSelection) {
+            SaplingSelection saplingSelection) {
         this.id = id;
         this.code = code;
         this.geneticMaterial = geneticMaterial;
@@ -90,11 +90,11 @@ public class Batch {
         this.amount = amount;
     }
 
-    public List<SaplingSelection> getSaplingSelection() {
+    public SaplingSelection getSaplingSelection() {
         return saplingSelection;
     }
 
-    public void setSaplingSelection(List<SaplingSelection> saplingSelection) {
+    public void setSaplingSelection(SaplingSelection saplingSelection) {
         this.saplingSelection = saplingSelection;
     }
 

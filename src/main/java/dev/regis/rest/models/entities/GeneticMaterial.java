@@ -1,13 +1,15 @@
 package dev.regis.rest.models.entities;
 
-import jakarta.persistence.CascadeType;
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class GeneticMaterial {
@@ -16,15 +18,20 @@ public class GeneticMaterial {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @Column(nullable = true)
     private String description;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "specie_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
     private Specie specie;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "geneticMaterial")
+    private List<ExpeditionPlan> listExpeditionPlans;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "geneticMaterial")
+    private List<Batch> ListBatchs;
 
     public GeneticMaterial() {
     }
@@ -66,6 +73,22 @@ public class GeneticMaterial {
 
     public void setSpecie(Specie specie) {
         this.specie = specie;
+    }
+
+    public List<ExpeditionPlan> getListExpeditionPlans() {
+        return listExpeditionPlans;
+    }
+
+    public void setListExpeditionPlans(List<ExpeditionPlan> listExpeditionPlans) {
+        this.listExpeditionPlans = listExpeditionPlans;
+    }
+
+    public List<Batch> getListBatchs() {
+        return ListBatchs;
+    }
+
+    public void setListBatchs(List<Batch> listBatchs) {
+        ListBatchs = listBatchs;
     }
     
     

@@ -9,12 +9,24 @@ import dev.regis.rest.models.entities.Specie;
 public class SpecieDTO implements Serializable {
     
     private static final long serialVersionUID = 1L;
-
+    private long id;
     private String name;
 
+    public SpecieDTO(){
+
+    }
 
     public SpecieDTO(Specie specie) {
-        this.name = specie.getName();
+        id = specie.getId();
+        name = specie.getName();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -25,7 +37,7 @@ public class SpecieDTO implements Serializable {
         this.name = name;
     }
  
-    public static List<SpecieDTO> convert(List<Specie> speciesList){
+    public static List<SpecieDTO> convertList(List<Specie> speciesList){
         return speciesList.stream().map(SpecieDTO::new).collect(Collectors.toList());
     }
 }

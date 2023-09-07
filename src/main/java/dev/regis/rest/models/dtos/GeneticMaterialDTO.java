@@ -1,22 +1,38 @@
 package dev.regis.rest.models.dtos;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import dev.regis.rest.models.entities.GeneticMaterial;
+import dev.regis.rest.models.entities.Specie;
 
 public class GeneticMaterialDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private long id;
     private String name;
     private String description;
-    private long specieId;
+    private Specie specie;
     
-    public GeneticMaterialDTO() {
+    public GeneticMaterialDTO(){
+
     }
 
-    public GeneticMaterialDTO(String name, String description, long specieId) {
-        this.name = name;
-        this.description = description;
-        this.specieId = specieId;
+    public GeneticMaterialDTO(GeneticMaterial geneticMaterial) {
+        id = geneticMaterial.getId();
+        name = geneticMaterial.getName();
+        description = geneticMaterial.getDescription();
+        specie = geneticMaterial.getSpecie();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -34,14 +50,16 @@ public class GeneticMaterialDTO implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public long getSpecieId() {
-        return specieId;
-    }
-
-    public void setSpecieId(long specieId) {
-        this.specieId = specieId;
-    }
     
+    public Specie getSpecie() {
+        return specie;
+    }
 
+    public void setSpecie(Specie specie) {
+        this.specie = specie;
+    }
+
+    public static List<GeneticMaterialDTO> convert(List<GeneticMaterial> speciesList){
+        return speciesList.stream().map(GeneticMaterialDTO::new).collect(Collectors.toList());
+    }
 }

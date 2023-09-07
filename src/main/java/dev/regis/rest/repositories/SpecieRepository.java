@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import dev.regis.rest.models.entities.Specie;
 
-public interface ISpecieRepository extends JpaRepository<Specie, Long>  {
-    @Query("FROM Specie gm WHERE LOWER(gm.name) LIKE %:partName%")
+public interface SpecieRepository extends JpaRepository<Specie, Long>  {
+    @Query("FROM Specie gm WHERE LOWER(gm.name) ILIKE %:partName%")
     Page<Specie> search(@Param("partName") String partName, Pageable pageable);
 }
