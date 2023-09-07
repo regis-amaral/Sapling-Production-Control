@@ -13,17 +13,22 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import dev.regis.rest.models.dtos.GeneticMaterialDTO;
+import dev.regis.rest.models.dtos.SpecieDTO;
 import dev.regis.rest.models.entities.GeneticMaterial;
-import dev.regis.rest.repositories.GeneticMaterialRepository;
+import dev.regis.rest.models.entities.Specie;
+import dev.regis.rest.repositories.IGeneticMaterialRepository;
 
 @Service
 public class GeneticMaterialService {
 
 	@Autowired
-	GeneticMaterialRepository geneticMaterialRepository;
+	IGeneticMaterialRepository geneticMaterialRepository;
 
 	@Autowired
 	ModelMapper mapper;
+
+	@Autowired
+	SpecieService specieService;
 
 	/*
 	 * Lista todos os Materiais Genéticos existentes
@@ -55,6 +60,17 @@ public class GeneticMaterialService {
 	 */
 	public Long create(GeneticMaterialDTO geneticMaterialDTO) throws Exception {
 		try {
+			SpecieDTO specieDTO = specieService.findById(geneticMaterialDTO.getSpecieId());
+
+			if (specieDTO != null) {
+				GeneticMaterial geneticMaterial = new GeneticMaterial();
+				geneticMaterial.setName(geneticMaterialDTO.getName());
+				geneticMaterial.setDescription(geneticMaterialDTO.getDescription());
+				geneticMaterial.set(specieDTO);
+
+				geneticMaterialRepository.save(geneticMaterial);
+			}
+
 			GeneticMaterial geneticMaterial = mapper.map(geneticMaterialDTO, GeneticMaterial.class);
 			GeneticMaterial created = geneticMaterialRepository.save(geneticMaterial);
 			return created.getId();
