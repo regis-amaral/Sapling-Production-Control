@@ -19,7 +19,7 @@ import dev.regis.rest.services.interfaces.IService;
 
 @Service
 public class GeneticMaterialService
-		extends ServiceAbstract<GeneticMaterial, GeneticMaterialInputDTO, GeneticMaterialDTO>
+		extends AbstractService<GeneticMaterial, GeneticMaterialInputDTO, GeneticMaterialDTO>
 		implements IService<GeneticMaterial, GeneticMaterialInputDTO, GeneticMaterialDTO> {
 
 	@Autowired

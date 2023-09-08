@@ -12,7 +12,9 @@ import dev.regis.rest.repositories.BatchRepository;
 import dev.regis.rest.services.interfaces.IService;
 
 @Service
-public class BatchService extends ServiceAbstract<Batch, BatchInputDTO, BatchDTO> implements IService <Batch, BatchInputDTO, BatchDTO> {
+public class BatchService 
+    extends AbstractService<Batch, BatchInputDTO, BatchDTO> 
+    implements IService <Batch, BatchInputDTO, BatchDTO> {
 
     @Autowired
     BatchRepository batchRepository;

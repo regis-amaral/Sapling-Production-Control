@@ -9,7 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-abstract class ServiceAbstract<ORM, InputDTO, OutputDTO> {
+abstract class AbstractService<ORM, InputDTO, OutputDTO> {
 
     @Autowired
     private JpaRepository<ORM, Long> repository;
@@ -17,6 +17,11 @@ abstract class ServiceAbstract<ORM, InputDTO, OutputDTO> {
     @Autowired
     ModelMapper mapper;
 
+    /**
+     * Insira como parâmetro a classe DTO de saída. Ex.: UserDTO.class
+     * @param DTOClass
+     * @return
+     */
     protected List<OutputDTO> listAllObjects(Class <OutputDTO> DTOClass) {
         List<ORM> entityList = repository.findAll();
         return convertListORMtoDTO(entityList, DTOClass);
@@ -31,6 +36,13 @@ abstract class ServiceAbstract<ORM, InputDTO, OutputDTO> {
         return listDTOs;
     }
 
+    /**
+     * Informe como parâmetros o ID a ser pesquisado e classe DTO de saída. Ex.: UserDTO.class
+     * @param id
+     * @param DTOClass
+     * @return
+     * @throws Exception
+     */
     protected OutputDTO findObjectById(Long id, Class <OutputDTO> DTOClass) throws Exception {
         Optional<ORM> optional = repository.findById(id);
         if (optional.isPresent()) {
@@ -40,6 +52,13 @@ abstract class ServiceAbstract<ORM, InputDTO, OutputDTO> {
         }
     }
 
+    /**
+     * Insira como parâmetro a classe da entidade. Ex.: User.class
+     * @param newDTO
+     * @param EntityClass
+     * @return
+     * @throws Exception
+     */
     protected Long createNewObject(InputDTO newDTO, Class <ORM> EntityClass) throws Exception {
         if(EntityClass == null){
             throw new Exception("Informe a classe da entidade a ser persistida. Ex. Specie.class");

@@ -2,6 +2,7 @@ package dev.regis.rest.models.production.entities;
 
 import java.util.Date;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -32,9 +33,8 @@ public class Batch {
     @Column(nullable = false)
     private int amount;
 
-    // @ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    // @JsonIgnore
-    // private SaplingSelection saplingSelection;
+    @ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private SaplingSelection saplingSelection;
 
     public Batch() {
     }

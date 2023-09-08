@@ -18,14 +18,14 @@ public class SaplingSelection {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Temporal(TemporalType.DATE)
     @Column(nullable = false)
     private Date selectionDate;
 
-    // @OneToMany(mappedBy = "saplingSelection", fetch = FetchType.EAGER)
-    // private List<Batch> listBatchs;
+    @OneToMany(mappedBy = "saplingSelection", fetch = FetchType.EAGER)
+    private List<Batch> batchList;
 
     @Column(nullable = false)
     private int totalRootedSeedlings;
@@ -33,18 +33,18 @@ public class SaplingSelection {
     public SaplingSelection() {
     }
 
-    public SaplingSelection(int id, Date selectionDate, List<Batch> listBatchs, int totalRootedSeedlings) {
+    public SaplingSelection(Long id, Date selectionDate, List<Batch> listBatchs, int totalRootedSeedlings) {
         this.id = id;
         this.selectionDate = selectionDate;
         // this.listBatchs = listBatchs;
         this.totalRootedSeedlings = totalRootedSeedlings;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -64,12 +64,12 @@ public class SaplingSelection {
         this.totalRootedSeedlings = totalRootedSeedlings;
     }
 
-    // public List<Batch> getListBatchs() {
-    //     return listBatchs;
-    // }
+    public List<Batch> getBatchList() {
+        return batchList;
+    }
 
-    // public void setListBatchs(List<Batch> listBatchs) {
-    //     this.listBatchs = listBatchs;
-    // }
+    public void setBatchList(List<Batch> batchList) {
+        this.batchList = batchList;
+    }
 
 }

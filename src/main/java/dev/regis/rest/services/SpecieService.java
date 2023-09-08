@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import dev.regis.rest.models.production.dtos.SpecieDTO;
 import dev.regis.rest.models.production.entities.Specie;
 import dev.regis.rest.repositories.SpecieRepository;
+import dev.regis.rest.services.interfaces.IService;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,7 +17,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 @Service
-public class SpecieService extends ServiceAbstract<Specie, SpecieDTO, SpecieDTO>{
+public class SpecieService
+    extends AbstractService<Specie, SpecieDTO, SpecieDTO> 
+    implements IService <Specie, SpecieDTO, SpecieDTO> {
 
     @Autowired
     SpecieRepository specieRepository;
