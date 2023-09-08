@@ -1,6 +1,6 @@
-package dev.regis.rest.models.entities;
+package dev.regis.rest.models.production.entities;
 
-import dev.regis.rest.models.dtos.SpecieDTO;
+import dev.regis.rest.models.production.dtos.SpecieDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,7 +12,7 @@ public class Specie {
 
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(nullable = false, unique = true)
     private String name;
@@ -25,11 +25,11 @@ public class Specie {
         name = specie.getName();
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -1,4 +1,4 @@
-package dev.regis.rest.controllers;
+package dev.regis.rest.controllers.production;
 
 import java.util.List;
 
@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.regis.rest.models.dtos.GeneticMaterialDTO;
+import dev.regis.rest.models.production.dtos.GeneticMaterialDTO;
+import dev.regis.rest.models.production.dtos.GeneticMaterialInputDTO;
 import dev.regis.rest.services.GeneticMaterialService;
 import jakarta.validation.Valid;
 
@@ -46,7 +47,7 @@ public class GeneticMaterialController {
 	}
 
 	@PostMapping(value = "/create")
-	public ResponseEntity<Object> create(@Valid @RequestBody GeneticMaterialDTO geneticMaterialDTO) {
+	public ResponseEntity<Object> create(@Valid @RequestBody GeneticMaterialInputDTO geneticMaterialDTO) {
 		try {
 			return ResponseEntity.ok(geneticMaterialService.create(geneticMaterialDTO));
 		} catch (Exception e) {
@@ -55,9 +56,9 @@ public class GeneticMaterialController {
 	}
 
 	@PutMapping(value = "/update")
-	public ResponseEntity<Object> update(@Valid @RequestBody GeneticMaterialDTO newGeneticMaterialDTO){
+	public ResponseEntity<Object> update(@Valid @RequestBody GeneticMaterialInputDTO newGeneticMaterialInputDTO){
         try {
-            return ResponseEntity.ok(geneticMaterialService.update(newGeneticMaterialDTO));
+            return ResponseEntity.ok(geneticMaterialService.update(newGeneticMaterialInputDTO));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

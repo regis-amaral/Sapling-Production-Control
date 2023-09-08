@@ -10,16 +10,23 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import dev.regis.rest.models.dtos.GeneticMaterialDTO;
-import dev.regis.rest.models.entities.GeneticMaterial;
+import dev.regis.rest.models.production.dtos.GeneticMaterialDTO;
+import dev.regis.rest.models.production.dtos.GeneticMaterialInputDTO;
+import dev.regis.rest.models.production.entities.GeneticMaterial;
 import dev.regis.rest.repositories.GeneticMaterialRepository;
+import dev.regis.rest.repositories.SpecieRepository;
 import dev.regis.rest.services.interfaces.IService;
 
 @Service
-public class GeneticMaterialService extends ServiceAbstract<GeneticMaterial, GeneticMaterialDTO> implements IService <GeneticMaterial, GeneticMaterialDTO> {
+public class GeneticMaterialService
+		extends ServiceAbstract<GeneticMaterial, GeneticMaterialInputDTO, GeneticMaterialDTO>
+		implements IService<GeneticMaterial, GeneticMaterialInputDTO, GeneticMaterialDTO> {
 
 	@Autowired
 	GeneticMaterialRepository geneticMaterialRepository;
+
+	@Autowired
+	SpecieRepository specieRepository;
 
 	@Autowired
 	ModelMapper mapper;
@@ -35,7 +42,7 @@ public class GeneticMaterialService extends ServiceAbstract<GeneticMaterial, Gen
 	}
 
 	@Override
-	public Long create(GeneticMaterialDTO newGeneticMaterialDTO) throws Exception {
+	public Long create(GeneticMaterialInputDTO newGeneticMaterialDTO) throws Exception {
 		return super.createNewObject(newGeneticMaterialDTO, GeneticMaterial.class);
 	}
 
@@ -45,7 +52,8 @@ public class GeneticMaterialService extends ServiceAbstract<GeneticMaterial, Gen
 	}
 
 	@Override
-	public Long update(GeneticMaterialDTO newGeneticMaterialDTO) throws Exception {
+	public Long update(GeneticMaterialInputDTO newGeneticMaterialDTO) throws Exception {
+
 		return super.updateObject(newGeneticMaterialDTO);
 	}
 

@@ -1,12 +1,12 @@
-package dev.regis.rest.models.dtos;
+package dev.regis.rest.models.production.dtos;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import dev.regis.rest.models.entities.Batch;
-import dev.regis.rest.models.entities.GeneticMaterial;
+import dev.regis.rest.models.production.entities.Batch;
+import dev.regis.rest.models.production.entities.GeneticMaterial;
 
 public class BatchDTO implements Serializable{
     

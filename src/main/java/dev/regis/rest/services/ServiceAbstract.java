@@ -9,7 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-abstract class ServiceAbstract<ORM, DTO> {
+abstract class ServiceAbstract<ORM, InputDTO, OutputDTO> {
 
     @Autowired
     private JpaRepository<ORM, Long> repository;
@@ -17,21 +17,21 @@ abstract class ServiceAbstract<ORM, DTO> {
     @Autowired
     ModelMapper mapper;
 
-    protected List<DTO> listAllObjects(Class <DTO> DTOClass) {
+    protected List<OutputDTO> listAllObjects(Class <OutputDTO> DTOClass) {
         List<ORM> entityList = repository.findAll();
         return convertListORMtoDTO(entityList, DTOClass);
     }
 
-    protected List<DTO> convertListORMtoDTO(List<ORM> entityList, Class <DTO> DTOClass) {
-        List<DTO> listDTOs = new ArrayList<DTO>();
+    protected List<OutputDTO> convertListORMtoDTO(List<ORM> entityList, Class <OutputDTO> DTOClass) {
+        List<OutputDTO> listDTOs = new ArrayList<OutputDTO>();
         entityList.forEach(entity -> {
-            DTO geneticMaterialDTO = mapper.map(entity, DTOClass);
+            OutputDTO geneticMaterialDTO = mapper.map(entity, DTOClass);
             listDTOs.add(geneticMaterialDTO);
         });
         return listDTOs;
     }
 
-    protected DTO findObjectById(Long id, Class <DTO> DTOClass) throws Exception {
+    protected OutputDTO findObjectById(Long id, Class <OutputDTO> DTOClass) throws Exception {
         Optional<ORM> optional = repository.findById(id);
         if (optional.isPresent()) {
             return mapper.map(optional.get(), DTOClass);
@@ -40,7 +40,7 @@ abstract class ServiceAbstract<ORM, DTO> {
         }
     }
 
-    protected Long createNewObject(DTO newDTO, Class <ORM> EntityClass) throws Exception {
+    protected Long createNewObject(InputDTO newDTO, Class <ORM> EntityClass) throws Exception {
         if(EntityClass == null){
             throw new Exception("Informe a classe da entidade a ser persistida. Ex. Specie.class");
         }
@@ -59,7 +59,7 @@ abstract class ServiceAbstract<ORM, DTO> {
         repository.deleteById(id);
     }
 
-    protected Long updateObject(DTO newDTO) throws Exception {
+    protected Long updateObject(InputDTO newDTO) throws Exception {
         Method getIdMethod = newDTO.getClass().getMethod("getId");
         Long id = (Long) getIdMethod.invoke(newDTO);
         Optional<ORM> optional = repository.findById(id);

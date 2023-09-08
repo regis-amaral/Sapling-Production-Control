@@ -1,4 +1,4 @@
-package dev.regis.rest.controllers;
+package dev.regis.rest.controllers.production;
 
 import java.util.List;
 
@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.regis.rest.models.dtos.BatchDTO;
+import dev.regis.rest.models.production.dtos.BatchDTO;
+import dev.regis.rest.models.production.dtos.BatchInputDTO;
 import dev.regis.rest.services.BatchService;
 import jakarta.validation.Valid;
 
@@ -45,7 +46,7 @@ public class BatchController {
 	}
 
     @PostMapping(value = "/create")
-	public ResponseEntity<Object> create(@Valid @RequestBody BatchDTO batchDTO) {
+	public ResponseEntity<Object> create(@Valid @RequestBody BatchInputDTO batchDTO) {
 		try {
 			return ResponseEntity.ok(batchService.create(batchDTO));
 		} catch (Exception e) {
@@ -54,7 +55,7 @@ public class BatchController {
 	}
 
     @PutMapping(value = "/update")
-	public ResponseEntity<Object> update(@Valid @RequestBody BatchDTO newBatchDTO){
+	public ResponseEntity<Object> update(@Valid @RequestBody BatchInputDTO newBatchDTO){
         try {
             return ResponseEntity.ok(batchService.update(newBatchDTO));
         } catch (Exception e) {

@@ -1,4 +1,4 @@
-package dev.regis.rest.controllers;
+package dev.regis.rest.controllers.production;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.regis.rest.models.dtos.SpecieDTO;
+import dev.regis.rest.models.production.dtos.SpecieDTO;
 import dev.regis.rest.services.SpecieService;
 import jakarta.validation.Valid;
 

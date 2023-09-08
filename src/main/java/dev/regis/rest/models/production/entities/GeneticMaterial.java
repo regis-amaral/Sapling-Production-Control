@@ -1,4 +1,4 @@
-package dev.regis.rest.models.entities;
+package dev.regis.rest.models.production.entities;
 
 import java.util.List;
 
@@ -11,6 +11,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
@@ -19,7 +20,7 @@ public class GeneticMaterial {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(nullable = false, unique = true)
     private String name;
@@ -28,6 +29,7 @@ public class GeneticMaterial {
     private String description;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "specie_id", nullable = false)
     private Specie specie;
 
     // @OneToMany(fetch = FetchType.LAZY, mappedBy = "geneticMaterial")
@@ -40,7 +42,7 @@ public class GeneticMaterial {
     public GeneticMaterial() {
     }
 
-    public GeneticMaterial(long id, String name, String description, Specie specie, List<Batch> listBatchs) {
+    public GeneticMaterial(Long id, String name, String description, Specie specie, List<Batch> listBatchs) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -48,11 +50,11 @@ public class GeneticMaterial {
         // this.ListBatchs = listBatchs;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

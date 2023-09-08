@@ -1,4 +1,4 @@
-package dev.regis.rest.models.entities;
+package dev.regis.rest.models.production.entities;
 
 import java.util.List;
 

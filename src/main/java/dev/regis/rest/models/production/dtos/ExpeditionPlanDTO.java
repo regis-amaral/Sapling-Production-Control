@@ -1,4 +1,4 @@
-package dev.regis.rest.models.dtos;
+package dev.regis.rest.models.production.dtos;
 
 import java.io.Serializable;
 import java.time.Month;

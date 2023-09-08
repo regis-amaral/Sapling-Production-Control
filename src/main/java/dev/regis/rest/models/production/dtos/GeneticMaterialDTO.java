@@ -1,11 +1,11 @@
-package dev.regis.rest.models.dtos;
+package dev.regis.rest.models.production.dtos;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import dev.regis.rest.models.entities.GeneticMaterial;
-import dev.regis.rest.models.entities.Specie;
+import dev.regis.rest.models.production.entities.GeneticMaterial;
+import dev.regis.rest.models.production.entities.Specie;
 
 public class GeneticMaterialDTO implements Serializable {
 
