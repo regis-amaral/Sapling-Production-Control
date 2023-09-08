@@ -6,11 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import dev.regis.rest.models.entities.production.Specie;
+import dev.regis.rest.models.entities.person.Client;
 
-public interface SpecieRepository extends JpaRepository<Specie, Long>  {
+public interface ClientRepository extends JpaRepository<Client, Long> {
 
-    @Query("FROM Specie x WHERE LOWER(x.name) ILIKE %:partName%")
-    Page<Specie> search(@Param("partName") String partName, Pageable pageable);
+    @Query("FROM Client x WHERE LOWER(x.name) ILIKE %:partName%")
+    Page<Client> search(@Param("partName") String partName, Pageable pageable);
 
 }

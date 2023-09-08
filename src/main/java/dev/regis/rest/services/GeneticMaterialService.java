@@ -10,9 +10,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import dev.regis.rest.models.production.dtos.GeneticMaterialDTO;
-import dev.regis.rest.models.production.dtos.GeneticMaterialInputDTO;
-import dev.regis.rest.models.production.entities.GeneticMaterial;
+import dev.regis.rest.models.dtos.production.GeneticMaterialDTO;
+import dev.regis.rest.models.dtos.production.GeneticMaterialInputDTO;
+import dev.regis.rest.models.entities.production.GeneticMaterial;
 import dev.regis.rest.repositories.GeneticMaterialRepository;
 import dev.regis.rest.repositories.SpecieRepository;
 import dev.regis.rest.services.interfaces.IService;

@@ -1,10 +1,10 @@
-package dev.regis.rest.models.production.dtos;
+package dev.regis.rest.models.dtos.production;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import dev.regis.rest.models.production.entities.Specie;
+import dev.regis.rest.models.entities.production.Specie;
 
 public class SpecieDTO implements Serializable {
     

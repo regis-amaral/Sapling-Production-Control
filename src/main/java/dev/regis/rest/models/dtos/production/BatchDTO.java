@@ -1,12 +1,12 @@
-package dev.regis.rest.models.production.dtos;
+package dev.regis.rest.models.dtos.production;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import dev.regis.rest.models.production.entities.Batch;
-import dev.regis.rest.models.production.entities.GeneticMaterial;
+import dev.regis.rest.models.entities.production.Batch;
+import dev.regis.rest.models.entities.production.GeneticMaterial;
 
 public class BatchDTO implements Serializable{
     
@@ -71,11 +71,11 @@ public class BatchDTO implements Serializable{
 
     /**
      * Converte uma lista ORM para DTO 
-     * @param speciesList
+     * @param list
      * @return
      */
-    public static List<BatchDTO> convert(List<Batch> batchList){
-        return batchList.stream().map(BatchDTO::new).collect(Collectors.toList());
+    public static List<BatchDTO> convert(List<Batch> list){
+        return list.stream().map(BatchDTO::new).collect(Collectors.toList());
     }
     
 }

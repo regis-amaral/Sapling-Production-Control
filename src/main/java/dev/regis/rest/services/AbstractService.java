@@ -19,18 +19,18 @@ abstract class AbstractService<ORM, InputDTO, OutputDTO> {
 
     /**
      * Insira como parâmetro a classe DTO de saída. Ex.: UserDTO.class
-     * @param DTOClass
+     * @param ObjectDTOClass
      * @return
      */
-    protected List<OutputDTO> listAllObjects(Class <OutputDTO> DTOClass) {
+    protected List<OutputDTO> listAllObjects(Class <OutputDTO> ObjectDTOClass) {
         List<ORM> entityList = repository.findAll();
-        return convertListORMtoDTO(entityList, DTOClass);
+        return convertListORMtoDTO(entityList, ObjectDTOClass);
     }
 
-    protected List<OutputDTO> convertListORMtoDTO(List<ORM> entityList, Class <OutputDTO> DTOClass) {
+    protected List<OutputDTO> convertListORMtoDTO(List<ORM> entityList, Class <OutputDTO> ObjectDTOClass) {
         List<OutputDTO> listDTOs = new ArrayList<OutputDTO>();
         entityList.forEach(entity -> {
-            OutputDTO geneticMaterialDTO = mapper.map(entity, DTOClass);
+            OutputDTO geneticMaterialDTO = mapper.map(entity, ObjectDTOClass);
             listDTOs.add(geneticMaterialDTO);
         });
         return listDTOs;
@@ -39,14 +39,14 @@ abstract class AbstractService<ORM, InputDTO, OutputDTO> {
     /**
      * Informe como parâmetros o ID a ser pesquisado e classe DTO de saída. Ex.: UserDTO.class
      * @param id
-     * @param DTOClass
+     * @param ObjectDTOClass
      * @return
      * @throws Exception
      */
-    protected OutputDTO findObjectById(Long id, Class <OutputDTO> DTOClass) throws Exception {
+    protected OutputDTO findObjectById(Long id, Class <OutputDTO> ObjectDTOClass) throws Exception {
         Optional<ORM> optional = repository.findById(id);
         if (optional.isPresent()) {
-            return mapper.map(optional.get(), DTOClass);
+            return mapper.map(optional.get(), ObjectDTOClass);
         } else {
             throw new Exception("Não encontrado");
         }

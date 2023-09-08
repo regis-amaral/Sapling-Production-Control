@@ -1,4 +1,4 @@
-package dev.regis.rest.controllers.production;
+package dev.regis.rest.controllers.user;
 
 import java.util.List;
 
@@ -10,27 +10,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.regis.rest.controllers.AbstractController;
-import dev.regis.rest.models.dtos.production.GeneticMaterialDTO;
-import dev.regis.rest.models.dtos.production.GeneticMaterialInputDTO;
-import dev.regis.rest.models.entities.production.GeneticMaterial;
-import dev.regis.rest.services.GeneticMaterialService;
+import dev.regis.rest.models.dtos.person.ClientDTO;
+import dev.regis.rest.models.dtos.person.ClientInputDTO;
+import dev.regis.rest.models.entities.person.Client;
+import dev.regis.rest.services.ClientService;
 
 @RestController
-@RequestMapping(value = "/api/genetic-material")
-public class GeneticMaterialController extends AbstractController <GeneticMaterial, GeneticMaterialInputDTO, GeneticMaterialDTO>{
+@RequestMapping(value = "/api/client")
+public class ClientController extends AbstractController <Client, ClientInputDTO, ClientDTO>{
 
     @Autowired
-	GeneticMaterialService geneticMaterialService;
+    ClientService service;
     
-	@GetMapping("/search")
-    public ResponseEntity<List<GeneticMaterialDTO>> search(
+    @GetMapping("/search")
+    public ResponseEntity<List<ClientDTO>> search(
             @RequestParam("name") String name,
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "orderBy", defaultValue = "id", required = false) String orderBy,
             @RequestParam(value = "itensPerPage", defaultValue = "10", required = false) Integer itensPerPage,
             @RequestParam(value = "direction", defaultValue = "ASC", required = false) String direction
     ) {
-		List<GeneticMaterialDTO> geneticMaterialDTOs =  geneticMaterialService.search(name, page, orderBy, itensPerPage, direction);
-		return ResponseEntity.ok(geneticMaterialDTOs);
+		List<ClientDTO> listClientDTOs =  service.search(name, page, orderBy, itensPerPage, direction);
+		return ResponseEntity.ok(listClientDTOs);
     }
 }

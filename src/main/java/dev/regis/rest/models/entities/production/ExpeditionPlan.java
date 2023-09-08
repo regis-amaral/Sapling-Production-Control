@@ -1,7 +1,8 @@
-package dev.regis.rest.models.production.entities;
+package dev.regis.rest.models.entities.production;
 
 import java.time.Month;
 
+import dev.regis.rest.models.entities.person.Client;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
@@ -16,7 +17,7 @@ public class ExpeditionPlan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
     private int planned;
@@ -83,6 +84,14 @@ public class ExpeditionPlan {
 
     public void setGeneticMaterial(GeneticMaterial geneticMaterial) {
         this.geneticMaterial = geneticMaterial;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     

@@ -1,30 +1,30 @@
-package dev.regis.rest.models.production.dtos;
+package dev.regis.rest.models.dtos.production;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import dev.regis.rest.models.production.entities.GeneticMaterial;
-import dev.regis.rest.models.production.entities.Specie;
+import dev.regis.rest.models.entities.production.GeneticMaterial;
+import dev.regis.rest.models.entities.production.Specie;
 
-public class GeneticMaterialInputDTO implements Serializable {
+public class GeneticMaterialDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private long id;
     private String name;
     private String description;
-    private Specie specie;
+    private SpecieDTO specie;
     
-    public GeneticMaterialInputDTO(){
+    public GeneticMaterialDTO(){
 
     }
 
-    public GeneticMaterialInputDTO(GeneticMaterial geneticMaterial) {
+    public GeneticMaterialDTO(GeneticMaterial geneticMaterial) {
         id = geneticMaterial.getId();
         name = geneticMaterial.getName();
         description = geneticMaterial.getDescription();
-        specie = geneticMaterial.getSpecie();
+        specie = new SpecieDTO(geneticMaterial.getSpecie());
     }
 
     public long getId() {
@@ -51,12 +51,12 @@ public class GeneticMaterialInputDTO implements Serializable {
         this.description = description;
     }
     
-    public Specie getSpecie() {
+    public SpecieDTO getSpecie() {
         return specie;
     }
 
     public void setSpecie(Specie specie) {
-        this.specie = specie;
+        this.specie = new SpecieDTO(specie);
     }
 
     /**

@@ -1,18 +1,13 @@
-package dev.regis.rest.models.production.entities;
-
-import java.util.List;
+package dev.regis.rest.models.entities.person;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.MappedSuperclass;
 
-@Entity
-public class Client {
-
+@MappedSuperclass
+public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -20,13 +15,10 @@ public class Client {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
-    private List<ExpeditionPlan> listExpeditionPlans;
-
-    public Client() {
+    public Person() {
     }
 
-    public Client(long id, String name) {
+    public Person(long id, String name) {
         this.id = id;
         this.name = name;
     }

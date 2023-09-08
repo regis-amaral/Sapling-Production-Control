@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import dev.regis.rest.models.production.dtos.SaplingSelectionDTO;
-import dev.regis.rest.models.production.dtos.SaplingSelectionInputDTO;
-import dev.regis.rest.models.production.entities.SaplingSelection;
+import dev.regis.rest.models.dtos.production.SaplingSelectionDTO;
+import dev.regis.rest.models.dtos.production.SaplingSelectionInputDTO;
+import dev.regis.rest.models.entities.production.SaplingSelection;
 import dev.regis.rest.repositories.SaplingSelectionRepository;
 import dev.regis.rest.services.interfaces.IService;
 
