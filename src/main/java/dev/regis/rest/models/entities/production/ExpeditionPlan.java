@@ -5,7 +5,6 @@ import java.time.Month;
 import dev.regis.rest.models.entities.person.Client;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,21 +13,20 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 public class ExpeditionPlan {
-
+    
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)    
     private Long id;
 
     @Column(nullable = false)
     private int planned;
-    
+
     @Column(nullable = true)
     private int realized;
 
-    @Enumerated
-    @Column(nullable = false, columnDefinition = "smallint")
+    @Column(nullable = false)
     private Month month;
-
+    
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private GeneticMaterial geneticMaterial;
 
@@ -38,7 +36,7 @@ public class ExpeditionPlan {
     public ExpeditionPlan() {
     }
 
-    public ExpeditionPlan(long id, int planned, int realized, Month month, GeneticMaterial geneticMaterial) {
+    public ExpeditionPlan(Long id, int planned, int realized, Month month, GeneticMaterial geneticMaterial) {
         this.id = id;
         this.planned = planned;
         this.realized = realized;
@@ -46,11 +44,11 @@ public class ExpeditionPlan {
         this.geneticMaterial = geneticMaterial;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -93,6 +91,4 @@ public class ExpeditionPlan {
     public void setClient(Client client) {
         this.client = client;
     }
-
-    
 }

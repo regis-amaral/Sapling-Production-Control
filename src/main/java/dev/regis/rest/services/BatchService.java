@@ -12,27 +12,27 @@ import dev.regis.rest.repositories.BatchRepository;
 import dev.regis.rest.services.interfaces.IService;
 
 @Service
-public class BatchService 
-    extends AbstractService<Batch, BatchInputDTO, BatchDTO> 
-    implements IService <Batch, BatchInputDTO, BatchDTO> {
+public class BatchService
+        extends AbstractService<Batch, BatchInputDTO, BatchDTO>
+        implements IService<Batch, BatchInputDTO, BatchDTO> {
 
     @Autowired
     BatchRepository batchRepository;
-    
+
     @Override
     public List<BatchDTO> listAll() {
         return super.listAllObjects(BatchDTO.class);
     }
 
     @Override
-    public BatchDTO findById(Long id) throws Exception{
+    public BatchDTO findById(Long id) throws Exception {
         return super.findObjectById(id, BatchDTO.class);
     }
 
-	@Override
-	public Long create(BatchInputDTO objectDTO) throws Exception {
-		return super.createNewObject(objectDTO, Batch.class);
-	}
+    @Override
+    public Long create(BatchInputDTO objectDTO) throws Exception {
+        return super.createNewObject(objectDTO, Batch.class);
+    }
 
     @Override
     public void deleteById(Long id) {
