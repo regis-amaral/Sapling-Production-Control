@@ -13,9 +13,10 @@ import org.springframework.stereotype.Service;
 import dev.regis.rest.models.dtos.GeneticMaterialDTO;
 import dev.regis.rest.models.entities.GeneticMaterial;
 import dev.regis.rest.repositories.GeneticMaterialRepository;
+import dev.regis.rest.services.interfaces.IService;
 
 @Service
-public class GeneticMaterialService extends ServiceAbstract<GeneticMaterial, GeneticMaterialDTO> {
+public class GeneticMaterialService extends ServiceAbstract<GeneticMaterial, GeneticMaterialDTO> implements IService <GeneticMaterial, GeneticMaterialDTO> {
 
 	@Autowired
 	GeneticMaterialRepository geneticMaterialRepository;
@@ -23,42 +24,29 @@ public class GeneticMaterialService extends ServiceAbstract<GeneticMaterial, Gen
 	@Autowired
 	ModelMapper mapper;
 
-	@Autowired
-	SpecieService specieService;
-
-	/*
-	 * Lista todos os Materiais Genéticos existentes
-	 */
+	@Override
 	public List<GeneticMaterialDTO> listAll() {
-		return super.listAll(GeneticMaterialDTO.class);
+		return super.listAllObjects(GeneticMaterialDTO.class);
 	}
 
-	/*
-	 * Retorna um Material Genético pelo ID informado
-	 */
+	@Override
 	public GeneticMaterialDTO findById(Long id) throws Exception {
-		return super.findById(id, GeneticMaterialDTO.class);
+		return super.findObjectById(id, GeneticMaterialDTO.class);
 	}
 
-	/*
-	 * Insere um novo Material Genético
-	 */
+	@Override
 	public Long create(GeneticMaterialDTO newGeneticMaterialDTO) throws Exception {
-		return super.create(newGeneticMaterialDTO, GeneticMaterial.class);
+		return super.createNewObject(newGeneticMaterialDTO, GeneticMaterial.class);
 	}
 
-	/*
-	 * Remove um Material Genético existente
-	 */
+	@Override
 	public void deleteById(Long id) {
-		super.deleteById(id);
+		super.deleteObjectById(id);
 	}
 
-	/*
-	 * Atualiza um Material Genetico existente
-	 */
+	@Override
 	public Long update(GeneticMaterialDTO newGeneticMaterialDTO) throws Exception {
-		return super.update(newGeneticMaterialDTO);
+		return super.updateObject(newGeneticMaterialDTO);
 	}
 
 	/*

@@ -24,8 +24,8 @@ public class SaplingSelection {
     @Column(nullable = false)
     private Date selectionDate;
 
-    @OneToMany(mappedBy = "saplingSelection", fetch = FetchType.EAGER)
-    private List<Batch> listBatchs;
+    // @OneToMany(mappedBy = "saplingSelection", fetch = FetchType.EAGER)
+    // private List<Batch> listBatchs;
 
     @Column(nullable = false)
     private int totalRootedSeedlings;
@@ -36,7 +36,7 @@ public class SaplingSelection {
     public SaplingSelection(int id, Date selectionDate, List<Batch> listBatchs, int totalRootedSeedlings) {
         this.id = id;
         this.selectionDate = selectionDate;
-        this.listBatchs = listBatchs;
+        // this.listBatchs = listBatchs;
         this.totalRootedSeedlings = totalRootedSeedlings;
     }
 
@@ -64,12 +64,12 @@ public class SaplingSelection {
         this.totalRootedSeedlings = totalRootedSeedlings;
     }
 
-    public List<Batch> getListBatchs() {
-        return listBatchs;
-    }
+    // public List<Batch> getListBatchs() {
+    //     return listBatchs;
+    // }
 
-    public void setListBatchs(List<Batch> listBatchs) {
-        this.listBatchs = listBatchs;
-    }
+    // public void setListBatchs(List<Batch> listBatchs) {
+    //     this.listBatchs = listBatchs;
+    // }
 
 }

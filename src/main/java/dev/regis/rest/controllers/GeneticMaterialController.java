@@ -25,8 +25,6 @@ public class GeneticMaterialController {
     @Autowired
 	GeneticMaterialService geneticMaterialService;
 
-
-
     @GetMapping
 	public List<GeneticMaterialDTO> listAll() {
 		return geneticMaterialService.listAll();
@@ -49,7 +47,6 @@ public class GeneticMaterialController {
 
 	@PostMapping(value = "/create")
 	public ResponseEntity<Object> create(@Valid @RequestBody GeneticMaterialDTO geneticMaterialDTO) {
-		System.out.println("controller create material genetico");
 		try {
 			return ResponseEntity.ok(geneticMaterialService.create(geneticMaterialDTO));
 		} catch (Exception e) {

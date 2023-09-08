@@ -2,24 +2,47 @@ package dev.regis.rest.models.dtos;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import dev.regis.rest.models.entities.Batch;
+import dev.regis.rest.models.entities.GeneticMaterial;
 
 public class BatchDTO implements Serializable{
     
     private static final long serialVersionUID = 1L;
 
+    private Long id;
     private String code;
-    private GeneticMaterialDTO geneticMaterial;
     private Date stakingDate;
     private int amount;
-    
+    private GeneticMaterialDTO geneticMaterial;
+
     public BatchDTO() {
     }
 
-    public BatchDTO(String code, GeneticMaterialDTO geneticMaterial, Date stakingDate, int amount) {
-        this.code = code;
-        this.geneticMaterial = geneticMaterial;
-        this.stakingDate = stakingDate;
-        this.amount = amount;
+    public BatchDTO(Batch batch) {
+        id = batch.getId();
+        code = batch.getCode();
+        stakingDate = batch.getStakingDate();
+        amount = batch.getAmount();
+        geneticMaterial = new GeneticMaterialDTO(batch.getGeneticMaterial());
+    }
+    
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public GeneticMaterialDTO getGeneticMaterial() {
+        return geneticMaterial;
+    }
+
+    public void setGeneticMaterial(GeneticMaterial geneticMaterial) {
+        this.geneticMaterial = new GeneticMaterialDTO(geneticMaterial);
     }
 
     public String getCode() {
@@ -28,14 +51,6 @@ public class BatchDTO implements Serializable{
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public GeneticMaterialDTO getGeneticMaterial() {
-        return geneticMaterial;
-    }
-
-    public void setGeneticMaterial(GeneticMaterialDTO geneticMaterial) {
-        this.geneticMaterial = geneticMaterial;
     }
 
     public Date getStakingDate() {
@@ -54,6 +69,13 @@ public class BatchDTO implements Serializable{
         this.amount = amount;
     }
 
-
+    /**
+     * Converte uma lista ORM para DTO 
+     * @param speciesList
+     * @return
+     */
+    public static List<BatchDTO> convert(List<Batch> batchList){
+        return batchList.stream().map(BatchDTO::new).collect(Collectors.toList());
+    }
     
 }

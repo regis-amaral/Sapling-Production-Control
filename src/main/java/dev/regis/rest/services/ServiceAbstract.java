@@ -17,12 +17,12 @@ abstract class ServiceAbstract<ORM, DTO> {
     @Autowired
     ModelMapper mapper;
 
-    public List<DTO> listAll(Class <DTO> DTOClass) {
+    protected List<DTO> listAllObjects(Class <DTO> DTOClass) {
         List<ORM> entityList = repository.findAll();
-        return convertList(entityList, DTOClass);
+        return convertListORMtoDTO(entityList, DTOClass);
     }
 
-    private List<DTO> convertList(List<ORM> entityList, Class <DTO> DTOClass) {
+    protected List<DTO> convertListORMtoDTO(List<ORM> entityList, Class <DTO> DTOClass) {
         List<DTO> listDTOs = new ArrayList<DTO>();
         entityList.forEach(entity -> {
             DTO geneticMaterialDTO = mapper.map(entity, DTOClass);
@@ -31,7 +31,7 @@ abstract class ServiceAbstract<ORM, DTO> {
         return listDTOs;
     }
 
-    public DTO findById(Long id, Class <DTO> DTOClass) throws Exception {
+    protected DTO findObjectById(Long id, Class <DTO> DTOClass) throws Exception {
         Optional<ORM> optional = repository.findById(id);
         if (optional.isPresent()) {
             return mapper.map(optional.get(), DTOClass);
@@ -40,22 +40,26 @@ abstract class ServiceAbstract<ORM, DTO> {
         }
     }
 
-    public Long create(DTO newDTO, Class <ORM> EntityClass) throws Exception {
+    protected Long createNewObject(DTO newDTO, Class <ORM> EntityClass) throws Exception {
+        if(EntityClass == null){
+            throw new Exception("Informe a classe da entidade a ser persistida. Ex. Specie.class");
+        }
         try {
             ORM entity = mapper.map(newDTO, EntityClass);
             ORM created = repository.save(entity);
             Method getIdMethod = created.getClass().getMethod("getId");
             return (Long) getIdMethod.invoke(created);
         } catch (Exception e) {
-            throw new Exception("um erro ocorreu");
+            e.printStackTrace();
+            throw new Exception(e.getMessage());
         }
     }
 
-    public void deleteById(Long id) {
+    protected void deleteObjectById(Long id) {
         repository.deleteById(id);
     }
 
-    public Long update(DTO newDTO) throws Exception {
+    protected Long updateObject(DTO newDTO) throws Exception {
         Method getIdMethod = newDTO.getClass().getMethod("getId");
         Long id = (Long) getIdMethod.invoke(newDTO);
         Optional<ORM> optional = repository.findById(id);

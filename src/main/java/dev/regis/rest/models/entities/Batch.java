@@ -2,6 +2,9 @@ package dev.regis.rest.models.entities;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,7 +21,7 @@ public class Batch {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(nullable = false)
     private String code;
@@ -33,27 +36,29 @@ public class Batch {
     @Column(nullable = false)
     private int amount;
 
-    @ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private SaplingSelection saplingSelection;
+    // @ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    // @JsonIgnore
+    // private SaplingSelection saplingSelection;
 
     public Batch() {
     }
 
-    public Batch(int id, String code, GeneticMaterial geneticMaterial, Date stakingDate, int amount,
-            SaplingSelection saplingSelection) {
+    public Batch(Long id, String code, Date stakingDate, int amount, GeneticMaterial geneticMaterial) {
         this.id = id;
         this.code = code;
         this.geneticMaterial = geneticMaterial;
         this.stakingDate = stakingDate;
         this.amount = amount;
-        this.saplingSelection = saplingSelection;
+        // this.saplingSelection = saplingSelection;
     }
 
-    public int getId() {
+    
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -65,13 +70,13 @@ public class Batch {
         this.code = code;
     }
 
-    public GeneticMaterial getGeneticMaterial() {
-        return geneticMaterial;
-    }
+    // public GeneticMaterial getGeneticMaterial() {
+    //     return geneticMaterial;
+    // }
 
-    public void setGeneticMaterial(GeneticMaterial geneticMaterial) {
-        this.geneticMaterial = geneticMaterial;
-    }
+    // public void setGeneticMaterial(GeneticMaterial geneticMaterial) {
+    //     this.geneticMaterial = geneticMaterial;
+    // }
 
     public Date getStakingDate() {
         return stakingDate;
@@ -89,13 +94,21 @@ public class Batch {
         this.amount = amount;
     }
 
-    public SaplingSelection getSaplingSelection() {
-        return saplingSelection;
+    public GeneticMaterial getGeneticMaterial() {
+        return geneticMaterial;
     }
 
-    public void setSaplingSelection(SaplingSelection saplingSelection) {
-        this.saplingSelection = saplingSelection;
+    public void setGeneticMaterial(GeneticMaterial geneticMaterial) {
+        this.geneticMaterial = geneticMaterial;
     }
+
+    // public SaplingSelection getSaplingSelection() {
+    //     return saplingSelection;
+    // }
+
+    // public void setSaplingSelection(SaplingSelection saplingSelection) {
+    //     this.saplingSelection = saplingSelection;
+    // }
 
     
 }

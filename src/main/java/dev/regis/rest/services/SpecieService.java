@@ -27,35 +27,35 @@ public class SpecieService extends ServiceAbstract<Specie, SpecieDTO>{
 	 * Lista todas as Espécies existentes
 	 */
     public List<SpecieDTO> listAll() {
-        return super.listAll(SpecieDTO.class);
+        return super.listAllObjects(SpecieDTO.class);
     }
 
     /*
 	 * Retorna uma Espécies pelo ID informado
 	 */
     public SpecieDTO findById(Long id) throws Exception {
-		return super.findById(id, SpecieDTO.class);
+		return super.findObjectById(id, SpecieDTO.class);
 	}
 
     /*
 	 * Insere uma nova Espécie
 	 */
     public Long create(SpecieDTO newSpecieDTO) throws Exception {
-        return super.create(newSpecieDTO, Specie.class);
+        return super.createNewObject(newSpecieDTO, Specie.class);
     }
 
     /*
 	 * Remove uma Espécie existente
 	 */
     public void deleteById(Long id) {
-        super.deleteById(id);
+        super.deleteObjectById(id);
     }
 
     /*
 	 * Atualiza uma Espécie existente
 	 */
     public Long update(SpecieDTO newSpecieDTO) throws Exception {
-        return super.update(newSpecieDTO);
+        return super.updateObject(newSpecieDTO);
     }
 
     /*

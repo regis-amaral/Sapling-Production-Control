@@ -14,7 +14,7 @@ public class GeneticMaterialDTO implements Serializable {
     private long id;
     private String name;
     private String description;
-    private Specie specie;
+    private SpecieDTO specie;
     
     public GeneticMaterialDTO(){
 
@@ -24,7 +24,7 @@ public class GeneticMaterialDTO implements Serializable {
         id = geneticMaterial.getId();
         name = geneticMaterial.getName();
         description = geneticMaterial.getDescription();
-        specie = geneticMaterial.getSpecie();
+        specie = new SpecieDTO(geneticMaterial.getSpecie());
     }
 
     public long getId() {
@@ -51,12 +51,12 @@ public class GeneticMaterialDTO implements Serializable {
         this.description = description;
     }
     
-    public Specie getSpecie() {
+    public SpecieDTO getSpecie() {
         return specie;
     }
 
     public void setSpecie(Specie specie) {
-        this.specie = specie;
+        this.specie = new SpecieDTO(specie);
     }
 
     /**
