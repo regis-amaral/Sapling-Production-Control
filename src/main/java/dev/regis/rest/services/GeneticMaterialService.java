@@ -7,7 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import dev.regis.rest.models.dtos.production.GeneticMaterialDTO;
+import dev.regis.rest.models.production.dtos.GeneticMaterialDTO;
 import dev.regis.rest.repositories.GeneticMaterialRepository;
 
 @Service

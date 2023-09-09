@@ -2,15 +2,15 @@ package dev.regis.rest.services.interfaces;
 
 import java.util.List;
 
-public interface IService <ORM, InDTO, OutDTO>{
+public interface IService <ObjectORM, ObjectDTO>{
 
-    public List<OutDTO> listAll();
+    public List<ObjectDTO> listAll();
     
-    public OutDTO findById(Long id) throws Exception;
+    public ObjectDTO findById(Long id) throws Exception;
 
-    public Long create(InDTO objectDTO) throws Exception;
+    public Long create(ObjectDTO objectDTO) throws Exception;
 
     public void deleteById(Long id);
 
-    public Long update(InDTO objectDTO) throws Exception;
+    public Long update(ObjectDTO objectDTO) throws Exception;
 }

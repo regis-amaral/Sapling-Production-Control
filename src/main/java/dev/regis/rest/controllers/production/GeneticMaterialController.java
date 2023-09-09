@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.regis.rest.models.dtos.production.GeneticMaterialDTO;
+import dev.regis.rest.models.production.dtos.GeneticMaterialDTO;
 import dev.regis.rest.services.GeneticMaterialService;
 
 @RestController

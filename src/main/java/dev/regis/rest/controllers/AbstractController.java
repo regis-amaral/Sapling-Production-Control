@@ -14,22 +14,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import dev.regis.rest.services.interfaces.IService;
 import jakarta.validation.Valid;
 
-public abstract class AbstractController <ORM, InputDTO, OutputDTO> {
+public abstract class AbstractController <ObjectORM, ObjetcDTO> {
     
     @Autowired
-    IService <ORM, InputDTO, OutputDTO> service;
+    IService <ObjectORM, ObjetcDTO> service;
 
     @GetMapping
-    public List<OutputDTO> listAll(){
+    public List<ObjetcDTO> listAll(){
         return service.listAll();
     }
     
     @GetMapping(value = "/{id}")
 	public ResponseEntity<Object> findById(@PathVariable Long id) {
 		try {
-			OutputDTO outputDTO = service.findById(id);
+			ObjetcDTO outputDTO = service.findById(id);
 			return ResponseEntity.ok(outputDTO);
 		} catch (Exception e) {
+			// TODO tratar exceções
+			e.printStackTrace();
 			return ResponseEntity.notFound().build();
 		}
 	}
@@ -40,7 +42,7 @@ public abstract class AbstractController <ORM, InputDTO, OutputDTO> {
 	}
 
     @PostMapping(value = "/create")
-	public ResponseEntity<Object> create(@Valid @RequestBody InputDTO newObjectDTO) {
+	public ResponseEntity<Object> create(@Valid @RequestBody ObjetcDTO newObjectDTO) {
 		try {
 			return ResponseEntity.ok(service.create(newObjectDTO));
 		} catch (Exception e) {
@@ -49,7 +51,7 @@ public abstract class AbstractController <ORM, InputDTO, OutputDTO> {
 	}
 
     @PutMapping(value = "/update")
-	public ResponseEntity<Object> update(@Valid @RequestBody InputDTO newObjectDTO){
+	public ResponseEntity<Object> update(@Valid @RequestBody ObjetcDTO newObjectDTO){
         try {
             return ResponseEntity.ok(service.update(newObjectDTO));
         } catch (Exception e) {

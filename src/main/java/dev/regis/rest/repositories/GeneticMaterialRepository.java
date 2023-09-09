@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import dev.regis.rest.models.entities.production.GeneticMaterial;
+import dev.regis.rest.models.production.GeneticMaterial;
 
 public interface GeneticMaterialRepository extends JpaRepository<GeneticMaterial, Long>  {
 

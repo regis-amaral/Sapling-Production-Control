@@ -8,8 +8,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import dev.regis.rest.models.dtos.production.BatchDTO;
-import dev.regis.rest.models.entities.production.Batch;
+import dev.regis.rest.models.production.Batch;
+import dev.regis.rest.models.production.dtos.BatchDTO;
 import dev.regis.rest.repositories.BatchRepository;
 
 @Service
@@ -23,13 +23,15 @@ public class BatchService {
     
     
     public List<BatchDTO> listAll() {
-        List<BatchDTO> listBatchDTOs = new ArrayList<>();
-        List<Batch> listBatch = repository.findAll();
-        for (Batch batch : listBatch) {
-            listBatchDTOs.add(mapper.map(batch, BatchDTO.class));
-        }
-        return listBatchDTOs;
-        // return super.listAllObjects(Batch.class, BatchDTO.class);
+
+        // List<BatchDTO> listBatchDTOs = new ArrayList<>();
+        // repository.findAll().forEach(batch -> listBatchDTOs.add(mapper.map(batch, BatchDTO.class)));
+        // return listBatchDTOs;
+
+        return repository.findAll().stream()
+            .map(batch -> mapper.map(batch, BatchDTO.class))
+            .collect(Collectors.toList());
+            
     }
 
     // @Override

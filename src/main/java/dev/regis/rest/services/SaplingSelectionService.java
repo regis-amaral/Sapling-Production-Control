@@ -5,44 +5,41 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import dev.regis.rest.models.dtos.production.SaplingSelectionDTO;
-import dev.regis.rest.models.dtos.production.SaplingSelectionInputDTO;
-import dev.regis.rest.models.entities.production.SaplingSelection;
+import dev.regis.rest.models.production.SaplingSelection;
+import dev.regis.rest.models.production.dtos.SaplingSelectionDTO;
 import dev.regis.rest.repositories.SaplingSelectionRepository;
 import dev.regis.rest.services.interfaces.IService;
 
 @Service
-public class SaplingSelectionService
-    extends AbstractService<SaplingSelection, SaplingSelectionInputDTO, SaplingSelectionDTO> 
-    implements IService <SaplingSelection, SaplingSelectionInputDTO, SaplingSelectionDTO>{
+public class SaplingSelectionService{
     
         @Autowired
         SaplingSelectionRepository saplingSelectionRepository;
 
-        @Override
-        public List<SaplingSelectionDTO> listAll() {
-            return super.listAllObjects(SaplingSelection.class, SaplingSelectionDTO.class);
-        }
+        // @Override
+        // public List<SaplingSelectionDTO> listAll() {
+        //     return super.listAllObjects(SaplingSelection.class, SaplingSelectionDTO.class);
+        // }
 
-        @Override
-        public SaplingSelectionDTO findById(Long id) throws Exception {
-            return super.findObjectById(id, SaplingSelectionDTO.class);
-        }
+        // @Override
+        // public SaplingSelectionDTO findById(Long id) throws Exception {
+        //     return super.findObjectById(id, SaplingSelectionDTO.class);
+        // }
 
-        @Override
-        public Long create(SaplingSelectionInputDTO objectDTO) throws Exception {
-            return super.createNewObject(objectDTO, SaplingSelection.class);
-        }
+        // @Override
+        // public Long create(SaplingSelectionInputDTO objectDTO) throws Exception {
+        //     return super.createNewObject(objectDTO, SaplingSelection.class);
+        // }
 
-        @Override
-        public void deleteById(Long id) {
-            super.deleteObjectById(id);
-        }
+        // @Override
+        // public void deleteById(Long id) {
+        //     super.deleteObjectById(id);
+        // }
 
-        @Override
-        public Long update(SaplingSelectionInputDTO objectDTO) throws Exception {
-            return super.updateObject(objectDTO);
-        }
+        // @Override
+        // public Long update(SaplingSelectionInputDTO objectDTO) throws Exception {
+        //     return super.updateObject(objectDTO);
+        // }
 
         
 }

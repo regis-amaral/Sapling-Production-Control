@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.regis.rest.models.dtos.production.BatchDTO;
+import dev.regis.rest.models.production.dtos.BatchDTO;
 import dev.regis.rest.services.BatchService;
 
 @RestController
