@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import dev.regis.rest.models.dtos.production.BatchDTO;
 import dev.regis.rest.models.dtos.production.BatchInputDTO;
 import dev.regis.rest.models.entities.production.Batch;
+import dev.regis.rest.models.mappers.MapBatch;
 import dev.regis.rest.repositories.BatchRepository;
 import dev.regis.rest.services.interfaces.IService;
 
@@ -18,10 +19,15 @@ public class BatchService
 
     @Autowired
     BatchRepository batchRepository;
+
+    @Autowired
+	MapBatch mapBatch;
     
     @Override
     public List<BatchDTO> listAll() {
-        return super.listAllObjects(Batch.class, BatchDTO.class);
+        List<Batch> list = batchRepository.findAll();
+        return mapBatch.toBatchDTOList(list);
+        // return super.listAllObjects(Batch.class, BatchDTO.class);
     }
 
     @Override

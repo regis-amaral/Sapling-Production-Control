@@ -23,9 +23,6 @@ public class Batch {
     @Column(nullable = false)
     private String code;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private GeneticMaterial geneticMaterial;
-
     @Temporal(TemporalType.DATE)
     @Column(nullable = false)
     private Date stakingDate;
@@ -36,17 +33,20 @@ public class Batch {
     @ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private SaplingSelection saplingSelection;
 
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private GeneticMaterial geneticMaterial;
+    
     public Batch() {
     }
 
-    public Batch(Long id, String code, Date stakingDate, int amount, GeneticMaterial geneticMaterial) {
-        this.id = id;
-        this.code = code;
-        this.geneticMaterial = geneticMaterial;
-        this.stakingDate = stakingDate;
-        this.amount = amount;
-        // this.saplingSelection = saplingSelection;
-    }
+    // public Batch(Long id, String code, Date stakingDate, int amount, GeneticMaterial geneticMaterial) {
+    //     this.id = id;
+    //     this.code = code;
+    //     this.geneticMaterial = geneticMaterial;
+    //     this.stakingDate = stakingDate;
+    //     this.amount = amount;
+    //     // this.saplingSelection = saplingSelection;
+    // }
 
     public Long getId() {
         return id;

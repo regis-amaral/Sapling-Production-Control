@@ -2,7 +2,6 @@ package dev.regis.rest.models.dtos.production;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import dev.regis.rest.models.entities.production.GeneticMaterial;
 import dev.regis.rest.models.entities.production.Specie;
@@ -65,6 +64,6 @@ public class GeneticMaterialInputDTO implements Serializable {
      * @return
      */
     public static List<GeneticMaterialDTO> convert(List<GeneticMaterial> speciesList){
-        return speciesList.stream().map(GeneticMaterialDTO::new).collect(Collectors.toList());
+        return null;//speciesList.stream().map(GeneticMaterialDTO::new).collect(Collectors.toList());
     }
 }

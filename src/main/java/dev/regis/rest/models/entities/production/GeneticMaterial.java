@@ -38,13 +38,13 @@ public class GeneticMaterial {
     public GeneticMaterial() {
     }
 
-    public GeneticMaterial(Long id, String name, String description, Specie specie, List<Batch> listBatchs) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.specie = specie;
-        // this.ListBatchs = listBatchs;
-    }
+    // public GeneticMaterial(Long id, String name, String description, Specie specie, List<Batch> listBatchs) {
+    //     this.id = id;
+    //     this.name = name;
+    //     this.description = description;
+    //     this.specie = specie;
+    //     // this.ListBatchs = listBatchs;
+    // }
 
     public Long getId() {
         return id;
