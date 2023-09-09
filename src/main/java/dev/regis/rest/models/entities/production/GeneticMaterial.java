@@ -2,6 +2,8 @@ package dev.regis.rest.models.entities.production;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -29,7 +31,8 @@ public class GeneticMaterial {
     @JoinColumn(name = "specie_id", nullable = false)
     private Specie specie;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "geneticMaterial")
+    @OneToMany(mappedBy = "geneticMaterial")
+    @JsonIgnoreProperties("geneticMaterial")
     private List<Batch> listBatchs;
 
     // @OneToMany(fetch = FetchType.LAZY, mappedBy = "geneticMaterial")
@@ -43,7 +46,7 @@ public class GeneticMaterial {
         this.name = name;
         this.description = description;
         this.specie = specie;
-        // this.ListBatchs = listBatchs;
+        this.listBatchs = listBatchs;
     }
 
     public Long getId() {
@@ -86,5 +89,5 @@ public class GeneticMaterial {
         this.listBatchs = listBatchs;
     }
 
-    
+
 }

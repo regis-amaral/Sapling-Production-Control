@@ -27,7 +27,7 @@ public class ExpeditionPlanDTO implements Serializable{
         planned = expeditionPlan.getPlanned();
         realized = expeditionPlan.getRealized();
         month = expeditionPlan.getMonth();
-        geneticMaterial = new GeneticMaterialDTO(expeditionPlan.getGeneticMaterial());
+        // geneticMaterial = new GeneticMaterialDTO(expeditionPlan.getGeneticMaterial());
         client = new ClientDTO(expeditionPlan.getClient());
     }
 

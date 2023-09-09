@@ -1,9 +1,9 @@
 package dev.regis.rest.models.dtos.production;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import dev.regis.rest.models.entities.production.Batch;
 import dev.regis.rest.models.entities.production.GeneticMaterial;
@@ -75,7 +75,7 @@ public class BatchInputDTO implements Serializable{
      * @return
      */
     public static List<BatchDTO> convert(List<Batch> batchList){
-        return batchList.stream().map(BatchDTO::new).collect(Collectors.toList());
+        return new ArrayList<BatchDTO>(); // batchList.stream().map(BatchDTO::new).collect(Collectors.toList());
     }
     
 }

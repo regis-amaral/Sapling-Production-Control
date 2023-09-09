@@ -21,7 +21,7 @@ public class SaplingSelectionDTO implements Serializable{
     public SaplingSelectionDTO(SaplingSelection saplingSelection) {
         id = saplingSelection.getId();
         selectionDate = saplingSelection.getSelectionDate();
-        batchList = BatchDTO.convert(saplingSelection.getBatchList());
+        // batchList = BatchDTO.convert(saplingSelection.getBatchList());
         totalRootedSeedlings = saplingSelection.getTotalRootedSeedlings();
     }
 

@@ -2,6 +2,8 @@ package dev.regis.rest.models.entities.production;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,6 +11,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -23,7 +26,9 @@ public class Batch {
     @Column(nullable = false)
     private String code;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne
+    @JoinColumn(name = "genetic_material_id")
+    @JsonIgnoreProperties("listBatchs")    
     private GeneticMaterial geneticMaterial;
 
     @Temporal(TemporalType.DATE)
@@ -39,13 +44,14 @@ public class Batch {
     public Batch() {
     }
 
-    public Batch(Long id, String code, Date stakingDate, int amount, GeneticMaterial geneticMaterial) {
+    public Batch(Long id, String code, GeneticMaterial geneticMaterial, Date stakingDate, int amount,
+            SaplingSelection saplingSelection) {
         this.id = id;
         this.code = code;
         this.geneticMaterial = geneticMaterial;
         this.stakingDate = stakingDate;
         this.amount = amount;
-        // this.saplingSelection = saplingSelection;
+        this.saplingSelection = saplingSelection;
     }
 
     public Long getId() {
@@ -96,5 +102,5 @@ public class Batch {
         this.saplingSelection = saplingSelection;
     }
 
-
+   
 }
