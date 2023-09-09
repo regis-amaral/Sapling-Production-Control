@@ -1,5 +1,7 @@
 package dev.regis.rest.services;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,31 +21,49 @@ abstract class AbstractService<ORM, InputDTO, OutputDTO> {
 
     /**
      * Insira como parâmetro a classe DTO de saída. Ex.: UserDTO.class
+     * O tratamento de conversão ORM para DTO deve ser feito no construtor das entidades.
+     * @param ORMClass
      * @param ObjectDTOClass
      * @return
      */
-    protected List<OutputDTO> listAllObjects(Class <OutputDTO> ObjectDTOClass) {
-        List<ORM> entityList = repository.findAll();
-        return convertListORMtoDTO(entityList, ObjectDTOClass);
+    protected List<OutputDTO> listAllObjects(Class<ORM> ORMClass, Class<OutputDTO> ObjectDTOClass) {
+        List<ORM> list = repository.findAll();
+        List<OutputDTO> listDTO = new ArrayList<>();
+        try {
+            for (ORM orm : list) {
+                Constructor<OutputDTO> constructor = ObjectDTOClass.getConstructor(ORMClass); /** Illegal class literal for the type parameter ORM */
+                OutputDTO outputDTOInstance = constructor.newInstance(orm);
+
+                listDTO.add(outputDTOInstance);
+            }
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+                | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return listDTO;
     }
 
-    protected List<OutputDTO> convertListORMtoDTO(List<ORM> entityList, Class <OutputDTO> ObjectDTOClass) {
-        List<OutputDTO> listDTOs = new ArrayList<OutputDTO>();
-        entityList.forEach(entity -> {
-            OutputDTO geneticMaterialDTO = mapper.map(entity, ObjectDTOClass);
-            listDTOs.add(geneticMaterialDTO);
-        });
-        return listDTOs;
-    }
+    // protected List<OutputDTO> convertListORMtoDTO(List<ORM> entityList, Class
+    // <OutputDTO> ObjectDTOClass) {
+    // List<OutputDTO> listDTOs = new ArrayList<OutputDTO>();
+    // entityList.forEach(entity -> {
+    // OutputDTO geneticMaterialDTO = mapper.map(entity, ObjectDTOClass);
+    // listDTOs.add(geneticMaterialDTO);
+    // });
+    // return listDTOs;
+    // }
 
     /**
-     * Informe como parâmetros o ID a ser pesquisado e classe DTO de saída. Ex.: UserDTO.class
+     * Informe como parâmetros o ID a ser pesquisado e classe DTO de saída. Ex.:
+     * UserDTO.class
+     * 
      * @param id
      * @param ObjectDTOClass
      * @return
      * @throws Exception
      */
-    protected OutputDTO findObjectById(Long id, Class <OutputDTO> ObjectDTOClass) throws Exception {
+    protected OutputDTO findObjectById(Long id, Class<OutputDTO> ObjectDTOClass) throws Exception {
         Optional<ORM> optional = repository.findById(id);
         if (optional.isPresent()) {
             return mapper.map(optional.get(), ObjectDTOClass);
@@ -54,13 +74,14 @@ abstract class AbstractService<ORM, InputDTO, OutputDTO> {
 
     /**
      * Insira como parâmetro a classe da entidade. Ex.: User.class
+     * 
      * @param newDTO
      * @param EntityClass
      * @return
      * @throws Exception
      */
-    protected Long createNewObject(InputDTO newDTO, Class <ORM> EntityClass) throws Exception {
-        if(EntityClass == null){
+    protected Long createNewObject(InputDTO newDTO, Class<ORM> EntityClass) throws Exception {
+        if (EntityClass == null) {
             throw new Exception("Informe a classe da entidade a ser persistida. Ex. Specie.class");
         }
         try {

@@ -48,8 +48,6 @@ public class Batch {
         // this.saplingSelection = saplingSelection;
     }
 
-    
-
     public Long getId() {
         return id;
     }
@@ -66,13 +64,13 @@ public class Batch {
         this.code = code;
     }
 
-    // public GeneticMaterial getGeneticMaterial() {
-    //     return geneticMaterial;
-    // }
+    public GeneticMaterial getGeneticMaterial() {
+        return geneticMaterial;
+    }
 
-    // public void setGeneticMaterial(GeneticMaterial geneticMaterial) {
-    //     this.geneticMaterial = geneticMaterial;
-    // }
+    public void setGeneticMaterial(GeneticMaterial geneticMaterial) {
+        this.geneticMaterial = geneticMaterial;
+    }
 
     public Date getStakingDate() {
         return stakingDate;
@@ -90,21 +88,13 @@ public class Batch {
         this.amount = amount;
     }
 
-    public GeneticMaterial getGeneticMaterial() {
-        return geneticMaterial;
+    public SaplingSelection getSaplingSelection() {
+        return saplingSelection;
     }
 
-    public void setGeneticMaterial(GeneticMaterial geneticMaterial) {
-        this.geneticMaterial = geneticMaterial;
+    public void setSaplingSelection(SaplingSelection saplingSelection) {
+        this.saplingSelection = saplingSelection;
     }
 
-    // public SaplingSelection getSaplingSelection() {
-    //     return saplingSelection;
-    // }
 
-    // public void setSaplingSelection(SaplingSelection saplingSelection) {
-    //     this.saplingSelection = saplingSelection;
-    // }
-
-    
 }

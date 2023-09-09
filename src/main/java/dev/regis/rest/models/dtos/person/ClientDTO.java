@@ -13,7 +13,7 @@ public class ClientDTO implements Serializable {
 
     private Long id;
     private String name;
-    private List<ExpeditionPlanDTO> listExpeditionPlan;
+    private List<ExpeditionPlanDTO> listExpeditionPlans;
 
     public ClientDTO() {
     }
@@ -21,7 +21,6 @@ public class ClientDTO implements Serializable {
     public ClientDTO(Client client) {
         id = client.getId();
         name = client.getName();
-        listExpeditionPlan = ExpeditionPlanDTO.convert(client.getListExpeditionPlans());
     }
 
     public Long getId() {
@@ -32,12 +31,12 @@ public class ClientDTO implements Serializable {
         this.id = id;
     }
 
-    public List<ExpeditionPlanDTO> getListExpeditionPlan() {
-        return listExpeditionPlan;
+    public List<ExpeditionPlanDTO> getListExpeditionPlans() {
+        return listExpeditionPlans;
     }
 
-    public void setListExpeditionPlan(List<ExpeditionPlanDTO> listExpeditionPlanDTOs) {
-        this.listExpeditionPlan = listExpeditionPlanDTOs;
+    public void setListExpeditionPlans(List<ExpeditionPlanDTO> listExpeditionPlanDTOs) {
+        this.listExpeditionPlans = listExpeditionPlanDTOs;
     }
 
     public String getName() {

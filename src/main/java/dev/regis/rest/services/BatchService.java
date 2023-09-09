@@ -21,7 +21,7 @@ public class BatchService
     
     @Override
     public List<BatchDTO> listAll() {
-        return super.listAllObjects(BatchDTO.class);
+        return super.listAllObjects(Batch.class, BatchDTO.class);
     }
 
     @Override

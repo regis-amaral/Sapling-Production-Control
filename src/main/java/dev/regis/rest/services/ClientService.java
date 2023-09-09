@@ -25,7 +25,7 @@ public class ClientService
 
         @Override
         public List<ClientDTO> listAll() {
-            return super.listAllObjects(ClientDTO.class);
+            return super.listAllObjects(Client.class, ClientDTO.class);
         }
 
         @Override

@@ -21,7 +21,7 @@ public class SaplingSelectionService
 
         @Override
         public List<SaplingSelectionDTO> listAll() {
-            return super.listAllObjects(SaplingSelectionDTO.class);
+            return super.listAllObjects(SaplingSelection.class, SaplingSelectionDTO.class);
         }
 
         @Override

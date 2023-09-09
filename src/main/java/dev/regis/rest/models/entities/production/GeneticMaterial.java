@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class GeneticMaterial {
@@ -28,9 +29,8 @@ public class GeneticMaterial {
     @JoinColumn(name = "specie_id", nullable = false)
     private Specie specie;
 
-    // @OneToMany(fetch = FetchType.LAZY, mappedBy = "geneticMaterial")
-    // @JsonIgnore
-    // private List<Batch> ListBatchs;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "geneticMaterial")
+    private List<Batch> listBatchs;
 
     // @OneToMany(fetch = FetchType.LAZY, mappedBy = "geneticMaterial")
     // private List<ExpeditionPlan> listExpeditionPlans;
@@ -78,21 +78,13 @@ public class GeneticMaterial {
         this.specie = specie;
     }
 
-    // public List<ExpeditionPlan> getListExpeditionPlans() {
-    //     return listExpeditionPlans;
-    // }
+    public List<Batch> getListBatchs() {
+        return listBatchs;
+    }
 
-    // public void setListExpeditionPlans(List<ExpeditionPlan> listExpeditionPlans) {
-    //     this.listExpeditionPlans = listExpeditionPlans;
-    // }
+    public void setListBatchs(List<Batch> listBatchs) {
+        this.listBatchs = listBatchs;
+    }
 
-    // public List<Batch> getListBatchs() {
-    //     return ListBatchs;
-    // }
-
-    // public void setListBatchs(List<Batch> listBatchs) {
-    //     ListBatchs = listBatchs;
-    // }
-    
     
 }

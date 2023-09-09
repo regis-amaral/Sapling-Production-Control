@@ -1,5 +1,6 @@
 package dev.regis.rest.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -28,7 +29,7 @@ public class SpecieService
     ModelMapper mapper;
 
     public List<SpecieDTO> listAll() {
-        return super.listAllObjects(SpecieDTO.class);
+        return super.listAllObjects(Specie.class, SpecieDTO.class); 
     }
 
     public SpecieDTO findById(Long id) throws Exception {

@@ -1,5 +1,6 @@
 package dev.regis.rest.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -33,7 +34,7 @@ public class GeneticMaterialService
 
 	@Override
 	public List<GeneticMaterialDTO> listAll() {
-		return super.listAllObjects(GeneticMaterialDTO.class);
+		return super.listAllObjects(GeneticMaterial.class, GeneticMaterialDTO.class); 
 	}
 
 	@Override
