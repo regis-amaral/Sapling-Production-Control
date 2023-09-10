@@ -16,25 +16,19 @@ import dev.regis.rest.services.ClientService;
 
 @RestController
 @RequestMapping(value = "/api/client")
-public class ClientController{
+public class ClientController extends AbstractController<Client, ClientDTO> {
 
-    @Autowired
-    ClientService service;
-    
-    @GetMapping
-    public List<ClientDTO> listAll(){
-        return service.listAll();
-    }
+  @Autowired
+  ClientService service;
 
-    // @GetMapping("/search")
-    // public ResponseEntity<List<ClientDTO>> search(
-    //         @RequestParam("name") String name,
-    //         @RequestParam(value = "page", defaultValue = "0") Integer page,
-    //         @RequestParam(value = "orderBy", defaultValue = "id", required = false) String orderBy,
-    //         @RequestParam(value = "itensPerPage", defaultValue = "10", required = false) Integer itensPerPage,
-    //         @RequestParam(value = "direction", defaultValue = "ASC", required = false) String direction
-    // ) {
-		// List<ClientDTO> listClientDTOs =  service.search(name, page, orderBy, itensPerPage, direction);
-		// return ResponseEntity.ok(listClientDTOs);
-    // }
+  @GetMapping("/search")
+  public ResponseEntity<List<ClientDTO>> search(
+      @RequestParam("name") String name,
+      @RequestParam(value = "page", defaultValue = "0") Integer page,
+      @RequestParam(value = "orderBy", defaultValue = "id", required = false) String orderBy,
+      @RequestParam(value = "itensPerPage", defaultValue = "10", required = false) Integer itensPerPage,
+      @RequestParam(value = "direction", defaultValue = "ASC", required = false) String direction) {
+    List<ClientDTO> listClientDTOs = service.search(name, page, orderBy, itensPerPage, direction);
+    return ResponseEntity.ok(listClientDTOs);
+  }
 }

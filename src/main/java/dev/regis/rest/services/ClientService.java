@@ -17,7 +17,7 @@ import dev.regis.rest.repositories.ClientRepository;
 import dev.regis.rest.services.interfaces.IService;
 
 @Service
-public class ClientService {
+public class ClientService extends AbstractService <Client, ClientDTO> implements IService <Client, ClientDTO>{
 
         @Autowired
         ClientRepository repository;
@@ -25,50 +25,41 @@ public class ClientService {
         @Autowired
         ModelMapper mapper;
         
+        @Override
         public List<ClientDTO> listAll() {
-
-            // List<BatchDTO> listBatchDTOs = new ArrayList<>();
-            // repository.findAll().forEach(batch -> listBatchDTOs.add(mapper.map(batch, BatchDTO.class)));
-            // return listBatchDTOs;
-    
-            return repository.findAll().stream()
-                .map(batch -> mapper.map(batch, ClientDTO.class))
-                .collect(Collectors.toList());
-                
+            return super.listAllObjects(ClientDTO.class);
         }
 
-    //     @Override
-    //     public List<ClientDTO> listAll() {
-    //         return super.listAllObjects(Client.class, ClientDTO.class);
-    //     }
+        @Override
+        public ClientDTO findById(Long id) throws Exception {
+            return super.findObjectById(id, ClientDTO.class);
+        }
 
-    //     @Override
-    //     public ClientDTO findById(Long id) throws Exception {
-    //         return super.findObjectById(id, ClientDTO.class);
-    //     }
+        @Override
+        public Long create(ClientDTO objectDTO) throws Exception {
+            return createNewObject(objectDTO, Client.class);
+        }
 
-    //     @Override
-    //     public Long create(ClientInputDTO objectDTO) throws Exception {
-    //         return createNewObject(objectDTO, Client.class);
-    //     }
+        @Override
+        public void deleteById(Long id) {
+            super.deleteObjectById(id);
+        }
 
-    //     @Override
-    //     public void deleteById(Long id) {
-    //         super.deleteObjectById(id);
-    //     }
+        @Override
+        public Long update(ClientDTO objectDTO) throws Exception {
+            return super.updateObject(objectDTO);
+        }
 
-    //     @Override
-    //     public Long update(ClientInputDTO objectDTO) throws Exception {
-    //         return super.updateObject(objectDTO);
-    //     }
-
-    //     public List<ClientDTO> search(String partName,
-	// 		Integer page,
-	// 		String orderBy,
-	// 		Integer itensPerPage,
-	// 		String direction) {
-	// 	Pageable pageable = PageRequest.of(page, itensPerPage, Sort.Direction.fromString(direction), orderBy);
-	// 	Page<Client> client = clientRepository.search(partName, pageable);
-    //     return ClientDTO.convertList(client.getContent());
-	// }
+        public List<ClientDTO> search(String partName,
+			Integer page,
+			String orderBy,
+			Integer itensPerPage,
+			String direction) {
+		Pageable pageable = PageRequest.of(page, itensPerPage, Sort.Direction.fromString(direction), orderBy);
+		Page<Client> clients = repository.search(partName, pageable);
+        
+        return clients.getContent().stream()
+            .map(client -> mapper.map(client, ClientDTO.class))
+            .collect(Collectors.toList());
+	}
 }

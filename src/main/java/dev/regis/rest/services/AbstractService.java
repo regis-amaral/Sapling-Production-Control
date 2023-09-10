@@ -44,7 +44,7 @@ abstract class AbstractService<ObjectORM, ObjectDTO> {
      * Insira como parâmetro a classe da entidade. Ex.: User.class
      */
     protected Long createNewObject(ObjectDTO newObjectDTO, Class<ObjectORM> EntityClass) throws Exception {
-        // TODO validar métodos e tratar exceções
+        // TODO validar métodos e tratar exceções (campos obrigatórios, campos únicos, ...)
         if (EntityClass == null) {
             throw new Exception("Informe a classe da entidade a ser persistida. Ex. Specie.class");
         }
@@ -64,9 +64,10 @@ abstract class AbstractService<ObjectORM, ObjectDTO> {
     }
 
     protected Long updateObject(ObjectDTO newObjectDTO) throws Exception {
-        // TODO validar métodos e tratar exceções
+        // TODO validar métodos e tratar exceções (campos obrigatórios, campos únicos, ...)
         Method getIdMethod = newObjectDTO.getClass().getMethod("getId");
         Long id = (Long) getIdMethod.invoke(newObjectDTO);
+        System.out.println("buscando pelo id " + id);
         Optional<ObjectORM> optional = repository.findById(id);
         if (optional.isPresent()) {
             ObjectORM entity = optional.get();

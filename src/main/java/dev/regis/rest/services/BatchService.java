@@ -1,8 +1,6 @@
 package dev.regis.rest.services;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +9,10 @@ import org.springframework.stereotype.Service;
 import dev.regis.rest.models.production.Batch;
 import dev.regis.rest.models.production.dtos.BatchDTO;
 import dev.regis.rest.repositories.BatchRepository;
+import dev.regis.rest.services.interfaces.IService;
 
 @Service
-public class BatchService {
+public class BatchService extends AbstractService <Batch, BatchDTO> implements IService <Batch, BatchDTO>{
 
     @Autowired
     BatchRepository repository;
@@ -21,37 +20,29 @@ public class BatchService {
     @Autowired
     ModelMapper mapper;
     
-    
+    @Override
     public List<BatchDTO> listAll() {
-
-        // List<BatchDTO> listBatchDTOs = new ArrayList<>();
-        // repository.findAll().forEach(batch -> listBatchDTOs.add(mapper.map(batch, BatchDTO.class)));
-        // return listBatchDTOs;
-
-        return repository.findAll().stream()
-            .map(batch -> mapper.map(batch, BatchDTO.class))
-            .collect(Collectors.toList());
-            
+        return super.listAllObjects(BatchDTO.class);  
     }
 
-    // @Override
-    // public BatchDTO findById(Long id) throws Exception{
-    //     return super.findObjectById(id, BatchDTO.class);
-    // }
+    @Override
+    public BatchDTO findById(Long id) throws Exception{
+        return super.findObjectById(id, BatchDTO.class);
+    }
 
-	// @Override
-	// public Long create(BatchInputDTO objectDTO) throws Exception {
-	// 	return super.createNewObject(objectDTO, Batch.class);
-	// }
+	@Override
+	public Long create(BatchDTO objectDTO) throws Exception {
+		return super.createNewObject(objectDTO, Batch.class);
+	}
 
-    // @Override
-    // public void deleteById(Long id) {
-    //     super.deleteObjectById(id);
-    // }
+    @Override
+    public void deleteById(Long id) {
+        super.deleteObjectById(id);
+    }
 
-    // @Override
-    // public Long update(BatchInputDTO objectDTO) throws Exception {
-    //     return super.updateObject(objectDTO);
-    // }
+    @Override
+    public Long update(BatchDTO objectDTO) throws Exception {
+        return super.updateObject(objectDTO);
+    }
 
 }

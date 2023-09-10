@@ -11,7 +11,7 @@ import dev.regis.rest.services.SaplingSelectionService;
 
 @RestController
 @RequestMapping(value = "/api/sapling-selection")
-public class SaplingSelectionController{
+public class SaplingSelectionController extends AbstractController <SaplingSelection, SaplingSelectionDTO>{
     
     @Autowired
     SaplingSelectionService saplingSelectionService;

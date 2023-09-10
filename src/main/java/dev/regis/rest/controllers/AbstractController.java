@@ -55,6 +55,7 @@ public abstract class AbstractController <ObjectORM, ObjetcDTO> {
         try {
             return ResponseEntity.ok(service.update(newObjectDTO));
         } catch (Exception e) {
+			e.printStackTrace(); // TODO tratar exeções
             return ResponseEntity.badRequest().body(e.getMessage());
         }
 	}
