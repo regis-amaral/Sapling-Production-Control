@@ -34,12 +34,11 @@ public class Batch {
     @Column(nullable = false)
     private int amount;
 
-    @ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("listBatchs")  
-    private SaplingSelection saplingSelection;
+    // @ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    // @JsonIgnoreProperties("listBatchs")  
+    // private SaplingSelection saplingSelection;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("listBatchs")    
+    @ManyToOne(optional = false, fetch = FetchType.LAZY) 
     private GeneticMaterial geneticMaterial;
 
       

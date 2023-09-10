@@ -29,7 +29,7 @@ public class GeneticMaterial {
     @Column(nullable = true)
     private String description;
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "specie_id", nullable = false)
     private Specie specie;
 
