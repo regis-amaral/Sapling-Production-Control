@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import dev.regis.rest.models.production.Batch;
+import dev.regis.rest.models.production.Specie;
 import lombok.Data;
 
 @Data
@@ -17,7 +18,7 @@ public class GeneticMaterialDTO implements Serializable {
 
     private String description;
 
-    private SpecieDTO specie;
+    private Specie specie;
 
     private List<Batch> listBatchs;
 

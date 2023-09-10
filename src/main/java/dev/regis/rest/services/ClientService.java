@@ -12,7 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import dev.regis.rest.models.person.Client;
-import dev.regis.rest.models.person.dto.ClientDTO;
+import dev.regis.rest.models.person.dtos.ClientDTO;
 import dev.regis.rest.repositories.ClientRepository;
 import dev.regis.rest.services.interfaces.IService;
 

@@ -3,7 +3,7 @@ package dev.regis.rest.models.production.dtos;
 import java.io.Serializable;
 import java.time.Month;
 
-import dev.regis.rest.models.person.dto.ClientDTO;
+import dev.regis.rest.models.person.dtos.ClientDTO;
 import dev.regis.rest.models.production.GeneticMaterial;
 import lombok.Data;
 

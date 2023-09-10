@@ -1,4 +1,4 @@
-package dev.regis.rest.models.person.dto;
+package dev.regis.rest.models.person.dtos;
 
 import java.io.Serializable;
 import java.util.List;
