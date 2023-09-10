@@ -18,6 +18,6 @@ public class SaplingSelectionDTO implements Serializable{
 
     private List<Batch> listBatchs;
 
-    private int totalRootedSeedlings;
+    private int totalRootedSaplings;
     
 }

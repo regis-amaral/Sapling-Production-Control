@@ -29,7 +29,7 @@ public class SaplingSelection {
     private Date selectionDate;
 
     @Column(nullable = false)
-    private int totalRootedSeedlings;
+    private int totalRootedSaplings;
     
     @OneToMany(mappedBy = "saplingSelection", fetch = FetchType.LAZY)
     @JsonIgnoreProperties("saplingSelection")  
