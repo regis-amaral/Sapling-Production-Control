@@ -6,8 +6,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import dev.regis.rest.models.production.GeneticMaterial;
+import dev.regis.rest.models.production.dtos.GeneticMaterialDTO;
 
 abstract class AbstractService<ObjectORM, ObjectDTO> {
 
