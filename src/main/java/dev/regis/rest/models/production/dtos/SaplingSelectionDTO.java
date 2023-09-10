@@ -16,7 +16,7 @@ public class SaplingSelectionDTO implements Serializable{
     
     private Date selectionDate;
 
-    private List<Batch> batchList;
+    private List<Batch> listBatchs;
 
     private int totalRootedSeedlings;
     

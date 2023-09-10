@@ -20,7 +20,7 @@ public class BatchDTO implements Serializable{
     
     private int amount;
     
-    // private SaplingSelection saplingSelection;
+    private SaplingSelection saplingSelection;
 
     private GeneticMaterial geneticMaterial;
 
