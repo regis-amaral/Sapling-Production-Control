@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import dev.regis.rest.models.entities.production.Specie;
+import dev.regis.rest.models.production.Specie;
 
 public interface SpecieRepository extends JpaRepository<Specie, Long>  {
 

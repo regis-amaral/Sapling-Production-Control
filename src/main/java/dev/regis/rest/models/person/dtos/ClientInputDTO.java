@@ -1,10 +1,10 @@
-package dev.regis.rest.models.dtos.person;
+package dev.regis.rest.models.person.dtos;
 
 import java.io.Serializable;
 import java.util.List;
 
-import dev.regis.rest.models.dtos.production.ExpeditionPlanDTO;
-import dev.regis.rest.models.entities.person.Client;
+import dev.regis.rest.models.person.Client;
+import dev.regis.rest.models.production.dtos.ExpeditionPlanDTO;
 
 public class ClientInputDTO implements Serializable {
 

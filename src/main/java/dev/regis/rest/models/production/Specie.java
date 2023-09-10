@@ -1,6 +1,6 @@
-package dev.regis.rest.models.entities.production;
+package dev.regis.rest.models.production;
 
-import dev.regis.rest.models.dtos.production.SpecieDTO;
+import dev.regis.rest.models.production.dtos.SpecieDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

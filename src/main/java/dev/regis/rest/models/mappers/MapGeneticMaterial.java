@@ -5,8 +5,8 @@ import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import dev.regis.rest.models.dtos.production.GeneticMaterialDTO;
-import dev.regis.rest.models.entities.production.GeneticMaterial;
+import dev.regis.rest.models.production.GeneticMaterial;
+import dev.regis.rest.models.production.dtos.GeneticMaterialDTO;
 
 @Mapper(uses = MapBatch.class)
 public interface MapGeneticMaterial {

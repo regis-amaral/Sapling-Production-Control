@@ -6,8 +6,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import dev.regis.rest.models.dtos.production.SpecieDTO;
-import dev.regis.rest.models.entities.production.Specie;
+import dev.regis.rest.models.production.Specie;
+import dev.regis.rest.models.production.dtos.SpecieDTO;
 import dev.regis.rest.repositories.SpecieRepository;
 import dev.regis.rest.services.interfaces.IService;
 

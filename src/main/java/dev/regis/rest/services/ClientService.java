@@ -9,9 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import dev.regis.rest.models.dtos.person.ClientDTO;
-import dev.regis.rest.models.dtos.person.ClientInputDTO;
-import dev.regis.rest.models.entities.person.Client;
+import dev.regis.rest.models.person.Client;
+import dev.regis.rest.models.person.dtos.ClientDTO;
+import dev.regis.rest.models.person.dtos.ClientInputDTO;
 import dev.regis.rest.repositories.ClientRepository;
 import dev.regis.rest.services.interfaces.IService;
 

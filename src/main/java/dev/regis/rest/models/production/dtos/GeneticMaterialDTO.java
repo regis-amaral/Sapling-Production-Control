@@ -1,4 +1,4 @@
-package dev.regis.rest.models.dtos.production;
+package dev.regis.rest.models.production.dtos;
 
 import java.io.Serializable;
 import java.util.List;

@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import dev.regis.rest.models.dtos.production.BatchDTO;
-import dev.regis.rest.models.dtos.production.BatchInputDTO;
-import dev.regis.rest.models.entities.production.Batch;
 import dev.regis.rest.models.mappers.MapBatch;
+import dev.regis.rest.models.production.Batch;
+import dev.regis.rest.models.production.dtos.BatchDTO;
+import dev.regis.rest.models.production.dtos.BatchInputDTO;
 import dev.regis.rest.repositories.BatchRepository;
 import dev.regis.rest.services.interfaces.IService;
 

@@ -1,4 +1,4 @@
-package dev.regis.rest.models.entities.production;
+package dev.regis.rest.models.production;
 
 import java.util.Date;
 

@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.regis.rest.controllers.AbstractController;
-import dev.regis.rest.models.dtos.production.SpecieDTO;
-import dev.regis.rest.models.entities.production.Specie;
+import dev.regis.rest.models.production.Specie;
+import dev.regis.rest.models.production.dtos.SpecieDTO;
 import dev.regis.rest.services.SpecieService;
 
 @RestController

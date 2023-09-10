@@ -1,8 +1,8 @@
-package dev.regis.rest.models.entities.production;
+package dev.regis.rest.models.production;
 
 import java.time.Month;
 
-import dev.regis.rest.models.entities.person.Client;
+import dev.regis.rest.models.person.Client;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;

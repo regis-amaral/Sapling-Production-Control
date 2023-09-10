@@ -1,8 +1,9 @@
-package dev.regis.rest.models.dtos.production;
+package dev.regis.rest.models.production.dtos;
 
 import java.io.Serializable;
 import java.util.Date;
-import dev.regis.rest.models.entities.production.SaplingSelection;
+
+import dev.regis.rest.models.production.SaplingSelection;
 
 public class BatchDTO implements Serializable{
     

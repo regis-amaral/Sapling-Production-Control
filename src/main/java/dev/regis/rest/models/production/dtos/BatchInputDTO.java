@@ -1,10 +1,10 @@
-package dev.regis.rest.models.dtos.production;
+package dev.regis.rest.models.production.dtos;
 
 import java.io.Serializable;
 import java.util.Date;
 
-import dev.regis.rest.models.entities.production.Batch;
-import dev.regis.rest.models.entities.production.GeneticMaterial;
+import dev.regis.rest.models.production.Batch;
+import dev.regis.rest.models.production.GeneticMaterial;
 
 public class BatchInputDTO implements Serializable{
     

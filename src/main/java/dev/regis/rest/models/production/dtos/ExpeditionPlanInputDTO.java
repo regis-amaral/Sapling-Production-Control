@@ -1,14 +1,15 @@
-package dev.regis.rest.models.dtos.production;
+package dev.regis.rest.models.production.dtos;
 
 import java.io.Serializable;
 import java.time.Month;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import dev.regis.rest.models.dtos.person.ClientDTO;
-import dev.regis.rest.models.entities.production.ExpeditionPlan;
+import dev.regis.rest.models.person.Client;
+import dev.regis.rest.models.production.ExpeditionPlan;
+import dev.regis.rest.models.production.GeneticMaterial;
 
-public class ExpeditionPlanDTO implements Serializable{
+public class ExpeditionPlanInputDTO implements Serializable{
     
     private static final long serialVersionUID = 1L;
     
@@ -16,19 +17,19 @@ public class ExpeditionPlanDTO implements Serializable{
     private int planned;
     private int realized;
     private Month month;
-    private GeneticMaterialDTO geneticMaterial;
-    private ClientDTO client;
+    private GeneticMaterial geneticMaterial;
+    private Client client;
 
-    public ExpeditionPlanDTO() {
+    public ExpeditionPlanInputDTO() {
     }
 
-    public ExpeditionPlanDTO(ExpeditionPlan expeditionPlan) {
+    public ExpeditionPlanInputDTO(ExpeditionPlan expeditionPlan) {
         id = expeditionPlan.getId();
         planned = expeditionPlan.getPlanned();
         realized = expeditionPlan.getRealized();
         month = expeditionPlan.getMonth();
-        // geneticMaterial = new GeneticMaterialDTO(expeditionPlan.getGeneticMaterial());
-        client = new ClientDTO(expeditionPlan.getClient());
+        geneticMaterial = expeditionPlan.getGeneticMaterial();
+        client = expeditionPlan.getClient();
     }
 
     public Long getId() {
@@ -63,19 +64,19 @@ public class ExpeditionPlanDTO implements Serializable{
         this.month = month;
     }
 
-    public GeneticMaterialDTO getGeneticMaterial() {
+    public GeneticMaterial getGeneticMaterial() {
         return geneticMaterial;
     }
 
-    public void setGeneticMaterial(GeneticMaterialDTO geneticMaterial) {
+    public void setGeneticMaterial(GeneticMaterial geneticMaterial) {
         this.geneticMaterial = geneticMaterial;
     }   
     
-    public ClientDTO getClient() {
+    public Client getClient() {
         return client;
     }
 
-    public void setClient(ClientDTO client) {
+    public void setClient(Client client) {
         this.client = client;
     }
 

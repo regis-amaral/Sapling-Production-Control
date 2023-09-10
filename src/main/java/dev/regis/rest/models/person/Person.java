@@ -1,4 +1,4 @@
-package dev.regis.rest.models.entities.person;
+package dev.regis.rest.models.person;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;

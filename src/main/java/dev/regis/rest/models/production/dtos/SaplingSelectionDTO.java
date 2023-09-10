@@ -1,28 +1,27 @@
-package dev.regis.rest.models.dtos.production;
+package dev.regis.rest.models.production.dtos;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import dev.regis.rest.models.entities.production.Batch;
-import dev.regis.rest.models.entities.production.SaplingSelection;
+import dev.regis.rest.models.production.SaplingSelection;
 
-public class SaplingSelectionInputDTO implements Serializable{
+public class SaplingSelectionDTO implements Serializable{
     
     private static final long serialVersionUID = 1L;
 
     private Long id;
     private Date selectionDate;
-    private List<Batch> batchList;
+    private List<BatchDTO> batchList;
     private int totalRootedSeedlings;
     
-    public SaplingSelectionInputDTO() {
+    public SaplingSelectionDTO() {
     }
 
-    public SaplingSelectionInputDTO(SaplingSelection saplingSelection) {
+    public SaplingSelectionDTO(SaplingSelection saplingSelection) {
         id = saplingSelection.getId();
         selectionDate = saplingSelection.getSelectionDate();
-        batchList = saplingSelection.getBatchList();
+        // batchList = BatchDTO.convert(saplingSelection.getBatchList());
         totalRootedSeedlings = saplingSelection.getTotalRootedSeedlings();
     }
 
@@ -42,11 +41,11 @@ public class SaplingSelectionInputDTO implements Serializable{
         this.selectionDate = selectionDate;
     }
 
-    public List<Batch> getBatchList() {
+    public List<BatchDTO> getBatchList() {
         return batchList;
     }
 
-    public void setBatchList(List<Batch> batchList) {
+    public void setBatchList(List<BatchDTO> batchList) {
         this.batchList = batchList;
     }
 

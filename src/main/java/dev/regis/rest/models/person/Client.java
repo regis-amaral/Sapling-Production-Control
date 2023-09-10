@@ -1,8 +1,8 @@
-package dev.regis.rest.models.entities.person;
+package dev.regis.rest.models.person;
 
 import java.util.List;
 
-import dev.regis.rest.models.entities.production.ExpeditionPlan;
+import dev.regis.rest.models.production.ExpeditionPlan;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
