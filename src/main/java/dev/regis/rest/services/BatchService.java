@@ -9,10 +9,9 @@ import org.springframework.stereotype.Service;
 import dev.regis.rest.models.production.Batch;
 import dev.regis.rest.models.production.dtos.BatchDTO;
 import dev.regis.rest.repositories.BatchRepository;
-import dev.regis.rest.services.interfaces.IService;
 
 @Service
-public class BatchService extends AbstractService <Batch, BatchDTO> implements IService <Batch, BatchDTO>{
+public class BatchService extends AbstractService <Batch, BatchDTO>{
 
     @Autowired
     BatchRepository repository;
@@ -20,29 +19,25 @@ public class BatchService extends AbstractService <Batch, BatchDTO> implements I
     @Autowired
     ModelMapper mapper;
     
-    @Override
+    
     public List<BatchDTO> listAll() {
-        return super.listAllObjects(BatchDTO.class);  
+        return super.listAll(BatchDTO.class);  
     }
 
-    @Override
     public BatchDTO findById(Long id) throws Exception{
-        return super.findObjectById(id, BatchDTO.class);
+        return super.findById(id, BatchDTO.class);
     }
 
-	@Override
 	public Long create(BatchDTO objectDTO) throws Exception {
-		return super.createNewObject(objectDTO, Batch.class);
+		return super.create(objectDTO, Batch.class);
 	}
 
-    @Override
     public void deleteById(Long id) {
-        super.deleteObjectById(id);
+        super.deleteById(id);
     }
 
-    @Override
     public Long update(BatchDTO objectDTO) throws Exception {
-        return super.updateObject(objectDTO);
+        return super.update(objectDTO);
     }
 
 }

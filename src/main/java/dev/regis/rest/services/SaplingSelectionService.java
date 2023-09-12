@@ -28,20 +28,17 @@ public class SaplingSelectionService extends AbstractService<SaplingSelection, S
     @Autowired
     BatchRepository batchRepository;
 
-    @Override
     public List<SaplingSelectionDTO> listAll() {
-        return super.listAllObjects(SaplingSelectionDTO.class);
+        return super.listAll(SaplingSelectionDTO.class);
     }
 
-    @Override
     public SaplingSelectionDTO findById(Long id) throws Exception {
-        return super.findObjectById(id, SaplingSelectionDTO.class);
+        return super.findById(id, SaplingSelectionDTO.class);
     }
 
-    @Transactional
     public Long create(SaplingSelectionDTO objectDTO) throws Exception {
         try {
-            Long id = super.createNewObject(objectDTO, SaplingSelection.class);
+            Long id = super.create(objectDTO, SaplingSelection.class);
             SaplingSelection saplingSelection = mapper.map(objectDTO, SaplingSelection.class);
             saplingSelection.setId(id);
             if(objectDTO.getListBatchs() != null){
@@ -66,7 +63,6 @@ public class SaplingSelectionService extends AbstractService<SaplingSelection, S
         throw new RuntimeException("Um erro ocorreu ao salvar! Operação cancelada.");
     }
 
-    @Override
     public void deleteById(Long id) {
         Optional<SaplingSelection> optional = saplingSelectionRepository.findById(id);
         if (optional.isPresent()) {
@@ -80,7 +76,7 @@ public class SaplingSelectionService extends AbstractService<SaplingSelection, S
                 batchRepository.save(batch);
             }
         }
-        super.deleteObjectById(id);
+        super.deleteById(id);
     }
 
     @Transactional

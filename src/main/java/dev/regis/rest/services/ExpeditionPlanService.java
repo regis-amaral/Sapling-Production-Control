@@ -20,29 +20,24 @@ public class ExpeditionPlanService extends AbstractService <ExpeditionPlan, Expe
     @Autowired
     ModelMapper mapper;
 
-    @Override
     public List<ExpeditionPlanDTO> listAll() {
-        return super.listAllObjects(ExpeditionPlanDTO.class);  
+        return super.listAll(ExpeditionPlanDTO.class);  
     }
 
-    @Override
     public ExpeditionPlanDTO findById(Long id) throws Exception {
-        return super.findObjectById(id, ExpeditionPlanDTO.class);
+        return super.findById(id, ExpeditionPlanDTO.class);
     }
 
-    @Override
     public Long create(ExpeditionPlanDTO objectDTO) throws Exception {
-        return super.createNewObject(objectDTO, ExpeditionPlan.class);
+        return super.create(objectDTO, ExpeditionPlan.class);
     }
 
-    @Override
     public void deleteById(Long id) {
-        super.deleteObjectById(id);
+        super.deleteById(id);
     }
 
-    @Override
     public Long update(ExpeditionPlanDTO objectDTO) throws Exception {
-        return super.updateObject(objectDTO);
+        return super.update(objectDTO);
     }
     
 }

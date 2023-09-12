@@ -26,28 +26,24 @@ public class GeneticMaterialService extends AbstractService <GeneticMaterial, Ge
 	ModelMapper mapper;
 
 	public List<GeneticMaterialDTO> listAll() {
-		return super.listAllObjects(GeneticMaterialDTO.class);
+		return super.listAll(GeneticMaterialDTO.class);
 	}
 
-	@Override
 	public GeneticMaterialDTO findById(Long id) throws Exception {
-		return super.findObjectById(id, GeneticMaterialDTO.class);
+		return super.findById(id, GeneticMaterialDTO.class);
 	}
 
-	@Override
 	public Long create(GeneticMaterialDTO newGeneticMaterialDTO) throws Exception {
-		return super.createNewObject(newGeneticMaterialDTO, GeneticMaterial.class);
+		return super.create(newGeneticMaterialDTO, GeneticMaterial.class);
 	}
 
-	@Override
 	public void deleteById(Long id) {
-		super.deleteObjectById(id);
+		super.deleteById(id);
 	}
 
-	@Override
 	public Long update(GeneticMaterialDTO newGeneticMaterialDTO) throws Exception {
 
-		return super.updateObject(newGeneticMaterialDTO);
+		return super.update(newGeneticMaterialDTO);
 	}
 
 	/*

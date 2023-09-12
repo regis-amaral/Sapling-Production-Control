@@ -25,25 +25,24 @@ public class SpecieService extends AbstractService <Specie, SpecieDTO> implement
     @Autowired
     ModelMapper mapper;
   
-    @Override
     public List<SpecieDTO> listAll() {
-        return super.listAllObjects(SpecieDTO.class);          
+        return super.listAll(SpecieDTO.class);          
     }
 
     public SpecieDTO findById(Long id) throws Exception {
-        return super.findObjectById(id, SpecieDTO.class);
+        return super.findById(id, SpecieDTO.class);
     }
 
     public Long create(SpecieDTO objectDTO) throws Exception {
-        return super.createNewObject(objectDTO, Specie.class);
+        return super.create(objectDTO, Specie.class);
     }
 
     public void deleteById(Long id) {
-        super.deleteObjectById(id);
+        super.deleteById(id);
     }
 
     public Long update(SpecieDTO newSpecieDTO) throws Exception {
-        return super.updateObject(newSpecieDTO);
+        return super.update(newSpecieDTO);
     }
 
     public List<SpecieDTO> search(String partName,

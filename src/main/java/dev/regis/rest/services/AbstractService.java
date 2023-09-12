@@ -21,7 +21,7 @@ abstract class AbstractService<ObjectORM, ObjectDTO> {
      * Insira como parâmetro a classe DTO de retorno. Ex.: UserDTO.class
      * O tratamento de conversão ORM para DTO deve ser feito no construtor das entidades.
      */
-    protected List<ObjectDTO> listAllObjects(Class<ObjectDTO> ObjectDTOClass) {
+    protected List<ObjectDTO> listAll(Class<ObjectDTO> ObjectDTOClass) {
         return repository.findAll().stream()
             .map(batch -> mapper.map(batch, ObjectDTOClass))
             .collect(Collectors.toList());
@@ -31,7 +31,7 @@ abstract class AbstractService<ObjectORM, ObjectDTO> {
      * Informe como parâmetros o ID a ser pesquisado e classe DTO de retorno. Ex.:
      * UserDTO.class
      */
-    protected ObjectDTO findObjectById(Long id, Class<ObjectDTO> ObjectDTOClass) throws Exception {
+    protected ObjectDTO findById(Long id, Class<ObjectDTO> ObjectDTOClass) throws Exception {
         Optional<ObjectORM> optional = repository.findById(id);
         if (optional.isPresent()) {
             return mapper.map(optional.get(), ObjectDTOClass);
@@ -43,7 +43,7 @@ abstract class AbstractService<ObjectORM, ObjectDTO> {
     /**
      * Insira como parâmetro a classe da entidade. Ex.: User.class
      */
-    protected Long createNewObject(ObjectDTO newObjectDTO, Class<ObjectORM> EntityClass) throws Exception {
+    protected Long create(ObjectDTO newObjectDTO, Class<ObjectORM> EntityClass) throws Exception {
         // TODO validar métodos e tratar exceções (campos obrigatórios, campos únicos, ...)
         if (EntityClass == null) {
             throw new Exception("Informe a classe da entidade a ser persistida. Ex. Specie.class");
@@ -59,11 +59,11 @@ abstract class AbstractService<ObjectORM, ObjectDTO> {
         }
     }
 
-    protected void deleteObjectById(Long id) {
+    protected void deleteById(Long id) {
         repository.deleteById(id);
     }
 
-    protected Long updateObject(ObjectDTO newObjectDTO) throws Exception {
+    protected Long update(ObjectDTO newObjectDTO) throws Exception {
         // TODO validar métodos e tratar exceções (campos obrigatórios, campos únicos, ...)
         Method getIdMethod = newObjectDTO.getClass().getMethod("getId");
         Long id = (Long) getIdMethod.invoke(newObjectDTO);

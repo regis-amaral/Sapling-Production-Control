@@ -14,10 +14,9 @@ import org.springframework.stereotype.Service;
 import dev.regis.rest.models.person.Client;
 import dev.regis.rest.models.person.dtos.ClientDTO;
 import dev.regis.rest.repositories.ClientRepository;
-import dev.regis.rest.services.interfaces.IService;
 
 @Service
-public class ClientService extends AbstractService <Client, ClientDTO> implements IService <Client, ClientDTO>{
+public class ClientService extends AbstractService <Client, ClientDTO> {
 
         @Autowired
         ClientRepository repository;
@@ -25,29 +24,24 @@ public class ClientService extends AbstractService <Client, ClientDTO> implement
         @Autowired
         ModelMapper mapper;
         
-        @Override
         public List<ClientDTO> listAll() {
-            return super.listAllObjects(ClientDTO.class);
+            return super.listAll(ClientDTO.class);
         }
 
-        @Override
         public ClientDTO findById(Long id) throws Exception {
-            return super.findObjectById(id, ClientDTO.class);
+            return super.findById(id, ClientDTO.class);
         }
 
-        @Override
         public Long create(ClientDTO objectDTO) throws Exception {
-            return createNewObject(objectDTO, Client.class);
+            return create(objectDTO, Client.class);
         }
 
-        @Override
         public void deleteById(Long id) {
-            super.deleteObjectById(id);
+            super.deleteById(id);
         }
-
-        @Override
+        
         public Long update(ClientDTO objectDTO) throws Exception {
-            return super.updateObject(objectDTO);
+            return super.update(objectDTO);
         }
 
         public List<ClientDTO> search(String partName,
