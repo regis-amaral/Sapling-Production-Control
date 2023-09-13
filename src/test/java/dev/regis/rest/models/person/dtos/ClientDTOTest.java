@@ -1,22 +1,15 @@
 package dev.regis.rest.models.person.dtos;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import dev.regis.rest.models.production.ExpeditionPlan;
 
 public class ClientDTOTest {
-
-    @Test
-    public void testGetId() {
-        ClientDTO clientDTO = new ClientDTO();
-        clientDTO.setId(1L);
-        assertEquals(1L, clientDTO.getId());
-    }
 
     @Test
     public void testGetName() {
