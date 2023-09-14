@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -28,7 +29,7 @@ import dev.regis.rest.repositories.SpecieRepository;
 
 @DataJpaTest
 @Sql("/h2/LibraryRepositorySpecie.sql")
-@RunWith(SpringRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class SpecieServiceTest {
     
     @Mock

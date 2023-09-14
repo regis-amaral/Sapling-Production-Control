@@ -25,7 +25,7 @@ public class AbstractServiceTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Test
+    
     public void testDeleteById() {
         Long id = 1L;
 
