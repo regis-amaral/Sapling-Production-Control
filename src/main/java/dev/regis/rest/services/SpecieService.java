@@ -46,8 +46,7 @@ public class SpecieService{
         try {
             Specie entity = mapper.map(newObjectDTO, Specie.class);
             Specie created = repository.save(entity);
-            Method getIdMethod = created.getClass().getMethod("getId");
-            return (Long) getIdMethod.invoke(created);
+            return created.getId();
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception("Um erro ocorreu!");
@@ -55,21 +54,27 @@ public class SpecieService{
     }
 
     public void deleteById(Long id) {
+        if (id == null || id < 1) {
+            throw new IllegalArgumentException("O ID é inválido!");
+        }
         repository.deleteById(id);
     }
 
     public Long update(SpecieDTO newObjectDTO) throws Exception {
         // TODO validar métodos e tratar exceções (campos obrigatórios, campos únicos, ...)
-        Method getIdMethod = newObjectDTO.getClass().getMethod("getId");
-        Long id = (Long) getIdMethod.invoke(newObjectDTO);
-        System.out.println("buscando pelo id " + id);
+
+        
+        if(newObjectDTO.getId() == null || newObjectDTO.getId() < 1 || newObjectDTO.getName() == null || newObjectDTO.getName().equals("")){
+            throw new Exception("Objeto inválido!");
+        }
+
+        Long id = newObjectDTO.getId();
         Optional<Specie> optional = repository.findById(id);
         if (optional.isPresent()) {
             Specie entity = optional.get();
             mapper.map(newObjectDTO, entity);
             repository.save(entity);
-            getIdMethod = entity.getClass().getMethod("getId");
-            return (Long) getIdMethod.invoke(entity);
+            return entity.getId();
         } else {
             throw new Exception("Um erro ocorreu!");
         }
