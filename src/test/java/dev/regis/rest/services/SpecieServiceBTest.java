@@ -27,6 +27,12 @@ import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.modelmapper.ModelMapper;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 import dev.regis.rest.models.production.Specie;
 import dev.regis.rest.models.production.dtos.SpecieDTO;
 import dev.regis.rest.repositories.SpecieRepository;
@@ -196,7 +202,28 @@ public class SpecieServiceBTest {
 
     }
 
-    
+    @Test
+    public void search_ValidEntries(){
+        String partName = "";
+		Integer page = 1;
+		String orderBy = "as";
+		Integer itensPerPage = 1;
+		String direction = "asc";
+
+        Pageable pageable = PageRequest.of(page, itensPerPage, Sort.Direction.ASC, orderBy);
+
+        List<Specie> specieList = this.getListSpecie();
+
+        Page<Specie> species = new PageImpl<Specie>(specieList, pageable, specieList.size());
+
+        when(repository.search(partName, pageable)).thenReturn(species);
+
+        List<SpecieDTO> list = specieService.search(partName, page, orderBy, itensPerPage, direction);
+
+        assertTrue(list != null);
+
+        
+    }
 
     private List<Specie> getListSpecie(){
         Specie specie1 = new Specie();

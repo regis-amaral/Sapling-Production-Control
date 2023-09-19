@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -42,11 +44,19 @@ public class SpecieService{
     }
 
     public Long create(SpecieDTO newObjectDTO) throws Exception {
-        // TODO validar métodos e tratar exceções (campos obrigatórios, campos únicos, ...)
+
+        if(newObjectDTO.getName() == null || 
+            newObjectDTO.getName().equals("")){
+            throw new Exception("Parâmetro inválido"); 
+        }
+
         try {
             Specie entity = mapper.map(newObjectDTO, Specie.class);
             Specie created = repository.save(entity);
             return created.getId();
+        } catch(ConstraintViolationException | DataIntegrityViolationException e){
+            e.printStackTrace();
+            throw new Exception("Dados informados violam restrições no BD.");
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception("Um erro ocorreu!");
