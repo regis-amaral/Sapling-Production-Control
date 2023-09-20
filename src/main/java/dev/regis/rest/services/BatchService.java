@@ -44,20 +44,12 @@ public class BatchService extends AbstractService <Batch, BatchDTO>{
         }
 
         //
-        Date stakingDate = newObjectDTO.getStakingDate();
-        if (stakingDate == null) {
+        if (newObjectDTO.getStakingDate() == null) {
             throw new Exception("A data de estaquia não pode ser nula");
         }
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        dateFormat.setLenient(false);
-        try {
-            Date today = new Date();
-            if (stakingDate.after(today)) {
-                throw new Exception("A data de estaquia não pode ser maior que a data atual");
-            }
-            dateFormat.parse(dateFormat.format(stakingDate));
-        } catch (Exception e) {
-            throw new Exception("A data de estaquia não está no formato esperado (yyyy-MM-dd)");
+        Date today = new Date();
+        if (newObjectDTO.getStakingDate().after(today)) {
+            throw new Exception("A data de estaquia não pode ser maior que a data atual");
         }
 
         //
@@ -66,7 +58,9 @@ public class BatchService extends AbstractService <Batch, BatchDTO>{
         }
 
         //
-        if(newObjectDTO.getGeneticMaterial() == null || newObjectDTO.getGeneticMaterial().getId() < 1){
+        if(newObjectDTO.getGeneticMaterial() == null || 
+        newObjectDTO.getGeneticMaterial().getId() == null ||
+            newObjectDTO.getGeneticMaterial().getId() < 1){
             throw new Exception("Material genético inválido");
         }
 
@@ -75,16 +69,60 @@ public class BatchService extends AbstractService <Batch, BatchDTO>{
         } catch(ConstraintViolationException | DataIntegrityViolationException e){
             throw new Exception("Dados informados violam restrições no BD.");
         } catch (Exception e) {
+            e.printStackTrace();
             throw new Exception("Um erro ocorreu!");
         }
 	}
 
     public void deleteById(Long id) {
+        if (id == null || id < 1) {
+            throw new IllegalArgumentException("ID inválido!");
+        }
         super.deleteById(id);
     }
 
-    public Long update(BatchDTO objectDTO) throws Exception {
-        return super.update(objectDTO);
+    public Long update(BatchDTO newObjectDTO) throws Exception {
+
+        if(newObjectDTO.getId() == null || 
+            newObjectDTO.getId() < 1){
+            throw new Exception("ID inválido!");
+        }
+
+        //
+        if(newObjectDTO.getCode() == null ||
+            newObjectDTO.getCode().trim().isEmpty()){
+            throw new Exception("Parâmetro inválido"); 
+        }
+
+        //
+        if (newObjectDTO.getStakingDate() == null) {
+            throw new Exception("A data de estaquia não pode ser nula");
+        }
+        Date today = new Date();
+        if (newObjectDTO.getStakingDate().after(today)) {
+            throw new Exception("A data de estaquia não pode ser maior que a data atual");
+        }
+
+        //
+        if (newObjectDTO.getAmount() <= 0) {
+            throw new Exception("A quantidade deve ser um número inteiro positivo");
+        }
+
+        //
+        if(newObjectDTO.getGeneticMaterial() == null || 
+        newObjectDTO.getGeneticMaterial().getId() == null ||
+            newObjectDTO.getGeneticMaterial().getId() < 1){
+            throw new Exception("Material genético inválido");
+        }
+
+        try{
+            return super.update(newObjectDTO);
+        } catch(ConstraintViolationException | DataIntegrityViolationException e){
+            throw new Exception("Dados informados violam restrições no BD.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Um erro ocorreu!");
+        }
     }
 
 }

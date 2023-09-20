@@ -19,13 +19,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<String> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex) {
-        String errorMsg = "Erro de tipo de argumento! \n" + ex.getMessage();
+        String errorMsg = "Erro no tipo de argumento! \n" + ex.getMessage();
         return new ResponseEntity<>(errorMsg, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MissingPathVariableException.class)
     public ResponseEntity<String> handleMissingPathVariable(MissingPathVariableException ex) {
-        String errorMsg = "Variavel esperada na url! \n" + ex.getMessage();
+        String errorMsg = "Erro em variável esperada na url! \n" + ex.getMessage();
         return new ResponseEntity<>(errorMsg, HttpStatus.BAD_REQUEST);
     }
 }

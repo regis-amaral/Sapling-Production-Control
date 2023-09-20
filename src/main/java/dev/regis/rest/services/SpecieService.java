@@ -61,6 +61,7 @@ public class SpecieService{
         } catch(ConstraintViolationException | DataIntegrityViolationException e){
             throw new Exception("Dados informados violam restrições no BD.");
         } catch (Exception e) {
+            e.printStackTrace();
             throw new Exception("Um erro ocorreu!");
         }
     }
@@ -75,7 +76,7 @@ public class SpecieService{
     public Long update(SpecieDTO newObjectDTO) throws Exception {
         if(newObjectDTO.getId() == null || 
             newObjectDTO.getId() < 1){
-            throw new Exception("Objeto inválido!");
+            throw new Exception("ID inválido!");
         }
 
         if(newObjectDTO.getName() == null || 
@@ -94,6 +95,7 @@ public class SpecieService{
             }catch(ConstraintViolationException | DataIntegrityViolationException e){
                 throw new Exception("Dados informados violam restrições no BD.");
             } catch (Exception e) {
+                e.printStackTrace();
                 throw new Exception("Um erro ocorreu!");
             }
         } else {
