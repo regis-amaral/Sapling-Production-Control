@@ -48,15 +48,10 @@ abstract class AbstractService<ObjectORM, ObjectDTO> {
         if (EntityClass == null) {
             throw new Exception("Informe a classe da entidade a ser persistida. Ex. Specie.class");
         }
-        try {
-            ObjectORM entity = mapper.map(newObjectDTO, EntityClass);
-            ObjectORM created = repository.save(entity);
-            Method getIdMethod = created.getClass().getMethod("getId");
-            return (Long) getIdMethod.invoke(created);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new Exception("Um erro ocorreu!");
-        }
+        ObjectORM entity = mapper.map(newObjectDTO, EntityClass);
+        ObjectORM created = repository.save(entity);
+        Method getIdMethod = created.getClass().getMethod("getId");
+        return (Long) getIdMethod.invoke(created);
     }
 
     protected void deleteById(Long id) {

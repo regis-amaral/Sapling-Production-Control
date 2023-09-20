@@ -5,7 +5,7 @@
         sapling_selection_id integer,
         staking_date date not null,
         genetic_material_id bigint not null,
-        code varchar(255) not null,
+        code varchar(255) not null unique,
         primary key (id)
     );
 
