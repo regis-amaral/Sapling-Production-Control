@@ -35,8 +35,6 @@ public class SaplingSelectionController{
 			SaplingSelectionDTO outputDTO = service.findById(id);
 			return ResponseEntity.ok(outputDTO);
 		} catch (Exception e) {
-			// TODO tratar exceções
-			e.printStackTrace();
 			return ResponseEntity.notFound().build();
 		}
 	}
@@ -60,7 +58,6 @@ public class SaplingSelectionController{
         try {
             return ResponseEntity.ok(service.update(newObjectDTO));
         } catch (Exception e) {
-			e.printStackTrace(); // TODO tratar exeções
             return ResponseEntity.badRequest().body(e.getMessage());
         }
 	}
