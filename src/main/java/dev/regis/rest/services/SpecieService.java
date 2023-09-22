@@ -52,7 +52,7 @@ public class SpecieService{
 
         if(newObjectDTO.getName() == null || 
             newObjectDTO.getName().trim().isEmpty()){
-            throw new Exception("Parâmetro inválido"); 
+            throw new Exception("Parâmetro nome inválido"); 
         }
         try {
             Specie entity = mapper.map(newObjectDTO, Specie.class);

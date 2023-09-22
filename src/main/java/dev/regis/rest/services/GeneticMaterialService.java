@@ -3,8 +3,10 @@ package dev.regis.rest.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -30,14 +32,37 @@ public class GeneticMaterialService extends AbstractService <GeneticMaterial, Ge
 	}
 
 	public GeneticMaterialDTO findById(Long id) throws Exception {
+		if (id == null || id < 1) {
+            throw new IllegalArgumentException("ID inválido!");
+        }
 		return super.findById(id, GeneticMaterialDTO.class);
 	}
 
 	public Long create(GeneticMaterialDTO newGeneticMaterialDTO) throws Exception {
-		return super.create(newGeneticMaterialDTO, GeneticMaterial.class);
+		//
+		if(newGeneticMaterialDTO.getName() == null || 
+			newGeneticMaterialDTO.getName().trim().isEmpty()){
+			throw new Exception("Parâmetro nome inválido"); 
+		}
+		//
+        if(newGeneticMaterialDTO.getSpecie() == null || newGeneticMaterialDTO.getSpecie().getId() == null){
+            throw new Exception("Deve ser selecionada uma espécie");
+        }
+
+		try{
+			return super.create(newGeneticMaterialDTO, GeneticMaterial.class);
+		}catch(ConstraintViolationException | DataIntegrityViolationException e){
+            throw new Exception("Dados informados violam restrições no BD.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Um erro ocorreu!");
+        } 
 	}
 
 	public void deleteById(Long id) {
+		if (id == null || id < 1) {
+            throw new IllegalArgumentException("ID inválido!");
+        }
 		super.deleteById(id);
 	}
 
