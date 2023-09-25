@@ -10,7 +10,7 @@ public interface IService <ObjectORM, ObjectDTO>{
 
     public Long create(ObjectDTO objectDTO) throws Exception;
 
-    public void deleteById(Long id);
+    public void deleteById(Long id) throws Exception;
 
     public Long update(ObjectDTO objectDTO) throws Exception;
 }

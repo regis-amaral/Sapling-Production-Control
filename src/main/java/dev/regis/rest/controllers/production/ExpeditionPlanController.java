@@ -41,7 +41,11 @@ public class ExpeditionPlanController{
 
     @DeleteMapping(value = "/delete/{id}")
 	public void delete(@PathVariable Long id) {
-		service.deleteById(id);
+		try{
+			service.deleteById(id);
+		} catch (Exception e) {
+			//
+		}
 	}
 
     @PostMapping(value = "/create")

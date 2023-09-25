@@ -74,10 +74,7 @@ public class BatchService extends AbstractService <Batch, BatchDTO>{
         }
 	}
 
-    public void deleteById(Long id) {
-        if (id == null || id < 1) {
-            throw new IllegalArgumentException("ID inválido!");
-        }
+    public void deleteById(Long id) throws Exception{
         super.deleteById(id);
     }
 

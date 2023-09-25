@@ -36,7 +36,7 @@ public class ClientService extends AbstractService <Client, ClientDTO> {
             return create(objectDTO, Client.class);
         }
 
-        public void deleteById(Long id) {
+        public void deleteById(Long id) throws Exception{
             super.deleteById(id);
         }
         

@@ -65,7 +65,7 @@ public class ExpeditionPlanService extends AbstractService <ExpeditionPlan, Expe
         } 
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws Exception{
         super.deleteById(id);
     }
 

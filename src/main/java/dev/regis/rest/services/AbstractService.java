@@ -54,7 +54,7 @@ abstract class AbstractService<ObjectORM, ObjectDTO> {
         return (Long) getIdMethod.invoke(created);
     }
 
-    protected void deleteById(Long id) {
+    protected void deleteById(Long id) throws Exception{
         repository.deleteById(id);
     }
 

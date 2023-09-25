@@ -106,12 +106,9 @@ public class SaplingSelectionService extends AbstractService<SaplingSelection, S
         
     }
 
-    public void deleteById(Long id) {
-
-        if (id == null || id < 1) {
-            throw new IllegalArgumentException("ID inválido!");
-        }
-
+    @Transactional
+    public void deleteById(Long id) throws Exception{
+        
         Optional<SaplingSelection> optional = saplingSelectionRepository.findById(id);
         if (optional.isPresent()) {
 
@@ -123,7 +120,12 @@ public class SaplingSelectionService extends AbstractService<SaplingSelection, S
                 batchRepository.save(batch);
             }
         }
-        super.deleteById(id);
+        try{
+            super.deleteById(id);
+        } catch (Exception e) {
+            // para abortar a transação...
+            throw new RuntimeException(e.getMessage());
+        } 
     }
 
     @Transactional
