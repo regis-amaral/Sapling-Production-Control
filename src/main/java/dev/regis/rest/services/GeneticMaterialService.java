@@ -67,8 +67,27 @@ public class GeneticMaterialService extends AbstractService <GeneticMaterial, Ge
 	}
 
 	public Long update(GeneticMaterialDTO newGeneticMaterialDTO) throws Exception {
-
-		return super.update(newGeneticMaterialDTO);
+		//
+        if (newGeneticMaterialDTO.getId() == null || newGeneticMaterialDTO.getId() < 1) {
+            throw new IllegalArgumentException("ID inválido!");
+        }
+		//
+		if(newGeneticMaterialDTO.getName() == null || 
+			newGeneticMaterialDTO.getName().trim().isEmpty()){
+			throw new Exception("Parâmetro nome inválido"); 
+		}
+		//
+        if(newGeneticMaterialDTO.getSpecie() == null || newGeneticMaterialDTO.getSpecie().getId() == null){
+            throw new Exception("Deve ser selecionada uma espécie");
+        }
+		try{
+			return super.update(newGeneticMaterialDTO);
+		}catch(ConstraintViolationException | DataIntegrityViolationException e){
+            throw new Exception("Dados informados violam restrições no BD.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Um erro ocorreu!");
+        } 
 	}
 
 	/*
