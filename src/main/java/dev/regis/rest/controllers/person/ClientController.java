@@ -43,7 +43,7 @@ public class ClientController {
 	}
 
     @DeleteMapping(value = "/delete/{id}")
-	public void delete(@PathVariable Long id) {
+	public void delete(@PathVariable Long id) throws Exception {
 		service.deleteById(id);
 	}
 

@@ -44,7 +44,7 @@ public class SpecieService{
         if (optional.isPresent()) {
             return mapper.map(optional.get(), SpecieDTO.class);
         } else {
-            throw new Exception("Não encontrado");
+            throw new Exception("Espécie não encontrada");
         }
     }
 
