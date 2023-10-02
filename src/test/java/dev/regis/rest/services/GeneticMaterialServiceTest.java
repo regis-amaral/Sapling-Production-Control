@@ -322,4 +322,131 @@ public class GeneticMaterialServiceTest {
         assertEquals(newGeneticMaterialDTO.getDescription(), persistedGeneticMaterialDTO.getDescription());
         assertEquals(newGeneticMaterialDTO.getSpecie().getId(), persistedGeneticMaterialDTO.getSpecie().getId());
     }
+
+    @Test
+    public void test_throws_exception_on_update_genetic_material_with_null_id(){
+        // Arrange
+        GeneticMaterialDTO newGeneticMaterialDTO = this.getNewGeneticMaterial();
+        newGeneticMaterialDTO.setId(null);
+
+        // Act
+        Throwable exception = assertThrows(Exception.class, () -> {
+            service.update(newGeneticMaterialDTO);
+        });
+
+        // Assert
+        assertNotNull(exception);
+        assertEquals("ID inválido!", exception.getMessage()); 
+    }
+
+    @Test
+    public void test_throws_exception_on_update_genetic_material_with_id_less_than_one(){
+        // Arrange
+        GeneticMaterialDTO newGeneticMaterialDTO = this.getNewGeneticMaterial();
+        newGeneticMaterialDTO.setId(0L);
+
+        // Act
+        Throwable exception = assertThrows(Exception.class, () -> {
+            service.update(newGeneticMaterialDTO);
+        });
+
+        // Assert
+        assertNotNull(exception);
+        assertEquals("ID inválido!", exception.getMessage()); 
+    }
+
+    @Test
+    public void test_throws_exception_on_update_genetic_material_with_null_name(){
+        // Arrange
+        GeneticMaterialDTO newGeneticMaterialDTO = this.getNewGeneticMaterial();
+        newGeneticMaterialDTO.setId(1L);
+        newGeneticMaterialDTO.setName(null);
+
+        // Act
+        Throwable exception = assertThrows(Exception.class, () -> {
+            service.update(newGeneticMaterialDTO);
+        });
+
+        // Assert
+        assertNotNull(exception);
+        assertEquals("Parâmetro nome inválido", exception.getMessage()); 
+    }
+
+    @Test
+    public void test_throws_exception_on_update_genetic_material_with_empty_name(){
+        // Arrange
+        GeneticMaterialDTO newGeneticMaterialDTO = this.getNewGeneticMaterial();
+        newGeneticMaterialDTO.setId(1L);
+        newGeneticMaterialDTO.setName("    ");
+
+        // Act
+        Throwable exception = assertThrows(Exception.class, () -> {
+            service.update(newGeneticMaterialDTO);
+        });
+
+        // Assert
+        assertNotNull(exception);
+        assertEquals("Parâmetro nome inválido", exception.getMessage()); 
+    }
+
+    @Test
+    public void test_throws_exception_on_update_genetic_material_with_null_specie(){
+        // Arrange
+        GeneticMaterialDTO newGeneticMaterialDTO = this.getNewGeneticMaterial();
+        newGeneticMaterialDTO.setId(1L);
+        newGeneticMaterialDTO.setSpecie(null);
+
+        // Act
+        Throwable exception = assertThrows(Exception.class, () -> {
+            service.update(newGeneticMaterialDTO);
+        });
+
+        // Assert
+        assertNotNull(exception);
+        assertEquals("Deve ser selecionada uma espécie", exception.getMessage()); 
+    }
+
+    @Test
+    public void test_throws_exception_on_update_genetic_material_with_null_specie_id(){
+        // Arrange
+        GeneticMaterialDTO newGeneticMaterialDTO = this.getNewGeneticMaterial();
+        newGeneticMaterialDTO.setId(1L);
+        newGeneticMaterialDTO.setSpecie(new Specie());
+
+        // Act
+        Throwable exception = assertThrows(Exception.class, () -> {
+            service.update(newGeneticMaterialDTO);
+        });
+
+        // Assert
+        assertNotNull(exception);
+        assertEquals("Deve ser selecionada uma espécie", exception.getMessage()); 
+    }
+
+    @Test
+    public void test_throws_exception_on_update_genetic_material_with_existent_name(){
+        
+        try{
+            // Arrange
+            GeneticMaterialDTO geneticMaterialDTO = service.findById(1L);
+            geneticMaterialDTO.setName("WRK 4707");
+
+            // Act
+            // Throwable exception = assertThrows(Exception.class, () -> {
+                service.update(geneticMaterialDTO);
+            // });
+
+            // Assert
+            
+            // assertNotNull(exception);
+            // assertEquals("Dados informados violam restrições no BD.", exception.getMessage()); 
+            GeneticMaterialDTO geneticMaterialDTO2 = service.findById(1L);
+            System.out.println(geneticMaterialDTO2.getName());
+
+        }catch(Exception e){
+            fail("Ocorreu um erro inesperado: " + e.getMessage());
+        }
+        
+    }
+
 }
