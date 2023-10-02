@@ -33,7 +33,7 @@ public class GeneticMaterial {
     @JoinColumn(name = "specie_id", nullable = false)
     private Specie specie;
 
-    @OneToMany(mappedBy = "geneticMaterial")
+    @OneToMany(mappedBy = "geneticMaterial", fetch = FetchType.LAZY)
     @JsonIgnoreProperties("geneticMaterial")
     private List<Batch> listBatchs;
 
