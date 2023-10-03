@@ -21,7 +21,7 @@
 // @TestPropertySource(properties = {
 //     "spring.jpa.hibernate.ddl-auto=validate"
 // })
-// public class GeneticMaterialServiceTest {
+// public class GeneticMaterialServiceTestOld {
 
 //     @Autowired
 //     private GeneticMaterialService service;

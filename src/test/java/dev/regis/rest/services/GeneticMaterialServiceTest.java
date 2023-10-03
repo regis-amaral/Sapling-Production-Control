@@ -293,17 +293,17 @@ public class GeneticMaterialServiceTest {
         assertEquals(returnedId, oldGeneticMaterialDTO.getId());
 
         // Arrange
-
         // verificação adicional dos dados persistidos em banco
 
-        GeneticMaterialDTO persistedGeneticMaterialDTO = new GeneticMaterialDTO();
+        GeneticMaterialDTO persistedGeneticMaterialDTO = null;
         try{
-            persistedGeneticMaterialDTO = service.findById(1L);
+            persistedGeneticMaterialDTO = service.findById(oldGeneticMaterialDTO.getId());
         }catch(Exception e){
             fail("Ocorreu um erro inesperado: " + e.getMessage());
         }
 
         // Assert
+        assertNotNull(persistedGeneticMaterialDTO);
         assertEquals(newGeneticMaterialDTO.getId(), persistedGeneticMaterialDTO.getId());
         assertEquals(newGeneticMaterialDTO.getName(), persistedGeneticMaterialDTO.getName());
         assertEquals(newGeneticMaterialDTO.getDescription(), persistedGeneticMaterialDTO.getDescription());

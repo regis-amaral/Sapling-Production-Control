@@ -30,7 +30,7 @@
 // @DataJpaTest
 // @Sql("/h2/LibraryRepositorySpecie.sql")
 // @RunWith(MockitoJUnitRunner.class)
-// public class SpecieServiceTest {
+// public class SpecieServiceTestOld {
     
 //     @Mock
 //     SpecieRepository repository;

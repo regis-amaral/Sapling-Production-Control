@@ -38,7 +38,7 @@
 // import dev.regis.rest.repositories.SpecieRepository;
 
 // @RunWith(MockitoJUnitRunner.class)
-// public class SpecieServiceBTest {
+// public class SpecieServiceBTestOld {
     
 //     @Mock
 //     SpecieRepository repository;
