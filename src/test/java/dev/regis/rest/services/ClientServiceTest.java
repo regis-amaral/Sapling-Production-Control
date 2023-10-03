@@ -27,7 +27,7 @@ public class ClientServiceTest {
     private ClientService service;
 
     @Test
-    public void test_listAll_returns_list_of_client_dto() {
+    public void listAll_ShouldReturnListOfClients() {
         // Arrange
 
         // Act
@@ -45,7 +45,7 @@ public class ClientServiceTest {
     }
 
     @Test
-    public void test_find_existent_client(){
+    public void findById_ShouldReturnExistentClient(){
         // Arrange
         Long id = 1L;
         ClientDTO clientDTO = null;
@@ -64,7 +64,7 @@ public class ClientServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_find_client_with_null_id(){
+    public void findById_ShouldThrowExceptionOnFindClientWithNullId(){
         // Arrange
         Long id = null;
 
@@ -79,7 +79,7 @@ public class ClientServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_find_client_with_id_less_than_one(){
+    public void findById_ShouldThrowExceptionOnFindClientWithIdLessThanOne(){
         // Arrange
         Long id = 0L;
 
@@ -95,7 +95,7 @@ public class ClientServiceTest {
     }
 
     @Test
-    public void test_create_client(){
+    public void create_ShouldCreateClient(){
         // Arrange
         ClientDTO clientDTO = this.getNewClientDTO();
         
@@ -113,7 +113,7 @@ public class ClientServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_create_client_with_null_name() {
+    public void create_ShouldThrowExceptionOnCreateClientWithNullName() {
         // Arrange
         ClientDTO clientDTO = this.getNewClientDTO();
         clientDTO.setName(null);
@@ -129,7 +129,7 @@ public class ClientServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_create_client_with_empty_name() {
+    public void create_ShouldThrowExceptionOnCreateClientWithEmptyName() {
         // Arrange
         ClientDTO clientDTO = this.getNewClientDTO();
         clientDTO.setName("    ");
@@ -145,7 +145,7 @@ public class ClientServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_create_client_with_existent_name() {
+    public void create_ShouldThrowExceptionOnCreateClientWithExistentName() {
         // Arrange
         ClientDTO clientDTO = this.getNewClientDTO();
 
@@ -168,7 +168,7 @@ public class ClientServiceTest {
     }
 
     @Test
-    public void test_delete_client(){
+    public void delete_ShouldDeleteClient(){
         // Arrange
         ClientDTO clientDTO = this.getNewClientDTO();
         Long id = null;
@@ -192,7 +192,7 @@ public class ClientServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_delete_null_client_id(){
+    public void delete_ShouldThrowExceptionOnDeleteNullClientId(){
         // Arrange
         Long id = null;
 
@@ -206,7 +206,7 @@ public class ClientServiceTest {
     }
 
     @Test
-    public void test_update_client(){
+    public void update_ShouldUpdateClient(){
         // Arrange
 
         // Busca uma espécie existente
@@ -251,7 +251,7 @@ public class ClientServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_update_client_with_id_less_than_one(){
+    public void update_ShouldThrowExceptionOnUpdateClientWithIdLessThanOne(){
         // Arrange
         ClientDTO newClientDTO = this.getNewClientDTO();
         newClientDTO.setId(0L);
@@ -267,7 +267,7 @@ public class ClientServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_update_client_with_null_id(){
+    public void update_ShouldThrowExceptionOnUpdateClientWithNullId(){
         // Arrange
         ClientDTO newClientDTO = this.getNewClientDTO();
         newClientDTO.setId(null);
@@ -283,7 +283,7 @@ public class ClientServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_update_client_with_null_name(){
+    public void update_ShouldThrowExceptionOnUpdateClientWithNullName(){
         // Arrange
         ClientDTO newClientDTO = this.getNewClientDTO();
         newClientDTO.setId(1L);
@@ -300,7 +300,7 @@ public class ClientServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_update_client_with_empty_name(){
+    public void update_ShouldThrowExceptionOnUpdateClientWithEmptyName(){
         // Arrange
         ClientDTO newClientDTO = this.getNewClientDTO();
         newClientDTO.setId(1L);

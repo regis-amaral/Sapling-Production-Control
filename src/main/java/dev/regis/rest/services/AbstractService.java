@@ -1,7 +1,6 @@
 package dev.regis.rest.services;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,19 +22,9 @@ abstract class AbstractService<ObjectORM, ObjectDTO> {
      * O tratamento de conversão ORM para DTO deve ser feito no construtor das entidades.
      */
     protected List<ObjectDTO> listAll(Class<ObjectDTO> ObjectDTOClass) {
-
-        List<ObjectORM> objects = repository.findAll();
-        List<ObjectDTO> dtos = new ArrayList<>();
-        
-        for (ObjectORM object : objects) {
-            dtos.add(mapper.map(object, ObjectDTOClass));
-        }
-        
-        return dtos;
-    
-        // return repository.findAll().stream()
-        //     .map(batch -> mapper.map(batch, ObjectDTOClass))
-        //     .collect(Collectors.toList());
+        return repository.findAll().stream()
+            .map(batch -> mapper.map(batch, ObjectDTOClass))
+            .collect(Collectors.toList());
     }
 
     /**

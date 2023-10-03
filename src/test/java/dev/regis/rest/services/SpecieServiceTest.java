@@ -28,7 +28,7 @@ public class SpecieServiceTest {
     private SpecieService service;
 
     @Test
-    public void test_listAll_returns_list_of_specie_dto() {
+    public void listAll_ShouldReturnListOfSpecies() {
         // Arrange
 
         // Act
@@ -46,7 +46,7 @@ public class SpecieServiceTest {
     }
 
     @Test
-    public void test_find_existent_specie(){
+    public void findById_ShouldReturnExistentSpecie(){
         // Arrange
         Long id = 1L;
         SpecieDTO specieDTO = null;
@@ -65,7 +65,7 @@ public class SpecieServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_find_specie_with_null_id(){
+    public void findById_ShouldThrowExceptionOnFindSpecieWithNullId(){
         // Arrange
         Long id = null;
 
@@ -80,7 +80,7 @@ public class SpecieServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_find_specie_with_id_less_than_one(){
+    public void findById_ShouldThrowExceptionOnFindSpecieWithIdLessThanOne(){
         // Arrange
         Long id = 0L;
 
@@ -96,7 +96,7 @@ public class SpecieServiceTest {
     }
 
     @Test
-    public void test_create_specie(){
+    public void create_ShouldCreateSpecie(){
         // Arrange
         SpecieDTO specieDTO = this.getNewSpecieDTO();
         
@@ -114,7 +114,7 @@ public class SpecieServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_create_specie_with_null_name() {
+    public void create_ShouldThrowExceptionOnCreateSpecieWithNullName() {
         // Arrange
         SpecieDTO specieDTO = this.getNewSpecieDTO();
         specieDTO.setName(null);
@@ -130,7 +130,7 @@ public class SpecieServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_create_specie_with_empty_name() {
+    public void create_ShouldThrowExceptionOnCreateSpecieWithEmptyName() {
         // Arrange
         SpecieDTO specieDTO = this.getNewSpecieDTO();
         specieDTO.setName("    ");
@@ -146,7 +146,7 @@ public class SpecieServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_create_specie_with_existent_name() {
+    public void create_ShouldThrowExceptionOnCreateSpecieWithExistentName() {
         // Arrange
         SpecieDTO specieDTO = this.getNewSpecieDTO();
 
@@ -169,7 +169,7 @@ public class SpecieServiceTest {
     }
 
     @Test
-    public void test_delete_specie(){
+    public void delete_ShouldDeleteSpecie(){
         // Arrange
         SpecieDTO specieDTO = this.getNewSpecieDTO();
         Long id = null;
@@ -193,7 +193,7 @@ public class SpecieServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_delete_null_specie_id(){
+    public void delete_ShouldThrowExceptionOnDeleteNullSpecieId(){
         // Arrange
         Long id = null;
 
@@ -207,7 +207,7 @@ public class SpecieServiceTest {
     }
 
     @Test
-    public void test_update_specie(){
+    public void update_ShouldUpdateSpecie(){
         // Arrange
 
         // Busca uma espécie existente
@@ -252,7 +252,7 @@ public class SpecieServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_update_specie_with_id_less_than_one(){
+    public void update_ShouldThrowExceptionOnUpdateSpecieWithIdLessThanOne(){
         // Arrange
         SpecieDTO newSpecieDTO = this.getNewSpecieDTO();
         newSpecieDTO.setId(0L);
@@ -268,7 +268,7 @@ public class SpecieServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_update_specie_with_null_id(){
+    public void update_ShouldThrowExceptionOnUpdateSpecieWithNullId(){
         // Arrange
         SpecieDTO newSpecieDTO = this.getNewSpecieDTO();
         newSpecieDTO.setId(null);
@@ -284,7 +284,7 @@ public class SpecieServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_update_specie_with_null_name(){
+    public void update_ShouldThrowExceptionOnUpdateSpecieWithNullName(){
         // Arrange
         SpecieDTO newSpecieDTO = this.getNewSpecieDTO();
         newSpecieDTO.setId(1L);
@@ -301,7 +301,7 @@ public class SpecieServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_update_specie_with_empty_name(){
+    public void update_ShouldThrowExceptionOnUpdateSpecieWithEmptyName(){
         // Arrange
         SpecieDTO newSpecieDTO = this.getNewSpecieDTO();
         newSpecieDTO.setId(1L);

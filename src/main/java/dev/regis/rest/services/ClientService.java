@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import dev.regis.rest.models.person.Client;
 import dev.regis.rest.models.person.dtos.ClientDTO;
-import dev.regis.rest.models.production.GeneticMaterial;
 import dev.regis.rest.repositories.ClientRepository;
 import dev.regis.rest.services.interfaces.IService;
 
