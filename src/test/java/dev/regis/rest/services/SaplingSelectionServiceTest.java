@@ -6,23 +6,33 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.Mockito.when;
 
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import dev.regis.rest.models.production.Batch;
+import dev.regis.rest.models.production.SaplingSelection;
 import dev.regis.rest.models.production.dtos.BatchDTO;
 import dev.regis.rest.models.production.dtos.ExpeditionPlanDTO;
 import dev.regis.rest.models.production.dtos.SaplingSelectionDTO;
+import dev.regis.rest.repositories.SaplingSelectionRepository;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -31,6 +41,23 @@ public class SaplingSelectionServiceTest {
     
     @Autowired
     private SaplingSelectionService service;
+
+    @Autowired
+    private BatchService batchService;
+
+    @Autowired
+    ModelMapper mapper;
+
+    @Mock
+    private SaplingSelectionRepository repositoryMocked;
+    
+    @InjectMocks
+    private SaplingSelectionService serviceMock;
+
+    @Before
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
 
     @Test
     public void listAll_ShouldReturnListOfSaplingSelecteds() {
@@ -218,11 +245,35 @@ public class SaplingSelectionServiceTest {
     }
 
     @Test
+    public void create_ShouldThrowExceptionOnCreateSaplingSelectionWithNullBatchId(){
+        // Arrange
+        SaplingSelectionDTO saplingSelectionDTO = this.getNewSaplingSelectionDTO();
+        saplingSelectionDTO.getListBatchs().get(0).setId(null);
+
+        // Act
+        Throwable exception = assertThrows(Exception.class, () -> {
+            service.create(saplingSelectionDTO);
+        });
+
+        // Assert
+        assertNotNull(exception);
+        assertEquals("ID não informado para o lote selecionado.", exception.getMessage());  
+    }
+
+    @Test
     public void create_ShouldThrowExceptionOnCreateSaplingSelectionWithExistentSaplingSelectionInOtherBatch(){
         // Arrange
         SaplingSelectionDTO saplingSelectionDTO = this.getNewSaplingSelectionDTO();
-        List<Batch> batchs = saplingSelectionDTO.getListBatchs();
-        batchs.forEach(batch -> batch.setId(null));
+
+        BatchDTO batchA = null;
+        try{
+            batchA = batchService.findById(1L);
+        }catch(Exception e){
+            fail("Ocorreu um erro inesperado: " + e.getMessage());
+        }
+        
+
+        List<Batch> batchs = List.of(mapper.map(batchA, Batch.class));
         saplingSelectionDTO.setListBatchs(batchs);
         
         // Act
@@ -232,6 +283,79 @@ public class SaplingSelectionServiceTest {
 
         // Assert
         assertNotNull(exception);
-        assertEquals("ID não informado para o lote selecionado.", exception.getMessage());  
+        assertEquals("Já foi cadastrada uma seleção para o lote " + batchA.getCode(), exception.getMessage());  
+    }
+
+    @Test
+    public void create_ShouldThrowExceptionOnCreateSaplingSelectionWithNonexistentBatch(){
+        // Arrange
+        SaplingSelectionDTO saplingSelectionDTO = this.getNewSaplingSelectionDTO();
+        saplingSelectionDTO.getListBatchs().get(0).setId(1000L);
+
+        // Act
+        Throwable exception = assertThrows(Exception.class, () -> {
+            service.create(saplingSelectionDTO);
+        });
+
+        // Assert
+        assertNotNull(exception);
+        assertEquals("Não existe o lote com o ID informado.", exception.getMessage());  
+    }
+
+    @Test
+    public void delete_ShouldDeleteSaplingSelection(){
+        // Arrange
+        Long id = 1L;
+       
+        // Act
+        try{
+            service.deleteById(id);
+        }catch(Exception e){
+            fail("Ocorreu um erro inesperado: " + e.getMessage());
+            // fail("Falhou ao deletar uma Seleção de Mudas existente.");
+        }
+        // Assert
+        // Se o método chegou até aqui sem lançar uma exceção então ele foi bem sucedido
+    }
+
+    @Test
+    public void update_ShouldThrowExceptionOnUpdateSaplingSelectionWithNullId(){
+        // Arrange
+        SaplingSelectionDTO saplingSelection = this.getNewSaplingSelectionDTO();
+        saplingSelection.setId(null);
+
+        // Act
+        Throwable exception = assertThrows(Exception.class, () -> {
+            service.update(saplingSelection);
+        });
+
+        // Assert
+        assertNotNull(exception);
+        assertEquals("ID inválido!", exception.getMessage());
+    }
+
+    @Test
+    public void update_ShouldThrowExceptionOnUpdateSaplingSelectionWithIdLessThanOne(){
+        // Arrange
+        SaplingSelectionDTO saplingSelection = this.getNewSaplingSelectionDTO();
+        saplingSelection.setId(0L);
+
+        // Act
+        Throwable exception = assertThrows(Exception.class, () -> {
+            service.update(saplingSelection);
+        });
+
+        // Assert
+        assertNotNull(exception);
+        assertEquals("ID inválido!", exception.getMessage());
+    }
+
+    @Test
+    public void update_ShouldUpdateSaplingSelection(){
+        // Arrange
+
+        // Act
+
+        // Assert
     }
 }

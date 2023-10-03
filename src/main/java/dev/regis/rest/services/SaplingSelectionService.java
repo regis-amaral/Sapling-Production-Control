@@ -75,29 +75,26 @@ public class SaplingSelectionService extends AbstractService<SaplingSelection, S
             Long id = super.create(objectDTO, SaplingSelection.class);
             SaplingSelection saplingSelection = mapper.map(objectDTO, SaplingSelection.class);
             saplingSelection.setId(id);
-            if(saplingSelection.getListBatchs() != null && saplingSelection.getListBatchs().size() > 0){
-                for (Batch bt : saplingSelection.getListBatchs()) {
-                    //
-                    if(bt.getId() == null){
-                        throw new RuntimeException("ID não informado para o lote selecionado.");
-                    }
-                    //
-                    Optional<Batch> optional = batchRepository.findById(bt.getId());
-                    if (optional.isPresent()) {
-                        Batch batch = optional.get();
-                        //verifica se o Batch já foi relacionado a outro SaplingSelection
-                        if(batch.getSaplingSelection() != null){
-                            throw new RuntimeException("Já foi cadastrada uma seleção para o lote " + batch.getCode());
-                        }
-                        batch.setSaplingSelection(saplingSelection);
-                        batchRepository.save(batch);
-                    } else {
-                        throw new RuntimeException("Não existe o lote com o ID informado.");
-                    }
+            for (Batch bt : saplingSelection.getListBatchs()) {
+                //
+                if(bt.getId() == null){
+                    throw new RuntimeException("ID não informado para o lote selecionado.");
                 }
-            }else{
-                throw new RuntimeException("Nenhum lote informado na requisição");
+                //
+                Optional<Batch> optional = batchRepository.findById(bt.getId());
+                if (optional.isPresent()) {
+                    Batch batch = optional.get();
+                    //verifica se o Batch já foi relacionado a outro SaplingSelection
+                    if(batch.getSaplingSelection() != null){
+                        throw new RuntimeException("Já foi cadastrada uma seleção para o lote " + batch.getCode());
+                    }
+                    batch.setSaplingSelection(saplingSelection);
+                    batchRepository.save(batch);
+                } else {
+                    throw new RuntimeException("Não existe o lote com o ID informado.");
+                }
             }
+
             return id;
         } catch(ConstraintViolationException | DataIntegrityViolationException e){
             throw new Exception("Dados informados violam restrições no BD.");
@@ -112,7 +109,7 @@ public class SaplingSelectionService extends AbstractService<SaplingSelection, S
     }
 
     @Transactional
-    public void deleteById(Long id) throws Exception{
+    public void deleteById(Long id) throws RuntimeException{
         
         Optional<SaplingSelection> optional = saplingSelectionRepository.findById(id);
         if (optional.isPresent()) {

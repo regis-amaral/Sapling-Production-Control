@@ -243,7 +243,7 @@ public class GeneticMaterialServiceTest {
         }
 
         // Assert
-        // Se o método chegou até aqui sem lançar uma exeção então ele foi bem sucedido
+        // Se o método chegou até aqui sem lançar uma exceção então ele foi bem sucedido
     }
 
     @Test
