@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import dev.regis.rest.models.production.Batch;
 import dev.regis.rest.models.production.SaplingSelection;
+import dev.regis.rest.models.production.dtos.BatchDTO;
 import dev.regis.rest.models.production.dtos.SaplingSelectionDTO;
 import dev.regis.rest.repositories.BatchRepository;
 import dev.regis.rest.repositories.SaplingSelectionRepository;
@@ -42,9 +43,7 @@ public class SaplingSelectionService extends AbstractService<SaplingSelection, S
         return super.findById(id, SaplingSelectionDTO.class);
     }
 
-    @Transactional
-    public Long create(SaplingSelectionDTO objectDTO) throws Exception {
-
+    private void validateSaplingSelectionDTO(SaplingSelectionDTO objectDTO)throws Exception {
         //
         if (objectDTO.getSelectionDate() == null) {
             throw new Exception("A data de seleção não pode ser nula");
@@ -55,15 +54,21 @@ public class SaplingSelectionService extends AbstractService<SaplingSelection, S
         }
 
         //
-        if(objectDTO.getTotalRootedSaplings() <= 0){
+        if(objectDTO.getTotalRootedSaplings() < 1){
             System.out.println(objectDTO.getTotalRootedSaplings());
-            throw new Exception("O total de mudas selecionadas deve ser um número inteiro positivo");
+            throw new Exception("O total de mudas selecionadas deve ser um número maior que zero");
         }
 
         //
         if(objectDTO.getListBatchs() == null || objectDTO.getListBatchs().size() == 0){
             throw new Exception("Deve ser selecionado ao menos um lote utilizado na seleção");
         }
+    }
+
+    @Transactional
+    public Long create(SaplingSelectionDTO objectDTO) throws Exception {
+
+        this.validateSaplingSelectionDTO(objectDTO);
 
         // Transação: salvar o SaplingSelection e atualizar os Batchs com o id retornado
         try {
@@ -136,25 +141,7 @@ public class SaplingSelectionService extends AbstractService<SaplingSelection, S
             throw new IllegalArgumentException("ID inválido!");
         }
 
-        //
-        if (objectDTO.getSelectionDate() == null) {
-            throw new Exception("A data de seleção não pode ser nula");
-        }
-        Date today = new Date();
-        if (objectDTO.getSelectionDate().after(today)) {
-            throw new Exception("A data de seleção não pode ser maior que a data atual");
-        }
-
-        //
-        if(objectDTO.getTotalRootedSaplings() <= 0){
-            System.out.println(objectDTO.getTotalRootedSaplings());
-            throw new Exception("O total de mudas selecionadas deve ser um número inteiro positivo");
-        }
-
-        //
-        if(objectDTO.getListBatchs() == null || objectDTO.getListBatchs().size() == 0){
-            throw new Exception("Deve ser selecionado ao menos um lote utilizado na seleção");
-        }
+        this.validateSaplingSelectionDTO(objectDTO);
 
         // Transação: salvar o SaplingSelection e atualizar os Batchs com o id retornado
         try {

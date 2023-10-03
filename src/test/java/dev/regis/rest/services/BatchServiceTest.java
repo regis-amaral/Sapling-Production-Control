@@ -123,7 +123,7 @@ public class BatchServiceTest {
     }
 
     @Test
-    public void update_ShouldThrowExceptionOnUpdateBatchWithNullCode(){
+    public void create_ShouldThrowExceptionOnCreateBatchWithNullCode(){
         // Arrange
         BatchDTO batchDTO = this.getNewBatchDTO();
         batchDTO.setCode(null);
@@ -139,7 +139,7 @@ public class BatchServiceTest {
     }
 
     @Test
-    public void update_ShouldThrowExceptionOnUpdateBatchWithEmptyCode(){
+    public void create_ShouldThrowExceptionOnCreateBatchWithEmptyCode(){
         // Arrange
         BatchDTO batchDTO = this.getNewBatchDTO();
         batchDTO.setCode("    ");
@@ -155,7 +155,7 @@ public class BatchServiceTest {
     }
 
     @Test
-    public void update_ShouldThrowExceptionOnUpdateBatchWithNullStakingDate(){
+    public void create_ShouldThrowExceptionOnCreateBatchWithNullStakingDate(){
         // Arrange
         BatchDTO batchDTO = this.getNewBatchDTO();
         batchDTO.setStakingDate(null);
@@ -171,7 +171,7 @@ public class BatchServiceTest {
     }
 
     @Test
-    public void update_ShouldThrowExceptionOnUpdateBatchWithStakingDateGreaterThanNow(){
+    public void create_ShouldThrowExceptionOnCreateBatchWithStakingDateGreaterThanNow(){
         // Arrange
         BatchDTO batchDTO = this.getNewBatchDTO();
 
@@ -194,7 +194,7 @@ public class BatchServiceTest {
     }
 
     @Test
-    public void findById_ShouldThrowExceptionOnFindBatchWithAmountLessThanOne(){
+    public void create_ShouldThrowExceptionOnCreateBatchWithAmountLessThanOne(){
         // Arrange
         BatchDTO batchDTO = this.getNewBatchDTO();
         batchDTO.setAmount(0);
@@ -211,7 +211,7 @@ public class BatchServiceTest {
     }
 
     @Test
-    public void findById_ShouldThrowExceptionOnFindBatchWithNullGeneticMaterial(){
+    public void create_ShouldThrowExceptionOnCreateBatchWithNullGeneticMaterial(){
         // Arrange
         BatchDTO batchDTO = this.getNewBatchDTO();
         batchDTO.setGeneticMaterial(null);
@@ -228,7 +228,7 @@ public class BatchServiceTest {
     }
 
     @Test
-    public void findById_ShouldThrowExceptionOnFindBatchWithNullGeneticMaterialId(){
+    public void create_ShouldThrowExceptionOnCreateBatchWithNullGeneticMaterialId(){
         // Arrange
         BatchDTO batchDTO = this.getNewBatchDTO();
         batchDTO.setGeneticMaterial(new GeneticMaterial());
@@ -245,7 +245,7 @@ public class BatchServiceTest {
     }
 
     @Test
-    public void findById_ShouldThrowExceptionOnFindBatchWithGeneticMaterialIdLessThanOne(){
+    public void create_ShouldThrowExceptionOnCreateBatchWithGeneticMaterialIdLessThanOne(){
         // Arrange
         BatchDTO batchDTO = this.getNewBatchDTO();
         GeneticMaterial geneticMaterial = new GeneticMaterial();

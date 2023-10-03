@@ -1,3 +1,4 @@
+package dev.regis.rest.TRASH;
 // package dev.regis.rest.services;
 
 // import static org.junit.Assert.assertEquals;

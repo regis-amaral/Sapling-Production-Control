@@ -19,9 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import dev.regis.rest.models.person.Client;
 import dev.regis.rest.models.production.GeneticMaterial;
-import dev.regis.rest.models.production.Specie;
 import dev.regis.rest.models.production.dtos.ExpeditionPlanDTO;
-import dev.regis.rest.models.production.dtos.GeneticMaterialDTO;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
