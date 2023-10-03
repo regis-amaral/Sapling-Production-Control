@@ -216,4 +216,22 @@ public class SaplingSelectionServiceTest {
         assertNotNull(exception);
         assertEquals("Deve ser selecionado ao menos um lote utilizado na seleção", exception.getMessage());  
     }
+
+    @Test
+    public void create_ShouldThrowExceptionOnCreateSaplingSelectionWithExistentSaplingSelectionInOtherBatch(){
+        // Arrange
+        SaplingSelectionDTO saplingSelectionDTO = this.getNewSaplingSelectionDTO();
+        List<Batch> batchs = saplingSelectionDTO.getListBatchs();
+        batchs.forEach(batch -> batch.setId(null));
+        saplingSelectionDTO.setListBatchs(batchs);
+        
+        // Act
+        Throwable exception = assertThrows(Exception.class, () -> {
+            service.create(saplingSelectionDTO);
+        });
+
+        // Assert
+        assertNotNull(exception);
+        assertEquals("ID não informado para o lote selecionado.", exception.getMessage());  
+    }
 }
