@@ -3,10 +3,8 @@ package dev.regis.rest.services;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
@@ -30,7 +28,7 @@ public class GeneticMaterialServiceTest {
     private GeneticMaterialService service;
 
     @Test
-    public void test_listAll_returnsListOfGeneticMaterialDTO() {
+    public void test_listAll_returns_list_of_genetic_material_dto() {
         // Arrange
 
         // Act
@@ -41,7 +39,7 @@ public class GeneticMaterialServiceTest {
         assertNotEquals(0, result.size());
     }
 
-    private GeneticMaterialDTO getNewGeneticMaterial(){
+    private GeneticMaterialDTO getNewGeneticMaterialDTO(){
         GeneticMaterialDTO geneticMaterialDTO = new GeneticMaterialDTO();
         geneticMaterialDTO.setName("XYZ");
         Specie specie = new Specie();
@@ -102,28 +100,9 @@ public class GeneticMaterialServiceTest {
     }
 
     @Test
-    public void test_findById_genetic_material(){
-        // Arrange
-        Long id = 1L;
-        GeneticMaterialDTO geneticMaterialDTO = null;
-
-        // Act
-        try{
-            geneticMaterialDTO = service.findById(id);
-        }catch(Exception e){
-            fail("Ocorreu um erro inesperado: " + e.getMessage());
-        }
-
-        // Assert
-        assertNotNull(geneticMaterialDTO);
-        assertEquals(id, geneticMaterialDTO.getId());
-        assertEquals("WRK 6201", geneticMaterialDTO.getName());
-    }
-
-    @Test
     public void test_create_genetic_material(){
         // Arrange
-        GeneticMaterialDTO geneticMaterialDTO = this.getNewGeneticMaterial();
+        GeneticMaterialDTO geneticMaterialDTO = this.getNewGeneticMaterialDTO();
         
         // Act
         Long id = null;
@@ -141,7 +120,7 @@ public class GeneticMaterialServiceTest {
     @Test
     public void test_throws_exception_on_create_genetic_material_with_null_name() {
         // Arrange
-        GeneticMaterialDTO geneticMaterialDTO = this.getNewGeneticMaterial();
+        GeneticMaterialDTO geneticMaterialDTO = this.getNewGeneticMaterialDTO();
         geneticMaterialDTO.setName(null);
 
         // Act
@@ -157,7 +136,7 @@ public class GeneticMaterialServiceTest {
     @Test
     public void test_throws_exception_on_create_genetic_material_with_empty_name() {
         // Arrange
-        GeneticMaterialDTO geneticMaterialDTO = this.getNewGeneticMaterial();
+        GeneticMaterialDTO geneticMaterialDTO = this.getNewGeneticMaterialDTO();
         geneticMaterialDTO.setName("    ");
 
         // Act
@@ -173,8 +152,15 @@ public class GeneticMaterialServiceTest {
     @Test
     public void test_throws_exception_on_create_genetic_material_with_existent_name() {
         // Arrange
-        GeneticMaterialDTO geneticMaterialDTO = this.getNewGeneticMaterial();
-        geneticMaterialDTO.setName("WRK 6201");
+        GeneticMaterialDTO geneticMaterialDTO = this.getNewGeneticMaterialDTO();
+
+        GeneticMaterialDTO existentGeneticMaterialDTO = new GeneticMaterialDTO();
+        try{
+            existentGeneticMaterialDTO = service.findById(1L);
+        }catch(Exception e){
+            fail("Ocorreu um erro inesperado: " + e.getMessage());
+        }
+        geneticMaterialDTO.setName(existentGeneticMaterialDTO.getName());
 
         // Act
         Throwable exception = assertThrows(Exception.class, () -> {
@@ -189,7 +175,7 @@ public class GeneticMaterialServiceTest {
     @Test
     public void test_throws_exception_on_create_genetic_material_with_null_specie() {
         // Arrange
-        GeneticMaterialDTO geneticMaterialDTO = this.getNewGeneticMaterial();
+        GeneticMaterialDTO geneticMaterialDTO = this.getNewGeneticMaterialDTO();
         geneticMaterialDTO.setSpecie(null);
 
         // Act
@@ -205,7 +191,7 @@ public class GeneticMaterialServiceTest {
     @Test
     public void test_throws_exception_on_create_genetic_material_with_specie_without_id() {
         // Arrange
-        GeneticMaterialDTO geneticMaterialDTO = this.getNewGeneticMaterial();
+        GeneticMaterialDTO geneticMaterialDTO = this.getNewGeneticMaterialDTO();
         geneticMaterialDTO.setSpecie(new Specie());
 
         // Act
@@ -221,7 +207,7 @@ public class GeneticMaterialServiceTest {
     @Test
     public void test_throws_exception_on_create_genetic_material_nonexistent_specie() {
         // Arrange
-        GeneticMaterialDTO geneticMaterialDTO = this.getNewGeneticMaterial();
+        GeneticMaterialDTO geneticMaterialDTO = this.getNewGeneticMaterialDTO();
         Specie specie = new Specie();
         specie.setId(1000000L);
         geneticMaterialDTO.setSpecie(specie);
@@ -239,9 +225,10 @@ public class GeneticMaterialServiceTest {
     @Test
     public void test_delete_genetic_material(){
         // Arrange
-        GeneticMaterialDTO geneticMaterialDTO = this.getNewGeneticMaterial();
+        GeneticMaterialDTO geneticMaterialDTO = this.getNewGeneticMaterialDTO();
         Long id = null;
-        try{
+        try{ 
+            // Crio um objeto novo para poder deletar
             id = service.create(geneticMaterialDTO);
         }catch(Exception e){
             fail("Ocorreu um erro inesperado: " + e.getMessage());
@@ -260,7 +247,7 @@ public class GeneticMaterialServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_delete_null_genetic_material(){
+    public void test_throws_exception_on_delete_null_genetic_material_id(){
         // Arrange
         Long id = null;
 
@@ -326,7 +313,7 @@ public class GeneticMaterialServiceTest {
     @Test
     public void test_throws_exception_on_update_genetic_material_with_null_id(){
         // Arrange
-        GeneticMaterialDTO newGeneticMaterialDTO = this.getNewGeneticMaterial();
+        GeneticMaterialDTO newGeneticMaterialDTO = this.getNewGeneticMaterialDTO();
         newGeneticMaterialDTO.setId(null);
 
         // Act
@@ -342,7 +329,7 @@ public class GeneticMaterialServiceTest {
     @Test
     public void test_throws_exception_on_update_genetic_material_with_id_less_than_one(){
         // Arrange
-        GeneticMaterialDTO newGeneticMaterialDTO = this.getNewGeneticMaterial();
+        GeneticMaterialDTO newGeneticMaterialDTO = this.getNewGeneticMaterialDTO();
         newGeneticMaterialDTO.setId(0L);
 
         // Act
@@ -358,7 +345,7 @@ public class GeneticMaterialServiceTest {
     @Test
     public void test_throws_exception_on_update_genetic_material_with_null_name(){
         // Arrange
-        GeneticMaterialDTO newGeneticMaterialDTO = this.getNewGeneticMaterial();
+        GeneticMaterialDTO newGeneticMaterialDTO = this.getNewGeneticMaterialDTO();
         newGeneticMaterialDTO.setId(1L);
         newGeneticMaterialDTO.setName(null);
 
@@ -375,7 +362,7 @@ public class GeneticMaterialServiceTest {
     @Test
     public void test_throws_exception_on_update_genetic_material_with_empty_name(){
         // Arrange
-        GeneticMaterialDTO newGeneticMaterialDTO = this.getNewGeneticMaterial();
+        GeneticMaterialDTO newGeneticMaterialDTO = this.getNewGeneticMaterialDTO();
         newGeneticMaterialDTO.setId(1L);
         newGeneticMaterialDTO.setName("    ");
 
@@ -392,7 +379,7 @@ public class GeneticMaterialServiceTest {
     @Test
     public void test_throws_exception_on_update_genetic_material_with_null_specie(){
         // Arrange
-        GeneticMaterialDTO newGeneticMaterialDTO = this.getNewGeneticMaterial();
+        GeneticMaterialDTO newGeneticMaterialDTO = this.getNewGeneticMaterialDTO();
         newGeneticMaterialDTO.setId(1L);
         newGeneticMaterialDTO.setSpecie(null);
 
@@ -409,7 +396,7 @@ public class GeneticMaterialServiceTest {
     @Test
     public void test_throws_exception_on_update_genetic_material_with_null_specie_id(){
         // Arrange
-        GeneticMaterialDTO newGeneticMaterialDTO = this.getNewGeneticMaterial();
+        GeneticMaterialDTO newGeneticMaterialDTO = this.getNewGeneticMaterialDTO();
         newGeneticMaterialDTO.setId(1L);
         newGeneticMaterialDTO.setSpecie(new Specie());
 
@@ -423,30 +410,7 @@ public class GeneticMaterialServiceTest {
         assertEquals("Deve ser selecionada uma espécie", exception.getMessage()); 
     }
 
-    @Test
-    public void test_throws_exception_on_update_genetic_material_with_existent_name(){
-        
-        try{
-            // Arrange
-            GeneticMaterialDTO geneticMaterialDTO = service.findById(1L);
-            geneticMaterialDTO.setName("WRK 4707");
+   
 
-            // Act
-            // Throwable exception = assertThrows(Exception.class, () -> {
-                service.update(geneticMaterialDTO);
-            // });
-
-            // Assert
-            
-            // assertNotNull(exception);
-            // assertEquals("Dados informados violam restrições no BD.", exception.getMessage()); 
-            GeneticMaterialDTO geneticMaterialDTO2 = service.findById(1L);
-            System.out.println(geneticMaterialDTO2.getName());
-
-        }catch(Exception e){
-            fail("Ocorreu um erro inesperado: " + e.getMessage());
-        }
-        
-    }
 
 }

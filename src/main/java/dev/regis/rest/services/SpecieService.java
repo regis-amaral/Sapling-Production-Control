@@ -1,6 +1,5 @@
 package dev.regis.rest.services;
 
-import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -66,10 +65,7 @@ public class SpecieService{
         }
     }
 
-    public void deleteById(Long id) {
-        if (id == null || id < 1) {
-            throw new IllegalArgumentException("ID inválido!");
-        }
+    public void deleteById(Long id) throws Exception{
         repository.deleteById(id);
     }
 
@@ -81,7 +77,7 @@ public class SpecieService{
 
         if(newObjectDTO.getName() == null || 
         newObjectDTO.getName().trim().isEmpty()){
-            throw new Exception("Parâmetro inválido"); 
+            throw new Exception("Parâmetro nome inválido"); 
         }
 
         Long id = newObjectDTO.getId();

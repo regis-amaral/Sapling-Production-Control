@@ -8,9 +8,7 @@ import dev.regis.rest.models.production.ExpeditionPlan;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
-import lombok.Data;
 
-@Data
 @Entity
 public class Client extends Person {
 

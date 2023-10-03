@@ -1,8 +1,8 @@
 package dev.regis.rest.services;
 
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -16,56 +16,55 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import dev.regis.rest.models.production.dtos.SpecieDTO;
-
+import dev.regis.rest.models.person.dtos.ClientDTO;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @Transactional
-public class SpecieServiceTest {
-    
+public class ClientServiceTest {
+ 
     @Autowired
-    private SpecieService service;
+    private ClientService service;
 
     @Test
-    public void test_listAll_returns_list_of_specie_dto() {
+    public void test_listAll_returns_list_of_client_dto() {
         // Arrange
 
         // Act
-        List<SpecieDTO> result = service.listAll();
+        List<ClientDTO> result = service.listAll();
 
         // Assert
         assertNotNull(result);
         assertNotEquals(0, result.size());
     }
 
-    private SpecieDTO getNewSpecieDTO(){
-        SpecieDTO specieDTO = new SpecieDTO();
-        specieDTO.setName("XYZ");
-        return specieDTO;
+    private ClientDTO getNewClientDTO(){
+        ClientDTO clientDTO = new ClientDTO();
+        clientDTO.setName("XYZ");
+        return clientDTO;
     }
 
     @Test
-    public void test_find_existent_specie(){
+    public void test_find_existent_client(){
         // Arrange
         Long id = 1L;
-        SpecieDTO specieDTO = null;
+        ClientDTO clientDTO = null;
 
         // Act
         try{
-            specieDTO = service.findById(id);
+            clientDTO = service.findById(id);
         }catch(Exception e){
             fail("Ocorreu um erro inesperado: " + e.getMessage());
         }
 
         // Assert
-        assertNotNull(specieDTO);
-        assertEquals(id, specieDTO.getId());
-        assertEquals("E. urograndis", specieDTO.getName());
+        assertNotNull(clientDTO);
+        assertEquals(id, clientDTO.getId());
+        assertEquals("regis", clientDTO.getName());
     }
 
     @Test
-    public void test_throws_exception_on_find_specie_with_null_id(){
+    public void test_throws_exception_on_find_client_with_null_id(){
         // Arrange
         Long id = null;
 
@@ -80,7 +79,7 @@ public class SpecieServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_find_specie_with_id_less_than_one(){
+    public void test_throws_exception_on_find_client_with_id_less_than_one(){
         // Arrange
         Long id = 0L;
 
@@ -96,14 +95,14 @@ public class SpecieServiceTest {
     }
 
     @Test
-    public void test_create_specie(){
+    public void test_create_client(){
         // Arrange
-        SpecieDTO specieDTO = this.getNewSpecieDTO();
+        ClientDTO clientDTO = this.getNewClientDTO();
         
         // Act
         Long id = null;
         try{
-            id = service.create(specieDTO);
+            id = service.create(clientDTO);
         }catch(Exception e){
             fail("Ocorreu um erro inesperado: " + e.getMessage());
         }
@@ -114,14 +113,14 @@ public class SpecieServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_create_specie_with_null_name() {
+    public void test_throws_exception_on_create_client_with_null_name() {
         // Arrange
-        SpecieDTO specieDTO = this.getNewSpecieDTO();
-        specieDTO.setName(null);
+        ClientDTO clientDTO = this.getNewClientDTO();
+        clientDTO.setName(null);
 
         // Act
         Throwable exception = assertThrows(Exception.class, () -> {
-            service.create(specieDTO);
+            service.create(clientDTO);
         });
 
         // Assert
@@ -130,14 +129,14 @@ public class SpecieServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_create_specie_with_empty_name() {
+    public void test_throws_exception_on_create_client_with_empty_name() {
         // Arrange
-        SpecieDTO specieDTO = this.getNewSpecieDTO();
-        specieDTO.setName("    ");
+        ClientDTO clientDTO = this.getNewClientDTO();
+        clientDTO.setName("    ");
 
         // Act
         Throwable exception = assertThrows(Exception.class, () -> {
-            service.create(specieDTO);
+            service.create(clientDTO);
         });
 
         // Assert
@@ -146,21 +145,21 @@ public class SpecieServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_create_specie_with_existent_name() {
+    public void test_throws_exception_on_create_client_with_existent_name() {
         // Arrange
-        SpecieDTO specieDTO = this.getNewSpecieDTO();
+        ClientDTO clientDTO = this.getNewClientDTO();
 
-        SpecieDTO existentSpecieDTO = new SpecieDTO();
+        ClientDTO existentClientDTO = new ClientDTO();
         try{
-            existentSpecieDTO = service.findById(1L);
+            existentClientDTO = service.findById(1L);
         }catch(Exception e){
             fail("Ocorreu um erro inesperado: " + e.getMessage());
         }
-        specieDTO.setName(existentSpecieDTO.getName());
+        clientDTO.setName(existentClientDTO.getName());
 
         // Act
         Throwable exception = assertThrows(Exception.class, () -> {
-            service.create(specieDTO);
+            service.create(clientDTO);
         });
 
         // Assert
@@ -169,23 +168,23 @@ public class SpecieServiceTest {
     }
 
     @Test
-    public void test_delete_specie(){
+    public void test_delete_client(){
         // Arrange
-        SpecieDTO specieDTO = this.getNewSpecieDTO();
+        ClientDTO clientDTO = this.getNewClientDTO();
         Long id = null;
         try{
             // Crio um objeto novo para poder deletar
-            id = service.create(specieDTO);
+            id = service.create(clientDTO);
         }catch(Exception e){
             fail("Ocorreu um erro inesperado: " + e.getMessage());
         }
-        specieDTO.setId(id);
+        clientDTO.setId(id);
 
         // Act
         try{
-            service.deleteById(specieDTO.getId());
+            service.deleteById(clientDTO.getId());
         }catch(Exception e){
-            fail("Falhou ao deletar uma Espécie existente.");
+            fail("Falhou ao deletar um cliente existente.");
         }
 
         // Assert
@@ -193,7 +192,7 @@ public class SpecieServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_delete_null_specie_id(){
+    public void test_throws_exception_on_delete_null_client_id(){
         // Arrange
         Long id = null;
 
@@ -207,59 +206,59 @@ public class SpecieServiceTest {
     }
 
     @Test
-    public void test_update_specie(){
+    public void test_update_client(){
         // Arrange
 
         // Busca uma espécie existente
-        SpecieDTO oldSpecieDTO = new SpecieDTO();
+        ClientDTO oldClientDTO  = new ClientDTO();
         try{
-            oldSpecieDTO = service.findById(1L);
+            oldClientDTO = service.findById(1L);
         }catch(Exception e){
             fail("Ocorreu um erro inesperado: " + e.getMessage());
         }
 
-        // Cria um novo objeto dto com novos dados para a espécie existente
-        SpecieDTO newSpecieDTO = new SpecieDTO();
-        newSpecieDTO.setId(oldSpecieDTO.getId());
-        newSpecieDTO.setName("XYZ");
+        // Cria um novo objeto dto com novos dados para o cliente existente
+        ClientDTO newClientDTO = new ClientDTO();
+        newClientDTO.setId(oldClientDTO.getId());
+        newClientDTO.setName("XYZ");
 
 
         // Act
         Long returnedId = null;
         try{
-            returnedId = service.update(newSpecieDTO);
+            returnedId = service.update(newClientDTO);
         }catch(Exception e){
             fail("Ocorreu um erro inesperado: " + e.getMessage());
         }
 
         // Assert
-        assertEquals(returnedId, oldSpecieDTO.getId());
+        assertEquals(returnedId, oldClientDTO.getId());
 
         // Arrange
 
         // verificação adicional dos dados persistidos em banco
 
-        SpecieDTO persistedSpecieDTO = new SpecieDTO();
+        ClientDTO persistedClientDTO = new ClientDTO();
         try{
-            persistedSpecieDTO = service.findById(1L);
+            persistedClientDTO = service.findById(1L);
         }catch(Exception e){
             fail("Ocorreu um erro inesperado: " + e.getMessage());
         }
 
         // Assert
-        assertEquals(newSpecieDTO.getId(), persistedSpecieDTO.getId());
-        assertEquals(newSpecieDTO.getName(), persistedSpecieDTO.getName());
+        assertEquals(newClientDTO.getId(), persistedClientDTO.getId());
+        assertEquals(newClientDTO.getName(), persistedClientDTO.getName());
     }
 
     @Test
-    public void test_throws_exception_on_update_specie_with_id_less_than_one(){
+    public void test_throws_exception_on_update_client_with_id_less_than_one(){
         // Arrange
-        SpecieDTO newSpecieDTO = this.getNewSpecieDTO();
-        newSpecieDTO.setId(0L);
+        ClientDTO newClientDTO = this.getNewClientDTO();
+        newClientDTO.setId(0L);
 
         // Act
         Throwable exception = assertThrows(Exception.class, () -> {
-            service.update(newSpecieDTO);
+            service.update(newClientDTO);
         });
 
         // Assert
@@ -268,14 +267,14 @@ public class SpecieServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_update_specie_with_null_id(){
+    public void test_throws_exception_on_update_client_with_null_id(){
         // Arrange
-        SpecieDTO newSpecieDTO = this.getNewSpecieDTO();
-        newSpecieDTO.setId(null);
+        ClientDTO newClientDTO = this.getNewClientDTO();
+        newClientDTO.setId(null);
 
         // Act
         Throwable exception = assertThrows(Exception.class, () -> {
-            service.update(newSpecieDTO);
+            service.update(newClientDTO);
         });
 
         // Assert
@@ -284,15 +283,15 @@ public class SpecieServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_update_specie_with_null_name(){
+    public void test_throws_exception_on_update_client_with_null_name(){
         // Arrange
-        SpecieDTO newSpecieDTO = this.getNewSpecieDTO();
-        newSpecieDTO.setId(1L);
-        newSpecieDTO.setName(null);
+        ClientDTO newClientDTO = this.getNewClientDTO();
+        newClientDTO.setId(1L);
+        newClientDTO.setName(null);
 
         // Act
         Throwable exception = assertThrows(Exception.class, () -> {
-            service.update(newSpecieDTO);
+            service.update(newClientDTO);
         });
 
         // Assert
@@ -301,20 +300,19 @@ public class SpecieServiceTest {
     }
 
     @Test
-    public void test_throws_exception_on_update_specie_with_empty_name(){
+    public void test_throws_exception_on_update_client_with_empty_name(){
         // Arrange
-        SpecieDTO newSpecieDTO = this.getNewSpecieDTO();
-        newSpecieDTO.setId(1L);
-        newSpecieDTO.setName("    ");
+        ClientDTO newClientDTO = this.getNewClientDTO();
+        newClientDTO.setId(1L);
+        newClientDTO.setName("    ");
 
         // Act
         Throwable exception = assertThrows(Exception.class, () -> {
-            service.update(newSpecieDTO);
+            service.update(newClientDTO);
         });
 
         // Assert
         assertNotNull(exception);
         assertEquals("Parâmetro nome inválido", exception.getMessage()); 
     }
-
 }
