@@ -352,6 +352,8 @@ public class ExpeditionPlanServiceTest {
         // Arrange
         // verificação adicional dos dados persistidos em banco
         ExpeditionPlanDTO persistedExpeditionPlanDTO = null;
+
+        // Act
         try{
             persistedExpeditionPlanDTO = service.findById(oldExpeditionPlanDTO.getId());
         }catch(Exception e){
