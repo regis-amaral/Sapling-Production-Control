@@ -18,11 +18,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import dev.regis.rest.models.production.Batch;
 import dev.regis.rest.models.production.GeneticMaterial;
 import dev.regis.rest.models.production.dtos.BatchDTO;
-import dev.regis.rest.models.production.dtos.ExpeditionPlanDTO;
-import dev.regis.rest.models.production.dtos.GeneticMaterialDTO;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -44,17 +41,18 @@ public class BatchServiceTest {
         assertNotEquals(0, result.size());
     }
 
-    private BatchDTO getNewBatchDTO(){
+    private BatchDTO getNewBatchDTO(int amount, String code, String stakingDate, Long materialGeneticId){
         BatchDTO batchDTO = new BatchDTO();
-        batchDTO.setAmount(1000);
-        batchDTO.setCode("400/2023");
-        batchDTO.setStakingDate(Date.valueOf("2023-09-30"));
+        batchDTO.setAmount(amount);
+        batchDTO.setCode(code);
+        batchDTO.setStakingDate(Date.valueOf(stakingDate));
         GeneticMaterial geneticMaterial = new GeneticMaterial();
-        geneticMaterial.setId(1L);
+        geneticMaterial.setId(materialGeneticId);
         batchDTO.setGeneticMaterial(geneticMaterial);
 
         return batchDTO;
     }
+
 
     @Test
     public void findById_ShouldReturnExistentBatch(){
@@ -107,8 +105,8 @@ public class BatchServiceTest {
     @Test
     public void create_ShouldCreateBatch(){
         // Arrange
-        BatchDTO batchDTO = this.getNewBatchDTO();
-        
+        BatchDTO batchDTO = this.getNewBatchDTO(1000, "200/2023", "2023-09-30", 1L);
+
         // Act
         Long id = null;
         try{
@@ -125,7 +123,7 @@ public class BatchServiceTest {
     @Test
     public void create_ShouldThrowExceptionOnCreateBatchWithNullCode(){
         // Arrange
-        BatchDTO batchDTO = this.getNewBatchDTO();
+        BatchDTO batchDTO = this.getNewBatchDTO(1000, "201/2023", "2023-09-10", 1L);
         batchDTO.setCode(null);
 
         // Act
@@ -141,7 +139,7 @@ public class BatchServiceTest {
     @Test
     public void create_ShouldThrowExceptionOnCreateBatchWithEmptyCode(){
         // Arrange
-        BatchDTO batchDTO = this.getNewBatchDTO();
+        BatchDTO batchDTO = this.getNewBatchDTO(1000, "202/2023", "2023-09-11", 1L);
         batchDTO.setCode("    ");
 
         // Act
@@ -157,7 +155,7 @@ public class BatchServiceTest {
     @Test
     public void create_ShouldThrowExceptionOnCreateBatchWithNullStakingDate(){
         // Arrange
-        BatchDTO batchDTO = this.getNewBatchDTO();
+        BatchDTO batchDTO = this.getNewBatchDTO(1000, "203/2023", "2023-09-15", 1L);
         batchDTO.setStakingDate(null);
 
         // Act
@@ -173,7 +171,7 @@ public class BatchServiceTest {
     @Test
     public void create_ShouldThrowExceptionOnCreateBatchWithStakingDateGreaterThanNow(){
         // Arrange
-        BatchDTO batchDTO = this.getNewBatchDTO();
+        BatchDTO batchDTO = this.getNewBatchDTO(1000, "204/2023", "2023-09-16", 1L);
 
         // data atual mais 1 dia
         LocalDate nextDay = LocalDate.now().plusDays(1);
@@ -196,8 +194,8 @@ public class BatchServiceTest {
     @Test
     public void create_ShouldThrowExceptionOnCreateBatchWithAmountLessThanOne(){
         // Arrange
-        BatchDTO batchDTO = this.getNewBatchDTO();
-        batchDTO.setAmount(0);
+        BatchDTO batchDTO = this.getNewBatchDTO(0, "205/2023", "2023-09-18", 1L);
+
 
         // Act
         Throwable exception = assertThrows(Exception.class, () -> {
@@ -213,7 +211,7 @@ public class BatchServiceTest {
     @Test
     public void create_ShouldThrowExceptionOnCreateBatchWithNullGeneticMaterial(){
         // Arrange
-        BatchDTO batchDTO = this.getNewBatchDTO();
+        BatchDTO batchDTO = this.getNewBatchDTO(1000, "206/2023", "2023-09-19", 1L);
         batchDTO.setGeneticMaterial(null);
 
         // Act
@@ -230,7 +228,7 @@ public class BatchServiceTest {
     @Test
     public void create_ShouldThrowExceptionOnCreateBatchWithNullGeneticMaterialId(){
         // Arrange
-        BatchDTO batchDTO = this.getNewBatchDTO();
+        BatchDTO batchDTO = this.getNewBatchDTO(1000, "207/2023", "2023-09-20", 1L);
         batchDTO.setGeneticMaterial(new GeneticMaterial());
 
         // Act
@@ -247,7 +245,7 @@ public class BatchServiceTest {
     @Test
     public void create_ShouldThrowExceptionOnCreateBatchWithGeneticMaterialIdLessThanOne(){
         // Arrange
-        BatchDTO batchDTO = this.getNewBatchDTO();
+        BatchDTO batchDTO = this.getNewBatchDTO(1000, "208/2023", "2023-09-21", 1L);
         GeneticMaterial geneticMaterial = new GeneticMaterial();
         geneticMaterial.setId(0L);
         batchDTO.setGeneticMaterial(geneticMaterial);
@@ -265,7 +263,7 @@ public class BatchServiceTest {
     @Test
     public void delete_ShouldDeleteBatch(){
         // Arrange
-        BatchDTO batchDTO = this.getNewBatchDTO();
+        BatchDTO batchDTO = this.getNewBatchDTO(1000, "209/2023", "2023-09-22", 1L);
         Long id = null;
         try{ 
             // Crio um objeto novo para poder deletar
@@ -311,7 +309,7 @@ public class BatchServiceTest {
             fail("Ocorreu um erro inesperado: " + e.getMessage());
         }
         // Cria um novo objeto com novos dados para o lote existente
-        BatchDTO newBatchDTO = this.getNewBatchDTO();
+        BatchDTO newBatchDTO = this.getNewBatchDTO(1000, "200/2023", "2023-09-30", 1L);
         newBatchDTO.setId(oldBatchDTO.getId());
         newBatchDTO.setAmount(166);
         newBatchDTO.setCode("321/2024");
@@ -353,7 +351,7 @@ public class BatchServiceTest {
     @Test
     public void update_ShouldThrowExceptionOnUpdateBatchWithNullId(){
         // Arrange
-        BatchDTO batchDTO = this.getNewBatchDTO();
+        BatchDTO batchDTO = this.getNewBatchDTO(1000, "200/2023", "2023-09-30", 1L);
         batchDTO.setId(null);
 
         // Act
@@ -369,7 +367,7 @@ public class BatchServiceTest {
     @Test
     public void update_ShouldThrowExceptionOnUpdateBatchWithIdLessThanOne(){
         // Arrange
-        BatchDTO batchDTO = this.getNewBatchDTO();
+        BatchDTO batchDTO = this.getNewBatchDTO(1000, "200/2023", "2023-09-30", 1L);
         batchDTO.setId(0L);
 
         // Act

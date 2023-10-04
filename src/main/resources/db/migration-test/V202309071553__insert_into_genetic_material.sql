@@ -1,3 +1,6 @@
+-- ATENÇÃO:
+-- Alterações nos dados desta migration podem acarretar quebra em testes existentes
+
 INSERT INTO genetic_material (name, specie_id) VALUES
     ('WRK 6201', 3),
     ('AEC 144', 1),

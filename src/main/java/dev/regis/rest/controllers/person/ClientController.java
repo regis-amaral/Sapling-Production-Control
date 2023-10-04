@@ -22,57 +22,60 @@ import jakarta.validation.Valid;
 @RequestMapping(value = "/api/client")
 public class ClientController {
 
-  @Autowired
-  ClientService service;
+    @Autowired
+    ClientService service;
 
-  @GetMapping
-    public List<ClientDTO> listAll(){
+    @GetMapping
+    public List<ClientDTO> listAll() {
         return service.listAll();
     }
-    
+
     @GetMapping(value = "/{id}")
-	public ResponseEntity<Object> findById(@PathVariable Long id) {
-		try {
-			ClientDTO outputDTO = service.findById(id);
-			return ResponseEntity.ok(outputDTO);
-		} catch (Exception e) {
-			// TODO tratar exceções
-			e.printStackTrace();
-			return ResponseEntity.notFound().build();
-		}
-	}
+    public ResponseEntity<Object> findById(@PathVariable Long id) {
+        try {
+            ClientDTO outputDTO = service.findById(id);
+            return ResponseEntity.ok(outputDTO);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @DeleteMapping(value = "/delete/{id}")
-	public void delete(@PathVariable Long id) throws Exception {
-		service.deleteById(id);
-	}
+    public ResponseEntity<Object> delete(@PathVariable Long id){
+        try{
+            service.deleteById(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
     @PostMapping(value = "/create")
-	public ResponseEntity<Object> create(@Valid @RequestBody ClientDTO newObjectDTO) {
-		try {
-			return ResponseEntity.ok(service.create(newObjectDTO));
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
-	}
+    public ResponseEntity<Object> create(@Valid @RequestBody ClientDTO newObjectDTO) {
+        try {
+            return ResponseEntity.ok(service.create(newObjectDTO));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
     @PutMapping(value = "/update")
-	public ResponseEntity<Object> update(@Valid @RequestBody ClientDTO newObjectDTO){
+    public ResponseEntity<Object> update(@Valid @RequestBody ClientDTO newObjectDTO) {
         try {
             return ResponseEntity.ok(service.update(newObjectDTO));
         } catch (Exception e) {
-			e.printStackTrace(); // TODO tratar exeções
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-	}
-  @GetMapping("/search")
-  public ResponseEntity<List<ClientDTO>> search(
-      @RequestParam("name") String name,
-      @RequestParam(value = "page", defaultValue = "0") Integer page,
-      @RequestParam(value = "orderBy", defaultValue = "id", required = false) String orderBy,
-      @RequestParam(value = "itensPerPage", defaultValue = "10", required = false) Integer itensPerPage,
-      @RequestParam(value = "direction", defaultValue = "ASC", required = false) String direction) {
-    List<ClientDTO> listClientDTOs = service.search(name, page, orderBy, itensPerPage, direction);
-    return ResponseEntity.ok(listClientDTOs);
-  }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<ClientDTO>> search(
+            @RequestParam("name") String name,
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "orderBy", defaultValue = "id", required = false) String orderBy,
+            @RequestParam(value = "itensPerPage", defaultValue = "10", required = false) Integer itensPerPage,
+            @RequestParam(value = "direction", defaultValue = "ASC", required = false) String direction) {
+        List<ClientDTO> listClientDTOs = service.search(name, page, orderBy, itensPerPage, direction);
+        return ResponseEntity.ok(listClientDTOs);
+    }
 }

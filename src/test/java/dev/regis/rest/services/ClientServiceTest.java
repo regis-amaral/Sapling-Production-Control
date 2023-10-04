@@ -60,7 +60,7 @@ public class ClientServiceTest {
         // Assert
         assertNotNull(clientDTO);
         assertEquals(id, clientDTO.getId());
-        assertEquals("regis", clientDTO.getName());
+        assertEquals("User A", clientDTO.getName());
     }
 
     @Test
