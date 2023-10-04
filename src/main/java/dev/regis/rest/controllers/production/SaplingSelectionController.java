@@ -35,17 +35,19 @@ public class SaplingSelectionController{
 			SaplingSelectionDTO outputDTO = service.findById(id);
 			return ResponseEntity.ok(outputDTO);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return ResponseEntity.notFound().build();
 		}
 	}
 
     @DeleteMapping(value = "/delete/{id}")
-	public void delete(@PathVariable Long id) {
+	public ResponseEntity<Object> delete(@PathVariable Long id) {
 		try{
-			service.deleteById(id);
-		} catch (Exception e) {
-			//
-		}
+            service.deleteById(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
 	}
 
     @PostMapping(value = "/create")

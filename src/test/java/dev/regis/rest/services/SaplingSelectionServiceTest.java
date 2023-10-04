@@ -63,8 +63,8 @@ public class SaplingSelectionServiceTest {
         batchA.setId(3L);
         Batch batchB = new Batch();
         batchB.setId(4L);
-        List<Batch> batchs = List.of(batchA, batchB);
-        saplingSelectionDTO.setListBatchs(batchs);
+        List<Batch> batches = List.of(batchA, batchB);
+        saplingSelectionDTO.setListBatchs(batches);
 
         return saplingSelectionDTO;
     }
@@ -285,7 +285,7 @@ public class SaplingSelectionServiceTest {
     @Test
     public void delete_ShouldDeleteSaplingSelection(){
         // Arrange
-        Long id = 1L;
+        Long id = 5L;
        
         // Act
         try{

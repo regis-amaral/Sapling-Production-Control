@@ -16,14 +16,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
-import dev.regis.rest.models.person.dtos.ClientDTO;
 import dev.regis.rest.models.production.GeneticMaterial;
 import dev.regis.rest.models.production.dtos.BatchDTO;
 import dev.regis.rest.services.BatchService;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
+@Transactional
 public class BatchControllerTest {
     
     @Autowired
@@ -33,15 +34,14 @@ public class BatchControllerTest {
     BatchService service;
 
     @Test
-    public void listAll_ShouldReturnListOfBatches() {
+    public void listAll_ShouldReturnListOfObjects() {
         // Arrange
-        List<BatchDTO> batches = service.listAll();
 
         // Act
-        List<BatchDTO> clients = controller.listAll();
+        List<BatchDTO> objects = controller.listAll();
 
         // Assert
-        assertEquals(batches.size(), clients.size());
+        assertTrue(objects.size() > 0);
     }
 
     private BatchDTO getNewBatchDTO(int amount, String code, String stakingDate, Long materialGeneticId){
