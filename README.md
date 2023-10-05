@@ -35,7 +35,7 @@ PENDENTE DE IMPLEMENTAÇÃO
 
 ## Software rodando corretamente
 
-No meu pc roda. <br> Baazinga! Ta rodando sim, mas depende.
+No meu pc roda. <br> Bazinga! Ta rodando sim, mas depende.
 
 ## Requisitos funcionais/Requisitos não funcionais/Regras de negócio
 
@@ -61,7 +61,7 @@ Foi utilizado o Flyway para executar migrations distintas para desenvolvimento e
 
 ![Alt text](documentation/image-2.png)
 
-## Uso do Maven para gerenciamento das dependencias e estrutura do projeto
+## Uso do Maven para gerenciamento das dependências e estrutura do projeto
 
 Vide [pom.xml](pom.xml)
 
