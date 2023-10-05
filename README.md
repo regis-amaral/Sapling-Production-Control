@@ -46,6 +46,9 @@ ESCREVER
 JaCoCo indicou 87% de coverage
 ![Alt text](documentation/image.png)
 
+Já o SonarQube indicou um coverage de 86.9%
+
+![Alt text](image.png)
 
 Obs.: Foram excluídas dos testes todas as classes do pacote models (entities e dtos).
 
