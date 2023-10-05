@@ -40,6 +40,7 @@ public class GeneticMaterialController {
 		}
 	}
 
+	@DeleteMapping(value = "/delete/{id}")
 	public ResponseEntity<Object> delete(@PathVariable Long id) {
 		try{
             service.deleteById(id);

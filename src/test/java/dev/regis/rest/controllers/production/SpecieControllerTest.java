@@ -19,42 +19,37 @@ import org.springframework.transaction.annotation.Transactional;
 
 import dev.regis.rest.models.production.Specie;
 import dev.regis.rest.models.production.dtos.GeneticMaterialDTO;
+import dev.regis.rest.models.production.dtos.SpecieDTO;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @Transactional
-public class GeneticMaterialControllerTest {
-
+public class SpecieControllerTest {
+    
     @Autowired
-    GeneticMaterialController controller;
-
+    SpecieController controller;
 
     @Test
     public void listAll_ShouldReturnListOfBatches() {
         // Arrange
 
         // Act
-        List<GeneticMaterialDTO> objects = controller.listAll();
+        List<SpecieDTO> objects = controller.listAll();
 
         // Assert
         assertTrue(objects.size() > 0);
     }
 
-     private GeneticMaterialDTO getNewGeneticMaterialDTO(String name, Specie specie){
-
-        GeneticMaterialDTO geneticMaterialDTO = new GeneticMaterialDTO();
-
-        geneticMaterialDTO.setName(name);
-
-        geneticMaterialDTO.setSpecie(specie);
-
-        return geneticMaterialDTO;
+    private SpecieDTO getNewSpecieDTO(String name){
+        SpecieDTO specieDTO = new SpecieDTO();
+        specieDTO.setName(name);
+        return specieDTO;
     }
 
     @Test
     public void findById_ShouldReturnResponseEntityWithStatusCode200AndObjectDTO() {
         // Arrange
-        Long id = 5L;
+        Long id = 1L;
 
         // Act
         ResponseEntity<Object> response = controller.findById(id);
@@ -62,7 +57,7 @@ public class GeneticMaterialControllerTest {
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertTrue(response.getBody() instanceof GeneticMaterialDTO);
+        assertTrue(response.getBody() instanceof SpecieDTO);
     }
 
     @Test
@@ -80,12 +75,10 @@ public class GeneticMaterialControllerTest {
     @Test
     public void create_ShouldReturnResponseEntityWithStatusCode200AndCreatedObjectId() {
         // Arrange
-        Specie specie = new Specie();
-        specie.setId(1L);
-        GeneticMaterialDTO geneticMaterialDTO = this.getNewGeneticMaterialDTO("XYZ", specie);
+        SpecieDTO specieDTO = this.getNewSpecieDTO("XYZ");
 
         // Act
-        ResponseEntity<Object> response = controller.create(geneticMaterialDTO);
+        ResponseEntity<Object> response = controller.create(specieDTO);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -96,11 +89,10 @@ public class GeneticMaterialControllerTest {
     @Test
     public void create_ShouldReturnResponseEntityWithStatusCode400ForInvalidObjectDTO() {
         // Arrange
-        Specie specie = new Specie();
-        GeneticMaterialDTO invalidGeneticMaterialDTO = this.getNewGeneticMaterialDTO("XYZ", specie);
+        SpecieDTO invalidSpecieDTO = this.getNewSpecieDTO("    ");
 
         // Act
-        ResponseEntity<Object> response = controller.create(invalidGeneticMaterialDTO);
+        ResponseEntity<Object> response = controller.create(invalidSpecieDTO);
 
         // Assert
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -112,18 +104,16 @@ public class GeneticMaterialControllerTest {
     public void update_ShouldReturnResponseEntityWithStatusCode200AndUpdatedObjectId() {
         try {
             // Arrange
-            Specie specie = new Specie();
-            specie.setId(3L);
-            GeneticMaterialDTO newGeneticMaterialDTO = this.getNewGeneticMaterialDTO("ABC", specie);
-            newGeneticMaterialDTO.setId(1L);
+            SpecieDTO specieDTO = this.getNewSpecieDTO("XYZ");
+            specieDTO.setId(1L);
             
             // Act
-            ResponseEntity<Object> response = controller.update(newGeneticMaterialDTO);
+            ResponseEntity<Object> response = controller.update(specieDTO);
 
             // Assert
             assertEquals(HttpStatus.OK, response.getStatusCode());
             assertTrue(response.getBody() instanceof Long);
-            assertEquals(newGeneticMaterialDTO.getId(), response.getBody());
+            assertEquals(specieDTO.getId(), response.getBody());
         } catch (Exception e) {
             fail("Ocorreu um erro inesperado: " + e.getMessage());
         }
@@ -133,11 +123,11 @@ public class GeneticMaterialControllerTest {
     public void update_ShouldReturnResponseEntityWithStatusCode400ForInvalidObjectDTO() {
         try {
             // Arrange
-            GeneticMaterialDTO invalidGeneticMaterialDTO = this.getNewGeneticMaterialDTO("ABC", new Specie());
-            invalidGeneticMaterialDTO.setId(1L);
+            SpecieDTO invalidSpecieDTO = this.getNewSpecieDTO("   ");
+            invalidSpecieDTO.setId(1L);
 
             // Act
-            ResponseEntity<Object> response = controller.update(invalidGeneticMaterialDTO);
+            ResponseEntity<Object> response = controller.update(invalidSpecieDTO);
 
             // Assert
             assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -151,7 +141,7 @@ public class GeneticMaterialControllerTest {
     @Test
     public void delete_ShouldReturnResponseEntityWithStatusCode200() {
         // Arrange
-        Long idToDelete = 12L; // GeneticMaterial que nao pertence a nenhum lote
+        Long idToDelete = 5L; // Specie que nao pertence a nenhum GeneticMaterial
 
         // Act
         ResponseEntity<Object> response = controller.delete(idToDelete);
@@ -191,14 +181,14 @@ public class GeneticMaterialControllerTest {
     @Test
     public void search_ShouldReturnListOfClients() {
         // Arrange
-        String name = "k";
+        String name = "E.";
         Integer page = 0;
         String orderBy = "name";
         Integer itemsPerPage = 10;
         String direction = "DESC";
 
         // Act
-        ResponseEntity<List<GeneticMaterialDTO>> response = controller.search(name, page, orderBy, itemsPerPage, direction);
+        ResponseEntity<List<SpecieDTO>> response = controller.search(name, page, orderBy, itemsPerPage, direction);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -217,7 +207,7 @@ public class GeneticMaterialControllerTest {
         String direction = "ASC";
 
         // Act
-        ResponseEntity<List<GeneticMaterialDTO>> response = controller.search(name, page, orderBy, itemsPerPage, direction);
+        ResponseEntity<List<SpecieDTO>> response = controller.search(name, page, orderBy, itemsPerPage, direction);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
