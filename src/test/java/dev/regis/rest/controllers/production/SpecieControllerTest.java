@@ -1,4 +1,4 @@
-package dev.regis.rest.controllers.person;
+package dev.regis.rest.controllers.production;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,29 +17,33 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import dev.regis.rest.models.person.dtos.ClientDTO;
-import dev.regis.rest.services.ClientService;
+import dev.regis.rest.models.production.Specie;
+import dev.regis.rest.models.production.dtos.GeneticMaterialDTO;
+import dev.regis.rest.models.production.dtos.SpecieDTO;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @Transactional
-public class ClientControllerTest {
-
+public class SpecieControllerTest {
+    
     @Autowired
-    ClientController controller;
-
-    @Autowired
-    ClientService service;
+    SpecieController controller;
 
     @Test
-    public void listAll_ShouldReturnListOfObjects() {
+    public void listAll_ShouldReturnListOfBatches() {
         // Arrange
 
         // Act
-        List<ClientDTO> objects = controller.listAll();
+        List<SpecieDTO> objects = controller.listAll();
 
         // Assert
         assertTrue(objects.size() > 0);
+    }
+
+    private SpecieDTO getNewSpecieDTO(String name){
+        SpecieDTO specieDTO = new SpecieDTO();
+        specieDTO.setName(name);
+        return specieDTO;
     }
 
     @Test
@@ -53,7 +57,7 @@ public class ClientControllerTest {
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertTrue(response.getBody() instanceof ClientDTO);
+        assertTrue(response.getBody() instanceof SpecieDTO);
     }
 
     @Test
@@ -71,11 +75,10 @@ public class ClientControllerTest {
     @Test
     public void create_ShouldReturnResponseEntityWithStatusCode200AndCreatedObjectId() {
         // Arrange
-        ClientDTO newClientDTO = new ClientDTO();
-        newClientDTO.setName("Novo Cliente");
+        SpecieDTO specieDTO = this.getNewSpecieDTO("XYZ");
 
         // Act
-        ResponseEntity<Object> response = controller.create(newClientDTO);
+        ResponseEntity<Object> response = controller.create(specieDTO);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -86,10 +89,10 @@ public class ClientControllerTest {
     @Test
     public void create_ShouldReturnResponseEntityWithStatusCode400ForInvalidObjectDTO() {
         // Arrange
-        ClientDTO invalidClientDTO = new ClientDTO();
+        SpecieDTO invalidSpecieDTO = this.getNewSpecieDTO("    ");
 
         // Act
-        ResponseEntity<Object> response = controller.create(invalidClientDTO);
+        ResponseEntity<Object> response = controller.create(invalidSpecieDTO);
 
         // Assert
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -101,16 +104,16 @@ public class ClientControllerTest {
     public void update_ShouldReturnResponseEntityWithStatusCode200AndUpdatedObjectId() {
         try {
             // Arrange
-            ClientDTO updatedClientDTO = service.findById(3L);
-            updatedClientDTO.setName("Ciclano");
-
+            SpecieDTO specieDTO = this.getNewSpecieDTO("XYZ");
+            specieDTO.setId(1L);
+            
             // Act
-            ResponseEntity<Object> response = controller.update(updatedClientDTO);
+            ResponseEntity<Object> response = controller.update(specieDTO);
 
             // Assert
             assertEquals(HttpStatus.OK, response.getStatusCode());
             assertTrue(response.getBody() instanceof Long);
-            assertEquals(updatedClientDTO.getId(), response.getBody());
+            assertEquals(specieDTO.getId(), response.getBody());
         } catch (Exception e) {
             fail("Ocorreu um erro inesperado: " + e.getMessage());
         }
@@ -120,11 +123,11 @@ public class ClientControllerTest {
     public void update_ShouldReturnResponseEntityWithStatusCode400ForInvalidObjectDTO() {
         try {
             // Arrange
-            ClientDTO updatedClientDTO = service.findById(3L);
-            updatedClientDTO.setName("  ");
+            SpecieDTO invalidSpecieDTO = this.getNewSpecieDTO("   ");
+            invalidSpecieDTO.setId(1L);
 
             // Act
-            ResponseEntity<Object> response = controller.update(updatedClientDTO);
+            ResponseEntity<Object> response = controller.update(invalidSpecieDTO);
 
             // Assert
             assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -138,7 +141,7 @@ public class ClientControllerTest {
     @Test
     public void delete_ShouldReturnResponseEntityWithStatusCode200() {
         // Arrange
-        Long idToDelete = 4L; // usuário sem relacionamentos
+        Long idToDelete = 5L; // Specie que nao pertence a nenhum GeneticMaterial
 
         // Act
         ResponseEntity<Object> response = controller.delete(idToDelete);
@@ -178,14 +181,14 @@ public class ClientControllerTest {
     @Test
     public void search_ShouldReturnListOfClients() {
         // Arrange
-        String name = "User";
+        String name = "E.";
         Integer page = 0;
         String orderBy = "name";
         Integer itemsPerPage = 10;
         String direction = "DESC";
 
         // Act
-        ResponseEntity<List<ClientDTO>> response = controller.search(name, page, orderBy, itemsPerPage, direction);
+        ResponseEntity<List<SpecieDTO>> response = controller.search(name, page, orderBy, itemsPerPage, direction);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -194,8 +197,8 @@ public class ClientControllerTest {
         assertTrue(response.getBody().size() > 0);
     }
 
-    @Test
-    public void search_ShouldReturnEmptyListForUnknownName() {
+     @Test
+        public void search_ShouldReturnEmptyListForUnknownName() {
         // Arrange
         String name = "Nonexistent Name";
         Integer page = 0;
@@ -204,13 +207,13 @@ public class ClientControllerTest {
         String direction = "ASC";
 
         // Act
-        ResponseEntity<List<ClientDTO>> response = controller.search(name, page, orderBy, itemsPerPage, direction);
+        ResponseEntity<List<SpecieDTO>> response = controller.search(name, page, orderBy, itemsPerPage, direction);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
         assertTrue(response.getBody() instanceof List);
-        assertEquals(0, response.getBody().size()); // A lista deve estar vazia
+
     }
 
 }

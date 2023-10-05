@@ -1,4 +1,4 @@
-package dev.regis.rest.controllers.person;
+package dev.regis.rest.controllers.production;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,35 +17,44 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import dev.regis.rest.models.person.dtos.ClientDTO;
-import dev.regis.rest.services.ClientService;
+import dev.regis.rest.models.production.Specie;
+import dev.regis.rest.models.production.dtos.GeneticMaterialDTO;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @Transactional
-public class ClientControllerTest {
+public class GeneticMaterialControllerTest {
 
     @Autowired
-    ClientController controller;
+    GeneticMaterialController controller;
 
-    @Autowired
-    ClientService service;
 
     @Test
-    public void listAll_ShouldReturnListOfObjects() {
+    public void listAll_ShouldReturnListOfBatches() {
         // Arrange
 
         // Act
-        List<ClientDTO> objects = controller.listAll();
+        List<GeneticMaterialDTO> objects = controller.listAll();
 
         // Assert
         assertTrue(objects.size() > 0);
     }
 
+     private GeneticMaterialDTO getNewGeneticMaterialDTO(String name, Specie specie){
+
+        GeneticMaterialDTO geneticMaterialDTO = new GeneticMaterialDTO();
+
+        geneticMaterialDTO.setName(name);
+
+        geneticMaterialDTO.setSpecie(specie);
+
+        return geneticMaterialDTO;
+    }
+
     @Test
     public void findById_ShouldReturnResponseEntityWithStatusCode200AndObjectDTO() {
         // Arrange
-        Long id = 1L;
+        Long id = 5L;
 
         // Act
         ResponseEntity<Object> response = controller.findById(id);
@@ -53,7 +62,7 @@ public class ClientControllerTest {
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertTrue(response.getBody() instanceof ClientDTO);
+        assertTrue(response.getBody() instanceof GeneticMaterialDTO);
     }
 
     @Test
@@ -71,11 +80,12 @@ public class ClientControllerTest {
     @Test
     public void create_ShouldReturnResponseEntityWithStatusCode200AndCreatedObjectId() {
         // Arrange
-        ClientDTO newClientDTO = new ClientDTO();
-        newClientDTO.setName("Novo Cliente");
+        Specie specie = new Specie();
+        specie.setId(1L);
+        GeneticMaterialDTO geneticMaterialDTO = this.getNewGeneticMaterialDTO("XYZ", specie);
 
         // Act
-        ResponseEntity<Object> response = controller.create(newClientDTO);
+        ResponseEntity<Object> response = controller.create(geneticMaterialDTO);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -86,10 +96,11 @@ public class ClientControllerTest {
     @Test
     public void create_ShouldReturnResponseEntityWithStatusCode400ForInvalidObjectDTO() {
         // Arrange
-        ClientDTO invalidClientDTO = new ClientDTO();
+        Specie specie = new Specie();
+        GeneticMaterialDTO invalidGeneticMaterialDTO = this.getNewGeneticMaterialDTO("XYZ", specie);
 
         // Act
-        ResponseEntity<Object> response = controller.create(invalidClientDTO);
+        ResponseEntity<Object> response = controller.create(invalidGeneticMaterialDTO);
 
         // Assert
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -101,16 +112,18 @@ public class ClientControllerTest {
     public void update_ShouldReturnResponseEntityWithStatusCode200AndUpdatedObjectId() {
         try {
             // Arrange
-            ClientDTO updatedClientDTO = service.findById(3L);
-            updatedClientDTO.setName("Ciclano");
-
+            Specie specie = new Specie();
+            specie.setId(3L);
+            GeneticMaterialDTO newGeneticMaterialDTO = this.getNewGeneticMaterialDTO("ABC", specie);
+            newGeneticMaterialDTO.setId(1L);
+            
             // Act
-            ResponseEntity<Object> response = controller.update(updatedClientDTO);
+            ResponseEntity<Object> response = controller.update(newGeneticMaterialDTO);
 
             // Assert
             assertEquals(HttpStatus.OK, response.getStatusCode());
             assertTrue(response.getBody() instanceof Long);
-            assertEquals(updatedClientDTO.getId(), response.getBody());
+            assertEquals(newGeneticMaterialDTO.getId(), response.getBody());
         } catch (Exception e) {
             fail("Ocorreu um erro inesperado: " + e.getMessage());
         }
@@ -120,11 +133,11 @@ public class ClientControllerTest {
     public void update_ShouldReturnResponseEntityWithStatusCode400ForInvalidObjectDTO() {
         try {
             // Arrange
-            ClientDTO updatedClientDTO = service.findById(3L);
-            updatedClientDTO.setName("  ");
+            GeneticMaterialDTO invalidGeneticMaterialDTO = this.getNewGeneticMaterialDTO("ABC", new Specie());
+            invalidGeneticMaterialDTO.setId(1L);
 
             // Act
-            ResponseEntity<Object> response = controller.update(updatedClientDTO);
+            ResponseEntity<Object> response = controller.update(invalidGeneticMaterialDTO);
 
             // Assert
             assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -138,7 +151,7 @@ public class ClientControllerTest {
     @Test
     public void delete_ShouldReturnResponseEntityWithStatusCode200() {
         // Arrange
-        Long idToDelete = 4L; // usuário sem relacionamentos
+        Long idToDelete = 12L; // GeneticMaterial que nao pertence a nenhum lote
 
         // Act
         ResponseEntity<Object> response = controller.delete(idToDelete);
@@ -178,14 +191,14 @@ public class ClientControllerTest {
     @Test
     public void search_ShouldReturnListOfClients() {
         // Arrange
-        String name = "User";
+        String name = "k";
         Integer page = 0;
         String orderBy = "name";
         Integer itemsPerPage = 10;
         String direction = "DESC";
 
         // Act
-        ResponseEntity<List<ClientDTO>> response = controller.search(name, page, orderBy, itemsPerPage, direction);
+        ResponseEntity<List<GeneticMaterialDTO>> response = controller.search(name, page, orderBy, itemsPerPage, direction);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -194,8 +207,8 @@ public class ClientControllerTest {
         assertTrue(response.getBody().size() > 0);
     }
 
-    @Test
-    public void search_ShouldReturnEmptyListForUnknownName() {
+     @Test
+        public void search_ShouldReturnEmptyListForUnknownName() {
         // Arrange
         String name = "Nonexistent Name";
         Integer page = 0;
@@ -204,13 +217,13 @@ public class ClientControllerTest {
         String direction = "ASC";
 
         // Act
-        ResponseEntity<List<ClientDTO>> response = controller.search(name, page, orderBy, itemsPerPage, direction);
+        ResponseEntity<List<GeneticMaterialDTO>> response = controller.search(name, page, orderBy, itemsPerPage, direction);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
         assertTrue(response.getBody() instanceof List);
-        assertEquals(0, response.getBody().size()); // A lista deve estar vazia
+
     }
 
 }

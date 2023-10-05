@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import dev.regis.rest.models.production.Batch;
 import dev.regis.rest.models.production.SaplingSelection;
+import dev.regis.rest.models.production.dtos.BatchDTO;
 import dev.regis.rest.models.production.dtos.SaplingSelectionDTO;
 import dev.regis.rest.repositories.BatchRepository;
 import dev.regis.rest.repositories.SaplingSelectionRepository;
@@ -42,9 +43,7 @@ public class SaplingSelectionService extends AbstractService<SaplingSelection, S
         return super.findById(id, SaplingSelectionDTO.class);
     }
 
-    @Transactional
-    public Long create(SaplingSelectionDTO objectDTO) throws Exception {
-
+    public void validateSaplingSelectionDTO(SaplingSelectionDTO objectDTO)throws Exception {
         //
         if (objectDTO.getSelectionDate() == null) {
             throw new Exception("A data de seleção não pode ser nula");
@@ -55,44 +54,47 @@ public class SaplingSelectionService extends AbstractService<SaplingSelection, S
         }
 
         //
-        if(objectDTO.getTotalRootedSaplings() <= 0){
+        if(objectDTO.getTotalRootedSaplings() < 1){
             System.out.println(objectDTO.getTotalRootedSaplings());
-            throw new Exception("O total de mudas selecionadas deve ser um número inteiro positivo");
+            throw new Exception("O total de mudas selecionadas deve ser um número maior que zero");
         }
 
         //
         if(objectDTO.getListBatchs() == null || objectDTO.getListBatchs().size() == 0){
             throw new Exception("Deve ser selecionado ao menos um lote utilizado na seleção");
         }
+    }
+
+    @Transactional
+    public Long create(SaplingSelectionDTO objectDTO) throws Exception {
+
+        this.validateSaplingSelectionDTO(objectDTO);
 
         // Transação: salvar o SaplingSelection e atualizar os Batchs com o id retornado
         try {
             Long id = super.create(objectDTO, SaplingSelection.class);
             SaplingSelection saplingSelection = mapper.map(objectDTO, SaplingSelection.class);
             saplingSelection.setId(id);
-            if(saplingSelection.getListBatchs() != null && saplingSelection.getListBatchs().size() > 0){
-                for (Batch bt : saplingSelection.getListBatchs()) {
-                    //
-                    if(bt.getId() == null){
-                        throw new RuntimeException("ID não informado para o lote selecionado.");
-                    }
-                    //
-                    Optional<Batch> optional = batchRepository.findById(bt.getId());
-                    if (optional.isPresent()) {
-                        Batch batch = optional.get();
-                        //verifica se o Batch já foi relacionado a outro SaplingSelection
-                        if(batch.getSaplingSelection() != null){
-                            throw new RuntimeException("Já foi cadastrada uma seleção para o lote " + batch.getCode());
-                        }
-                        batch.setSaplingSelection(saplingSelection);
-                        batchRepository.save(batch);
-                    } else {
-                        throw new RuntimeException("Não existe o lote com o ID informado.");
-                    }
+            for (Batch bt : saplingSelection.getListBatchs()) {
+                //
+                if(bt.getId() == null){
+                    throw new RuntimeException("ID não informado para o lote selecionado.");
                 }
-            }else{
-                throw new RuntimeException("Nenhum lote informado na requisição");
+                //
+                Optional<Batch> optional = batchRepository.findById(bt.getId());
+                if (optional.isPresent()) {
+                    Batch batch = optional.get();
+                    //verifica se o Batch já foi relacionado a outro SaplingSelection
+                    if(batch.getSaplingSelection() != null){
+                        throw new RuntimeException("Já foi cadastrada uma seleção para o lote " + batch.getCode());
+                    }
+                    batch.setSaplingSelection(saplingSelection);
+                    batchRepository.save(batch);
+                } else {
+                    throw new RuntimeException("Não existe o lote com o ID informado.");
+                }
             }
+
             return id;
         } catch(ConstraintViolationException | DataIntegrityViolationException e){
             throw new Exception("Dados informados violam restrições no BD.");
@@ -107,7 +109,7 @@ public class SaplingSelectionService extends AbstractService<SaplingSelection, S
     }
 
     @Transactional
-    public void deleteById(Long id) throws Exception{
+    public void deleteById(Long id) throws RuntimeException{
         
         Optional<SaplingSelection> optional = saplingSelectionRepository.findById(id);
         if (optional.isPresent()) {
@@ -136,25 +138,7 @@ public class SaplingSelectionService extends AbstractService<SaplingSelection, S
             throw new IllegalArgumentException("ID inválido!");
         }
 
-        //
-        if (objectDTO.getSelectionDate() == null) {
-            throw new Exception("A data de seleção não pode ser nula");
-        }
-        Date today = new Date();
-        if (objectDTO.getSelectionDate().after(today)) {
-            throw new Exception("A data de seleção não pode ser maior que a data atual");
-        }
-
-        //
-        if(objectDTO.getTotalRootedSaplings() <= 0){
-            System.out.println(objectDTO.getTotalRootedSaplings());
-            throw new Exception("O total de mudas selecionadas deve ser um número inteiro positivo");
-        }
-
-        //
-        if(objectDTO.getListBatchs() == null || objectDTO.getListBatchs().size() == 0){
-            throw new Exception("Deve ser selecionado ao menos um lote utilizado na seleção");
-        }
+        this.validateSaplingSelectionDTO(objectDTO);
 
         // Transação: salvar o SaplingSelection e atualizar os Batchs com o id retornado
         try {
@@ -172,29 +156,25 @@ public class SaplingSelectionService extends AbstractService<SaplingSelection, S
                 }
 
                 // crio os novos relacionamentos
-                if (objectDTO.getListBatchs() != null && objectDTO.getListBatchs().size() > 0) {
-                    for (Batch batch : objectDTO.getListBatchs()) {
-                        //
-                        if(batch.getId() == null){
-                            throw new RuntimeException("ID não informado para o lote selecionado.");
-                        }
-
-                        Optional<Batch> opt = batchRepository.findById(batch.getId());
-                        if (opt.isPresent()) {
-                            Batch batch2 = opt.get();
-                            //verifica se o Batch já foi relacionado a outro SaplingSelection
-                            if(batch2.getSaplingSelection() != null){
-                                throw new RuntimeException("Já foi cadastrada uma seleção para o lote " + batch.getCode());
-                            }
-                            batch2.setSaplingSelection(saplingSelection);
-                            batchRepository.save(batch2);
-                        } else {
-                            // TODO tratar exceção
-                            throw new RuntimeException("Não existe o lote com o ID informado.");
-                        }
+                for (Batch batch : objectDTO.getListBatchs()) {
+                    //
+                    if(batch.getId() == null){
+                        throw new RuntimeException("ID não informado para o lote selecionado.");
                     }
-                }else{
-                    throw new RuntimeException("Nenhum lote informado na requisição");
+
+                    Optional<Batch> opt = batchRepository.findById(batch.getId());
+                    if (opt.isPresent()) {
+                        Batch batch2 = opt.get();
+                        //verifica se o Batch já foi relacionado a outro SaplingSelection
+                        if(batch2.getSaplingSelection() != null){
+                            throw new RuntimeException("Já foi cadastrada uma seleção para o lote " + batch.getCode());
+                        }
+                        batch2.setSaplingSelection(saplingSelection);
+                        batchRepository.save(batch2);
+                    } else {
+                        // TODO tratar exceção
+                        throw new RuntimeException("Não existe o lote com o ID informado.");
+                    }
                 }
                 // salvo as alterações em SaplingSelection
                 mapper.map(objectDTO, saplingSelection);

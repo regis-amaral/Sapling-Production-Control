@@ -34,26 +34,8 @@ public class ExpeditionPlanService extends AbstractService <ExpeditionPlan, Expe
     }
 
     public Long create(ExpeditionPlanDTO objectDTO) throws Exception {
-        //
-        if(objectDTO.getPlanned() < 1){
-            throw new Exception("A quantidade planejada é inválida");
-        }
-        //
-        if(objectDTO.getRealized() < 0){
-            throw new Exception("A quantidade realizada é inválida");
-        }
-        //
-        if(objectDTO.getMonth() == null){
-            throw new Exception("Mês de expedição inválido");
-        }
-        //
-        if(objectDTO.getClient() == null){
-            throw new Exception("Cliente não informado");
-        }
-        //
-        if(objectDTO.getGeneticMaterial() == null){
-            throw new Exception("Material genético não informado");
-        }
+        
+        this.validateExpeditionPlan(objectDTO);
         
         try{
             return super.create(objectDTO, ExpeditionPlan.class);
@@ -69,12 +51,8 @@ public class ExpeditionPlanService extends AbstractService <ExpeditionPlan, Expe
         super.deleteById(id);
     }
 
-    public Long update(ExpeditionPlanDTO objectDTO) throws Exception {
-        //
-        if (objectDTO.getId() == null || objectDTO.getId() < 1) {
-            throw new IllegalArgumentException("ID inválido!");
-        }
-        //
+    private void validateExpeditionPlan(ExpeditionPlanDTO objectDTO) throws Exception {
+//
         if(objectDTO.getPlanned() < 1){
             throw new Exception("A quantidade planejada é inválida");
         }
@@ -87,14 +65,23 @@ public class ExpeditionPlanService extends AbstractService <ExpeditionPlan, Expe
             throw new Exception("Mês de expedição inválido");
         }
         //
-        if(objectDTO.getClient() == null){
+        if(objectDTO.getClient() == null || objectDTO.getClient().getId() == null){
             throw new Exception("Cliente não informado");
         }
         //
-        if(objectDTO.getGeneticMaterial() == null){
+        if(objectDTO.getGeneticMaterial() == null || objectDTO.getGeneticMaterial().getId() == null){
             throw new Exception("Material genético não informado");
         }
+    }
+
+    public Long update(ExpeditionPlanDTO objectDTO) throws Exception {
+        //
+        if (objectDTO.getId() == null || objectDTO.getId() < 1) {
+            throw new IllegalArgumentException("ID inválido!");
+        }
         
+        this.validateExpeditionPlan(objectDTO);
+
         try{
             return super.update(objectDTO);
         }catch(ConstraintViolationException | DataIntegrityViolationException e){

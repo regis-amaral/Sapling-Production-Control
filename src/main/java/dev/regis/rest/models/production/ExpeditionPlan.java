@@ -30,7 +30,7 @@ public class ExpeditionPlan {
     private int realized;
 
     @Enumerated
-    @Column(nullable = false, columnDefinition = "smallint")
+    @Column(name = "expedition_month", nullable = false, columnDefinition = "smallint")
     private Month month;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)

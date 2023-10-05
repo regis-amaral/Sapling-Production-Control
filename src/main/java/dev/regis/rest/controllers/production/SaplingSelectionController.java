@@ -40,12 +40,13 @@ public class SaplingSelectionController{
 	}
 
     @DeleteMapping(value = "/delete/{id}")
-	public void delete(@PathVariable Long id) {
+	public ResponseEntity<Object> delete(@PathVariable Long id) {
 		try{
-			service.deleteById(id);
-		} catch (Exception e) {
-			//
-		}
+            service.deleteById(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
 	}
 
     @PostMapping(value = "/create")

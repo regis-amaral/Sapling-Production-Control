@@ -1,6 +1,5 @@
 package dev.regis.rest.services;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -35,34 +34,40 @@ public class BatchService extends AbstractService <Batch, BatchDTO>{
         return super.findById(id, BatchDTO.class);
     }
 
-	public Long create(BatchDTO newObjectDTO) throws Exception {
-
+    private void validateBachDTO(BatchDTO objectDTO)throws Exception {
         //
-        if(newObjectDTO.getCode() == null ||
-            newObjectDTO.getCode().trim().isEmpty()){
-            throw new Exception("Parâmetro inválido"); 
+        if(objectDTO.getCode() == null ||
+            objectDTO.getCode().trim().isEmpty()){
+            throw new Exception("Parâmetro código inválido"); 
         }
 
         //
-        if (newObjectDTO.getStakingDate() == null) {
+        if (objectDTO.getStakingDate() == null) {
             throw new Exception("A data de estaquia não pode ser nula");
         }
+
+        //
         Date today = new Date();
-        if (newObjectDTO.getStakingDate().after(today)) {
+        if (objectDTO.getStakingDate().after(today)) {
             throw new Exception("A data de estaquia não pode ser maior que a data atual");
         }
 
         //
-        if (newObjectDTO.getAmount() <= 0) {
-            throw new Exception("A quantidade deve ser um número inteiro positivo");
+        if (objectDTO.getAmount() < 1) {
+            throw new Exception("A quantidade deve ser um número maior que zero");
         }
 
         //
-        if(newObjectDTO.getGeneticMaterial() == null || 
-        newObjectDTO.getGeneticMaterial().getId() == null ||
-            newObjectDTO.getGeneticMaterial().getId() < 1){
+        if(objectDTO.getGeneticMaterial() == null || 
+            objectDTO.getGeneticMaterial().getId() == null ||
+            objectDTO.getGeneticMaterial().getId() < 1){
             throw new Exception("Material genético inválido");
         }
+    }
+
+	public Long create(BatchDTO newObjectDTO) throws Exception {
+
+        this.validateBachDTO(newObjectDTO);
 
 		try{
             return super.create(newObjectDTO, Batch.class);
@@ -85,32 +90,7 @@ public class BatchService extends AbstractService <Batch, BatchDTO>{
             throw new Exception("ID inválido!");
         }
 
-        //
-        if(newObjectDTO.getCode() == null ||
-            newObjectDTO.getCode().trim().isEmpty()){
-            throw new Exception("Parâmetro inválido"); 
-        }
-
-        //
-        if (newObjectDTO.getStakingDate() == null) {
-            throw new Exception("A data de estaquia não pode ser nula");
-        }
-        Date today = new Date();
-        if (newObjectDTO.getStakingDate().after(today)) {
-            throw new Exception("A data de estaquia não pode ser maior que a data atual");
-        }
-
-        //
-        if (newObjectDTO.getAmount() <= 0) {
-            throw new Exception("A quantidade deve ser um número inteiro positivo");
-        }
-
-        //
-        if(newObjectDTO.getGeneticMaterial() == null || 
-        newObjectDTO.getGeneticMaterial().getId() == null ||
-            newObjectDTO.getGeneticMaterial().getId() < 1){
-            throw new Exception("Material genético inválido");
-        }
+        this.validateBachDTO(newObjectDTO);
 
         try{
             return super.update(newObjectDTO);

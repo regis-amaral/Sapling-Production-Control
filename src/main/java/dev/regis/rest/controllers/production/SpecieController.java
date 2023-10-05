@@ -36,15 +36,18 @@ public class SpecieController {
 			SpecieDTO outputDTO = service.findById(id);
 			return ResponseEntity.ok(outputDTO);
 		} catch (Exception e) {
-			// TODO tratar exceções
-			e.printStackTrace();
 			return ResponseEntity.notFound().build();
 		}
 	}
 
     @DeleteMapping(value = "/delete/{id}")
-	public void delete(@PathVariable Long id) {
-		service.deleteById(id);
+	public ResponseEntity<Object> delete(@PathVariable Long id) {
+		try{
+            service.deleteById(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
 	}
 
     @PostMapping(value = "/create")
@@ -61,7 +64,6 @@ public class SpecieController {
         try {
             return ResponseEntity.ok(service.update(newObjectDTO));
         } catch (Exception e) {
-			e.printStackTrace(); // TODO tratar exeções
             return ResponseEntity.badRequest().body(e.getMessage());
         }
 	}

@@ -22,36 +22,35 @@ import jakarta.validation.Valid;
 @RequestMapping(value = "/api/genetic-material")
 public class GeneticMaterialController {
 
-  @Autowired
-  GeneticMaterialService service;
+	@Autowired
+	GeneticMaterialService service;
 
-  @GetMapping
-    public List<GeneticMaterialDTO> listAll(){
-        return service.listAll();
-    }
-    
-    @GetMapping(value = "/{id}")
+	@GetMapping
+	public List<GeneticMaterialDTO> listAll() {
+		return service.listAll();
+	}
+
+	@GetMapping(value = "/{id}")
 	public ResponseEntity<Object> findById(@PathVariable Long id) {
 		try {
 			GeneticMaterialDTO outputDTO = service.findById(id);
 			return ResponseEntity.ok(outputDTO);
 		} catch (Exception e) {
-			// TODO tratar exceções
-			e.printStackTrace();
 			return ResponseEntity.notFound().build();
 		}
 	}
 
-    @DeleteMapping(value = "/delete/{id}")
-	public void delete(@PathVariable Long id) {
+	@DeleteMapping(value = "/delete/{id}")
+	public ResponseEntity<Object> delete(@PathVariable Long id) {
 		try{
-			service.deleteById(id);
-		} catch (Exception e) {
-			//
-		}
+            service.deleteById(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
 	}
 
-    @PostMapping(value = "/create")
+	@PostMapping(value = "/create")
 	public ResponseEntity<Object> create(@Valid @RequestBody GeneticMaterialDTO newObjectDTO) {
 		try {
 			return ResponseEntity.ok(service.create(newObjectDTO));
@@ -60,24 +59,23 @@ public class GeneticMaterialController {
 		}
 	}
 
-    @PutMapping(value = "/update")
-	public ResponseEntity<Object> update(@Valid @RequestBody GeneticMaterialDTO newObjectDTO){
-        try {
-            return ResponseEntity.ok(service.update(newObjectDTO));
-        } catch (Exception e) {
-			e.printStackTrace(); // TODO tratar exeções
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+	@PutMapping(value = "/update")
+	public ResponseEntity<Object> update(@Valid @RequestBody GeneticMaterialDTO newObjectDTO) {
+		try {
+			return ResponseEntity.ok(service.update(newObjectDTO));
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 	}
 
-  @GetMapping("/search")
-  public ResponseEntity<List<GeneticMaterialDTO>> search(
-      @RequestParam("name") String name,
-      @RequestParam(value = "page", defaultValue = "0") Integer page,
-      @RequestParam(value = "orderBy", defaultValue = "id", required = false) String orderBy,
-      @RequestParam(value = "itensPerPage", defaultValue = "10", required = false) Integer itensPerPage,
-      @RequestParam(value = "direction", defaultValue = "ASC", required = false) String direction) {
-    List<GeneticMaterialDTO> geneticMaterialDTOs = service.search(name, page, orderBy, itensPerPage, direction);
-    return ResponseEntity.ok(geneticMaterialDTOs);
-  }
+	@GetMapping("/search")
+	public ResponseEntity<List<GeneticMaterialDTO>> search(
+			@RequestParam("name") String name,
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "orderBy", defaultValue = "id", required = false) String orderBy,
+			@RequestParam(value = "itensPerPage", defaultValue = "10", required = false) Integer itensPerPage,
+			@RequestParam(value = "direction", defaultValue = "ASC", required = false) String direction) {
+		List<GeneticMaterialDTO> geneticMaterialDTOs = service.search(name, page, orderBy, itensPerPage, direction);
+		return ResponseEntity.ok(geneticMaterialDTOs);
+	}
 }

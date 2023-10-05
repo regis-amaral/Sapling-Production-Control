@@ -1,4 +1,4 @@
-package dev.regis.rest.controllers.person;
+package dev.regis.rest.controllers.production;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -17,29 +18,42 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import dev.regis.rest.models.person.dtos.ClientDTO;
-import dev.regis.rest.services.ClientService;
+import dev.regis.rest.models.production.GeneticMaterial;
+import dev.regis.rest.models.production.dtos.BatchDTO;
+import dev.regis.rest.services.BatchService;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @Transactional
-public class ClientControllerTest {
+public class BatchControllerTest {
+    
+    @Autowired
+    BatchController controller;
 
     @Autowired
-    ClientController controller;
-
-    @Autowired
-    ClientService service;
+    BatchService service;
 
     @Test
     public void listAll_ShouldReturnListOfObjects() {
         // Arrange
 
         // Act
-        List<ClientDTO> objects = controller.listAll();
+        List<BatchDTO> objects = controller.listAll();
 
         // Assert
         assertTrue(objects.size() > 0);
+    }
+
+    private BatchDTO getNewBatchDTO(int amount, String code, String stakingDate, Long materialGeneticId){
+        BatchDTO batchDTO = new BatchDTO();
+        batchDTO.setAmount(amount);
+        batchDTO.setCode(code);
+        batchDTO.setStakingDate(Date.valueOf(stakingDate));
+        GeneticMaterial geneticMaterial = new GeneticMaterial();
+        geneticMaterial.setId(materialGeneticId);
+        batchDTO.setGeneticMaterial(geneticMaterial);
+
+        return batchDTO;
     }
 
     @Test
@@ -53,7 +67,7 @@ public class ClientControllerTest {
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertTrue(response.getBody() instanceof ClientDTO);
+        assertTrue(response.getBody() instanceof BatchDTO);
     }
 
     @Test
@@ -71,11 +85,10 @@ public class ClientControllerTest {
     @Test
     public void create_ShouldReturnResponseEntityWithStatusCode200AndCreatedObjectId() {
         // Arrange
-        ClientDTO newClientDTO = new ClientDTO();
-        newClientDTO.setName("Novo Cliente");
+        BatchDTO newBatchDTO = this.getNewBatchDTO(1200, "100/2023", "2023-02-02", 2L);
 
         // Act
-        ResponseEntity<Object> response = controller.create(newClientDTO);
+        ResponseEntity<Object> response = controller.create(newBatchDTO);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -86,10 +99,10 @@ public class ClientControllerTest {
     @Test
     public void create_ShouldReturnResponseEntityWithStatusCode400ForInvalidObjectDTO() {
         // Arrange
-        ClientDTO invalidClientDTO = new ClientDTO();
+        BatchDTO invalidBatchDTO = new BatchDTO();
 
         // Act
-        ResponseEntity<Object> response = controller.create(invalidClientDTO);
+        ResponseEntity<Object> response = controller.create(invalidBatchDTO);
 
         // Assert
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -101,16 +114,16 @@ public class ClientControllerTest {
     public void update_ShouldReturnResponseEntityWithStatusCode200AndUpdatedObjectId() {
         try {
             // Arrange
-            ClientDTO updatedClientDTO = service.findById(3L);
-            updatedClientDTO.setName("Ciclano");
+            BatchDTO updatedBatchDTO = this.getNewBatchDTO(1300, "209/2023", "2023-02-15", 3L);
+            updatedBatchDTO.setId(1L);
 
             // Act
-            ResponseEntity<Object> response = controller.update(updatedClientDTO);
+            ResponseEntity<Object> response = controller.update(updatedBatchDTO);
 
             // Assert
             assertEquals(HttpStatus.OK, response.getStatusCode());
             assertTrue(response.getBody() instanceof Long);
-            assertEquals(updatedClientDTO.getId(), response.getBody());
+            assertEquals(updatedBatchDTO.getId(), response.getBody());
         } catch (Exception e) {
             fail("Ocorreu um erro inesperado: " + e.getMessage());
         }
@@ -120,11 +133,11 @@ public class ClientControllerTest {
     public void update_ShouldReturnResponseEntityWithStatusCode400ForInvalidObjectDTO() {
         try {
             // Arrange
-            ClientDTO updatedClientDTO = service.findById(3L);
-            updatedClientDTO.setName("  ");
+            BatchDTO batchDTO = service.findById(3L);
+            batchDTO.setCode("  ");
 
             // Act
-            ResponseEntity<Object> response = controller.update(updatedClientDTO);
+            ResponseEntity<Object> response = controller.update(batchDTO);
 
             // Assert
             assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -138,7 +151,7 @@ public class ClientControllerTest {
     @Test
     public void delete_ShouldReturnResponseEntityWithStatusCode200() {
         // Arrange
-        Long idToDelete = 4L; // usuário sem relacionamentos
+        Long idToDelete = 5L; // batch sem SaplingSelection
 
         // Act
         ResponseEntity<Object> response = controller.delete(idToDelete);
@@ -174,43 +187,4 @@ public class ClientControllerTest {
         assertNotNull(response.getBody()); // Deve haver uma mensagem de erro no corpo
         assertTrue(response.getBody() instanceof String);
     }
-
-    @Test
-    public void search_ShouldReturnListOfClients() {
-        // Arrange
-        String name = "User";
-        Integer page = 0;
-        String orderBy = "name";
-        Integer itemsPerPage = 10;
-        String direction = "DESC";
-
-        // Act
-        ResponseEntity<List<ClientDTO>> response = controller.search(name, page, orderBy, itemsPerPage, direction);
-
-        // Assert
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(response.getBody());
-        assertTrue(response.getBody() instanceof List);
-        assertTrue(response.getBody().size() > 0);
-    }
-
-    @Test
-    public void search_ShouldReturnEmptyListForUnknownName() {
-        // Arrange
-        String name = "Nonexistent Name";
-        Integer page = 0;
-        String orderBy = "name";
-        Integer itemsPerPage = 10;
-        String direction = "ASC";
-
-        // Act
-        ResponseEntity<List<ClientDTO>> response = controller.search(name, page, orderBy, itemsPerPage, direction);
-
-        // Assert
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(response.getBody());
-        assertTrue(response.getBody() instanceof List);
-        assertEquals(0, response.getBody().size()); // A lista deve estar vazia
-    }
-
 }
