@@ -37,6 +37,17 @@ PENDENTE DE IMPLEMENTAÇÃO
 
 No meu pc roda. <br> Bazinga! Ta rodando sim, mas depende.
 
+
+Comando para rodar o projeto:
+```
+mvn spring-boot:run
+```
+
+Comando para rodar os testes:
+```
+mvn test
+```
+
 ## Requisitos funcionais/Requisitos não funcionais/Regras de negócio
 
 ESCREVER
