@@ -35,7 +35,6 @@ public class SaplingSelectionController{
 			SaplingSelectionDTO outputDTO = service.findById(id);
 			return ResponseEntity.ok(outputDTO);
 		} catch (Exception e) {
-			e.printStackTrace();
 			return ResponseEntity.notFound().build();
 		}
 	}

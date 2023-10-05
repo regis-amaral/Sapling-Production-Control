@@ -12,4 +12,5 @@ INSERT INTO genetic_material (name, specie_id) VALUES
     ('KF 114', 4),
     ('KF 101', 4),
     ('WRK 4707', 3),
-    ('IPB 01', 1);
+    ('IPB 01', 1),
+    ('ID:12 Excluir', 3);

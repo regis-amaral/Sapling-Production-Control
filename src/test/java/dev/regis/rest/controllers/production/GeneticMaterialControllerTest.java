@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.sql.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -18,49 +17,49 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import dev.regis.rest.models.person.dtos.ClientDTO;
 import dev.regis.rest.models.production.Batch;
+import dev.regis.rest.models.production.Specie;
+import dev.regis.rest.models.production.dtos.GeneticMaterialDTO;
 import dev.regis.rest.models.production.dtos.SaplingSelectionDTO;
+import dev.regis.rest.services.GeneticMaterialService;
 import dev.regis.rest.services.SaplingSelectionService;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @Transactional
-public class SaplingSelectionControllerTest {
-    
-    @Autowired
-    SaplingSelectionController controller;
+public class GeneticMaterialControllerTest {
 
     @Autowired
-    SaplingSelectionService service;
+    GeneticMaterialController controller;
+
 
     @Test
     public void listAll_ShouldReturnListOfBatches() {
         // Arrange
 
         // Act
-        List<SaplingSelectionDTO> objects = controller.listAll();
+        List<GeneticMaterialDTO> objects = controller.listAll();
 
         // Assert
         assertTrue(objects.size() > 0);
     }
 
-    private SaplingSelectionDTO getNewSaplingSelectionDTO(String selectionDate, int totalRootedSaplings, List <Batch> batches){
+     private GeneticMaterialDTO getNewGeneticMaterialDTO(String name, Specie specie){
 
-        SaplingSelectionDTO saplingSelectionDTO = new SaplingSelectionDTO();
+        GeneticMaterialDTO geneticMaterialDTO = new GeneticMaterialDTO();
 
-        saplingSelectionDTO.setSelectionDate(Date.valueOf(selectionDate));
+        geneticMaterialDTO.setName(name);
 
-        saplingSelectionDTO.setTotalRootedSaplings(totalRootedSaplings);
+        geneticMaterialDTO.setSpecie(specie);
 
-        saplingSelectionDTO.setListBatchs(batches);
-
-        return saplingSelectionDTO;
+        return geneticMaterialDTO;
     }
 
     @Test
     public void findById_ShouldReturnResponseEntityWithStatusCode200AndObjectDTO() {
         // Arrange
-        Long id = 1L;
+        Long id = 5L;
 
         // Act
         ResponseEntity<Object> response = controller.findById(id);
@@ -68,7 +67,7 @@ public class SaplingSelectionControllerTest {
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertTrue(response.getBody() instanceof SaplingSelectionDTO);
+        assertTrue(response.getBody() instanceof GeneticMaterialDTO);
     }
 
     @Test
@@ -86,15 +85,12 @@ public class SaplingSelectionControllerTest {
     @Test
     public void create_ShouldReturnResponseEntityWithStatusCode200AndCreatedObjectId() {
         // Arrange
-        Batch batchA = new Batch();
-        batchA.setId(3L);
-        Batch batchB = new Batch();
-        batchB.setId(4L);
-        List<Batch> batches = List.of(batchA, batchB);
-        SaplingSelectionDTO newSaplingSelectionDTO = this.getNewSaplingSelectionDTO("2023-10-03", 100, batches);
+        Specie specie = new Specie();
+        specie.setId(1L);
+        GeneticMaterialDTO geneticMaterialDTO = this.getNewGeneticMaterialDTO("XYZ", specie);
 
         // Act
-        ResponseEntity<Object> response = controller.create(newSaplingSelectionDTO);
+        ResponseEntity<Object> response = controller.create(geneticMaterialDTO);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -105,10 +101,11 @@ public class SaplingSelectionControllerTest {
     @Test
     public void create_ShouldReturnResponseEntityWithStatusCode400ForInvalidObjectDTO() {
         // Arrange
-        SaplingSelectionDTO invalidSaplingSelectionDTO = new SaplingSelectionDTO();
+        Specie specie = new Specie();
+        GeneticMaterialDTO invalidGeneticMaterialDTO = this.getNewGeneticMaterialDTO("XYZ", specie);
 
         // Act
-        ResponseEntity<Object> response = controller.create(invalidSaplingSelectionDTO);
+        ResponseEntity<Object> response = controller.create(invalidGeneticMaterialDTO);
 
         // Assert
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -120,21 +117,19 @@ public class SaplingSelectionControllerTest {
     public void update_ShouldReturnResponseEntityWithStatusCode200AndUpdatedObjectId() {
         try {
             // Arrange
-            Batch batchA = new Batch();
-            batchA.setId(3L);
-            Batch batchB = new Batch();
-            batchB.setId(4L);
-            List<Batch> batches = List.of(batchA, batchB);
-            SaplingSelectionDTO saplingSelectionDTO = this.getNewSaplingSelectionDTO("2023-10-03", 100, batches);
-            saplingSelectionDTO.setId(1L);
-
+            // Busca um material genético existente
+            Specie specie = new Specie();
+            specie.setId(3L);
+            GeneticMaterialDTO newGeneticMaterialDTO = this.getNewGeneticMaterialDTO("ABC", specie);
+            newGeneticMaterialDTO.setId(1L);
+            
             // Act
-            ResponseEntity<Object> response = controller.update(saplingSelectionDTO);
+            ResponseEntity<Object> response = controller.update(newGeneticMaterialDTO);
 
             // Assert
             assertEquals(HttpStatus.OK, response.getStatusCode());
             assertTrue(response.getBody() instanceof Long);
-            assertEquals(saplingSelectionDTO.getId(), response.getBody());
+            assertEquals(newGeneticMaterialDTO.getId(), response.getBody());
         } catch (Exception e) {
             fail("Ocorreu um erro inesperado: " + e.getMessage());
         }
@@ -144,11 +139,11 @@ public class SaplingSelectionControllerTest {
     public void update_ShouldReturnResponseEntityWithStatusCode400ForInvalidObjectDTO() {
         try {
             // Arrange
-            SaplingSelectionDTO saplingSelectionDTO = service.findById(3L);
-            saplingSelectionDTO.setListBatchs(null);
+            GeneticMaterialDTO invalidGeneticMaterialDTO = this.getNewGeneticMaterialDTO("ABC", new Specie());
+            invalidGeneticMaterialDTO.setId(1L);
 
             // Act
-            ResponseEntity<Object> response = controller.update(saplingSelectionDTO);
+            ResponseEntity<Object> response = controller.update(invalidGeneticMaterialDTO);
 
             // Assert
             assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -162,7 +157,7 @@ public class SaplingSelectionControllerTest {
     @Test
     public void delete_ShouldReturnResponseEntityWithStatusCode200() {
         // Arrange
-        Long idToDelete = 5L; // SaplingSelection sem relacionamentos
+        Long idToDelete = 12L; // GeneticMaterial que nao pertence a nenhum lote
 
         // Act
         ResponseEntity<Object> response = controller.delete(idToDelete);
@@ -197,6 +192,44 @@ public class SaplingSelectionControllerTest {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertNotNull(response.getBody()); // Deve haver uma mensagem de erro no corpo
         assertTrue(response.getBody() instanceof String);
+    }
+
+    @Test
+    public void search_ShouldReturnListOfClients() {
+        // Arrange
+        String name = "k";
+        Integer page = 0;
+        String orderBy = "name";
+        Integer itemsPerPage = 10;
+        String direction = "DESC";
+
+        // Act
+        ResponseEntity<List<GeneticMaterialDTO>> response = controller.search(name, page, orderBy, itemsPerPage, direction);
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertTrue(response.getBody() instanceof List);
+        assertTrue(response.getBody().size() > 0);
+    }
+
+     @Test
+        public void search_ShouldReturnEmptyListForUnknownName() {
+        // Arrange
+        String name = "Nonexistent Name";
+        Integer page = 0;
+        String orderBy = "name";
+        Integer itemsPerPage = 10;
+        String direction = "ASC";
+
+        // Act
+        ResponseEntity<List<GeneticMaterialDTO>> response = controller.search(name, page, orderBy, itemsPerPage, direction);
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertTrue(response.getBody() instanceof List);
+
     }
 
 }
