@@ -23,7 +23,7 @@ Não estão elencados acima porém também são pré requisitos:
 - Normalização de banco de dados
 
 ## Diagrama de Classes
-![ClassDoagram](documentation/ClassDiagram.png)
+![ClassDiagram](documentation/img/ClassDiagram.png)
 
 ## Arquivo Insomnia
 
@@ -55,11 +55,11 @@ ESCREVER
 ## Cobertura de código de no mínimo 50%
 
 JaCoCo indicou 87% de coverage
-![Alt text](documentation/image.png)
+![Alt text](documentation/img/image-6.png)
 
 Já o SonarQube indicou um coverage de 86.9%
 
-![Alt text](image.png)
+![Alt text](documentation/img/image-5.png)
 
 Obs.: Foram excluídas dos testes todas as classes do pacote models (entities e dtos).
 
@@ -67,13 +67,13 @@ Obs.: Foram excluídas dos testes todas as classes do pacote models (entities e 
 
 Diagrama ER gerado automaticamente pelo DBeaver:
 
-![ER Diagram](documentation/image-1.png)
+![ER Diagram](documentation/img/image-1.png)
 
 ## Uso do Flyway para gerenciamento das Migrations
 
 Foi utilizado o Flyway para executar migrations distintas para desenvolvimento e testes:
 
-![Alt text](documentation/image-2.png)
+![Alt text](documentation/img/image-2.png)
 
 ## Uso do Maven para gerenciamento das dependências e estrutura do projeto
 
@@ -83,7 +83,7 @@ Vide [pom.xml](pom.xml)
 
 Os dados foram analizados a partir de uma planilha do excel:
 
-![Alt text](documentation/image-4.png)
+![Alt text](documentation/img/image-4.png)
 
 Em um primeiro momento foi analizado o problema, abstraídas as entidades principais e estabelecido um limite para o escopo inicial do sistema. 
 

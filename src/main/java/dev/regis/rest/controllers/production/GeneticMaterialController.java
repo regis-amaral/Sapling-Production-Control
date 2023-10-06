@@ -46,7 +46,7 @@ public class GeneticMaterialController {
             service.deleteById(id);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().build();
         }
 	}
 

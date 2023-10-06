@@ -46,7 +46,7 @@ public class SpecieController {
             service.deleteById(id);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().build();
         }
 	}
 
@@ -59,7 +59,7 @@ public class SpecieController {
 		}
 	}
 
-    @PutMapping(value = "/update")
+        @PutMapping(value = "/update")
 	public ResponseEntity<Object> update(@Valid @RequestBody SpecieDTO newObjectDTO){
         try {
             return ResponseEntity.ok(service.update(newObjectDTO));
