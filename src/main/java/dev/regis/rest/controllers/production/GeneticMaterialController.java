@@ -16,21 +16,35 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.regis.rest.models.production.dtos.GeneticMaterialDTO;
 import dev.regis.rest.services.GeneticMaterialService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/api/genetic-material")
+@Tag(name = "Materiais Genéticos", description = "Endpoints para gerenciamento dos Materiais Genéticos")
 public class GeneticMaterialController {
 
 	@Autowired
 	GeneticMaterialService service;
 
 	@GetMapping
+	@Operation(summary = "Retorna todos os materiais genéticos cadastrados", description = "Retorna uma lista com todos os materiais genéticos existentes")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista retornada")
+        })
 	public List<GeneticMaterialDTO> listAll() {
 		return service.listAll();
 	}
 
 	@GetMapping(value = "/{id}")
+	@Operation(summary = "Busca um material genético pelo ID", description = "Retorna um material genético com o ID especificado")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Material genético encontrada"),
+            @ApiResponse(responseCode = "404", description = "Not found - Não foi possível encontrar o material genético")
+    })
 	public ResponseEntity<Object> findById(@PathVariable Long id) {
 		try {
 			GeneticMaterialDTO outputDTO = service.findById(id);
@@ -41,6 +55,10 @@ public class GeneticMaterialController {
 	}
 
 	@DeleteMapping(value = "/delete/{id}")
+	@Operation(summary = "Deleta um material genético pelo ID", description = "Deleta um material genético pelo ID especificado")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Comando recebido")
+    })
 	public ResponseEntity<Object> delete(@PathVariable Long id) {
 		try{
             service.deleteById(id);
