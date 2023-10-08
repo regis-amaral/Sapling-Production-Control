@@ -1,42 +1,36 @@
-# Trabalho Final do Módulo
+# Trabalho Final do Módulo de Spring Boot na Turma de Java do Programa +Devs2Blu
 
-## Regras
+Este trabalho foi desenvolvido como atividade final para a conclusão do Módulo de Spring Boot na Turma de Java do Progama +Devs2Blu. 
 
-O aluno deverá construir uma aplicação Java, usando os conceitos apresentados em sala usando as tecnologias do ecossistema Spring.
+Para o tema a ser desenvolvido, escolhi criar uma API Rest para gerenciar o controle de produção de mudas em um viveiro florestal.
 
-Pontos que serão OBRIGATÓRIOS para a entrega do trabalho.
+O escopo do problema foi delimitado a partir de uma planilha onde são controlados os dados de produção de estaquias de cada material genético, os lotes de cada um desses materiais, a seleção de mudas dos lotes e o controle dos planos de expedições de cada cliente.
 
-- Diagrama de classes da solução; 
-- Arquivo Insomnia com exemplos de todas as chamadas de API’s da aplicação;
-- Documentação das API’s no Swagger
-- Software rodando corretamente;
-- Lista de Requisitos funcionais/Requisitos não funcionais/Regras de negócio;
-- Cobertura de código de no mínimo 50%;
-- Persistencia de dados em Postgres;
-- Uso do Flyway para gerenciamento das Migrations;
-- Uso do Maven para gerenciamento das dependencias e estrutura do projeto
-- PLUS: Deploy no RailWay, conforme tutorial: [****Como configurar o springboot e postgresSQL no Railway****](https://www.notion.so/Como-configurar-o-springboot-e-postgresSQL-no-Railway-301bdf4514fe49eb88fb082298aa8a2a?pvs=21)
+## Normalização dos Dados
 
-Não estão elencados acima porém também são pré requisitos:
+Os dados foram analizados a partir da seguinte planilha do excel:
 
-- Qualidade de código
-- Normalização de banco de dados
+![Alt text](documentation/img/image-4.png)
+
+Em um primeiro momento foi analizado o problema, em seguida foram abstraídas as entidades principais e então estabelecido um limite para o escopo inicial da API. 
+
+A partir daí foram selecionados os registros a serem normalizados.
+
+Como se pode ver na planilha acima os registros não possuíam dados compostos nem dependências transitivas, logo foi preciso apenas identificar as entidades e normalizar os dados para a 3FN eliminando assim as redundâncias. O resultado pode ser observado nos diagramas abaixo.
+
 
 ## Diagrama de Classes
 ![ClassDiagram](documentation/img/ClassDiagram.png)
 
-## Arquivo Insomnia
+## Diagrama ER
 
-PENDENTE DE TESTES MANUAIS
+Diagrama ER gerado automaticamente pelo DBeaver a partir do BD PostgreSQL:
 
-## Documentação das API’s no Swagger
+![ER Diagram](documentation/img/image-1.png)
 
-PENDENTE DE IMPLEMENTAÇÃO
+## Execução e Testes Unitários
 
-## Software rodando corretamente
-
-No meu pc roda. <br> Bazinga! Ta rodando sim, mas depende.
-
+Para rodar esse projeto é necessário ter instalado o JDK 17+ e o Maven 3.x
 
 Comando para rodar o projeto:
 ```
@@ -48,11 +42,91 @@ Comando para rodar os testes:
 mvn test
 ```
 
+## Arquivo Insomnia
+
+O seguinte arquivo pode ser importado no Insomnia para testar manualmente os endpoints da API:
+
+[Insomnia.json](documentation/Insomnia.json)
+
+## Documentação das API’s no Swagger
+
+Com o projeto rodando é possível visualizar a documentação dos endpoints através do Swagger no seguinte endereço:
+
+[http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+
+
 ## Requisitos funcionais/Requisitos não funcionais/Regras de negócio
 
-ESCREVER
+### Requisitos Funcionais:
 
-## Cobertura de código de no mínimo 50%
+#### Cadastro de Espécies:
+
+- O sistema deve disponibilizar endpoints para criar, listar, visualizar, atualizar e excluir espécies.
+- Cada espécie deve ser identificada por um id e um nome único.
+
+#### Cadastro de Materiais Genéticos:
+
+- O sistema deve disponibilizar endpoints para criar, listar, visualizar, atualizar e excluir materiais genéticos.
+- Cada material genético deve possuir um identificador único, um nome e uma espécie relacionada.
+
+#### Cadastro de Lotes:
+
+- Deve haver endpoints para criar, listar, visualizar, atualizar e excluir lotes de estaquias
+- Cada lote de conter informações como código, data de estaquia, quantidade de estaquias e a referência ao material genético correspondente.
+- Cada lote deve possuir um identificador único.
+
+#### Seleção de Mudas:
+
+- Deve ser possível registrar a seleção de mudas a partir de um ou mais lotes, incluindo data de seleção e o número de mudas selecionadas.
+- As mudas selecionadas devem estar vinculadas aos lotes correspondentes.
+
+#### Cadastro de Clientes:
+
+- O sistema deve disponibilizar endpoints para criar, listar, visualizar, atualizar e excluir clientes.
+
+#### Plano de Expedição:
+
+- Deve haver endpoints para criar, listar, visualizar, atualizar e excluir planos de expedição.
+- Cada plano de expedição deve possuir um id único, a quantidade planejada, a quantidade realizada, o mês e estar associado a um cliente e a um material genético.
+
+### Requisitos Não Funcionais:
+
+- A API deve ser bem documentada, fornecendo informações claras sobre os endpoints disponíveis, seus parâmetros e as respostas esperadas.
+
+- O sistema deve ser capaz de lidar com um grande volume de dados, mantendo uma resposta rápida e eficaz.
+
+- O sistema deve estar disponível para uso durante o horário comercial, com tempo de inatividade mínimo para manutenção.
+
+
+### Regras de Negócio:
+
+#### Restrição de Cadastro Duplicado:
+
+- Não é permitido cadastrar materiais genéticos, lotes ou clientes com nomes ou códigos duplicados.
+
+#### Vínculo entre Elementos:
+
+- Toda estaquia pertence a um lote específico e a um material genético.
+- Toda seleção de mudas está associada a um ou mais lotes.
+- Cada plano de expedição está ligado a um cliente e a um material genético.
+
+#### Atualização de Informações:
+
+- A quantidade realizada em um plano de expedição pode ser atualizada após a expedição efetiva das mudas.
+
+#### Integridade Referencial:
+
+- Não é permitido excluir um material genético, espécie, lote ou cliente que tenha registros associados a ele.
+
+#### Consistência de Dados:
+
+- A data de estaquia de um lote deve ser anterior à data de seleção das mudas do mesmo lote.
+
+#### Quantidade de Mudas na Seleção:
+
+- A quantidade de mudas selecionadas de um lote não pode exceder a quantidade de estaquias do lote.
+
+## Cobertura de código
 
 JaCoCo indicou 87% de coverage
 ![Alt text](documentation/img/image-6.png)
@@ -63,11 +137,7 @@ Já o SonarQube indicou um coverage de 86.9%
 
 Obs.: Foram excluídas dos testes todas as classes do pacote models (entities e dtos).
 
-## Persistência de dados em Postgres
 
-Diagrama ER gerado automaticamente pelo DBeaver:
-
-![ER Diagram](documentation/img/image-1.png)
 
 ## Uso do Flyway para gerenciamento das Migrations
 
@@ -79,18 +149,17 @@ Foi utilizado o Flyway para executar migrations distintas para desenvolvimento e
 
 Vide [pom.xml](pom.xml)
 
-## Normalização dos Dados
+## Considerações Finais
 
-Os dados foram analizados a partir de uma planilha do excel:
+O presente trabalho me agregou muito conhecimento em programação Java com o uso do framework Spring Boot, implementação de testes unitários com Junit4, documentação de API com o Swagger, coverage de código, uso do Maven para gerenciamento de dependências, dentre outras tecnologias utilizadas para desenvolvê-lo.
 
-![Alt text](documentation/img/image-4.png)
+O projeto desenvolvido pode muito bem se tornar uma aplicação para controle na empresa de onde os dados foram analizados, tornando o controle de produção muito mais confiável, sólido e dinâmico.
 
-Em um primeiro momento foi analizado o problema, abstraídas as entidades principais e estabelecido um limite para o escopo inicial do sistema. 
+Algum pontos que ainda precisam ser melhores explorados:
 
-A partir daí foram selecionados os registros a serem normalizados.
+- Documentação com o Swagger: Há muito mais opções que podem agregar informações úteis a documentação, melhorando assim o entendimento dos desenvolvedores das aplicações que forem consumir esta API.
 
-Como se pode ver na planilha acima os registros não possuíam dados compostos nem dependências transitivas, logo foi preciso apenas identificar as entidades e normalizar os dados para a 3FN eliminando assim as redundâncias. O resultado pode ser observado do diagrama ER acima.
-
+- Testes: Para esse projeto foram utilizados testes unitários, para uma melhor qualidade do sistema será necessários implementar testes de integração com alguma aplicação que consuma esta API e testes de carga.
 
 
 
