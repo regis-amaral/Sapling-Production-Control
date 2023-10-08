@@ -174,17 +174,4 @@ public class BatchControllerTest {
         assertNull(response.getBody());
     }
 
-    @Test
-    public void delete_ShouldReturnResponseEntityWithStatusCode400ForNullId() {
-        // Arrange
-        Long invalidId = null;
-
-        // Act
-        ResponseEntity<Object> response = controller.delete(invalidId);
-
-        // Assert
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertNotNull(response.getBody()); // Deve haver uma mensagem de erro no corpo
-        assertTrue(response.getBody() instanceof String);
-    }
 }

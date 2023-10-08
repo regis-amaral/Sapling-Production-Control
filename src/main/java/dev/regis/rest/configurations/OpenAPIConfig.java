@@ -15,11 +15,8 @@ import io.swagger.v3.oas.models.servers.Server;
 @Configuration
 public class OpenAPIConfig {
 
-  @Value("${rest.openapi.dev-url}")
+  @Value("http://localhost:8080")
   private String devUrl;
-
-  @Value("${rest.openapi.prod-url}")
-  private String prodUrl;
 
   @Bean
   public OpenAPI myOpenAPI() {

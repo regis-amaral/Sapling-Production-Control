@@ -44,6 +44,11 @@ Comando para rodar os testes:
 mvn test
 ```
 
+Comando para limpar e reconstruir o projeto:
+```
+mvn clean install
+```
+
 ## Arquivo Insomnia
 
 O seguinte arquivo pode ser importado no Insomnia para testar manualmente os endpoints da API:
