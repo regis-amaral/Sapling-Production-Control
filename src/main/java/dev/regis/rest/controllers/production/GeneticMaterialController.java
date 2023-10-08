@@ -42,7 +42,7 @@ public class GeneticMaterialController {
 	@GetMapping(value = "/{id}")
 	@Operation(summary = "Busca um material genético pelo ID", description = "Retorna um material genético com o ID especificado")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Material genético encontrada"),
+            @ApiResponse(responseCode = "200", description = "Material genético encontrao"),
             @ApiResponse(responseCode = "404", description = "Not found - Não foi possível encontrar o material genético")
     })
 	public ResponseEntity<Object> findById(@PathVariable Long id) {
@@ -69,6 +69,11 @@ public class GeneticMaterialController {
 	}
 
 	@PostMapping(value = "/create")
+	@Operation(summary = "Insere um novo material genético", description = "Insere um novo material genético com os dados especificados")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Material genético criado"),
+            @ApiResponse(responseCode = "400", description = "Bad Request - Os dados informados não foram aceitos")
+    })
 	public ResponseEntity<Object> create(@Valid @RequestBody GeneticMaterialDTO newObjectDTO) {
 		try {
 			return ResponseEntity.ok(service.create(newObjectDTO));
@@ -77,7 +82,12 @@ public class GeneticMaterialController {
 		}
 	}
 
-	@PutMapping(value = "/update")
+	@PutMapping(value = "/update/{id}")
+	@Operation(summary = "Atualiza um material genético existente", description = "Atualiza um material genético com os dados especificados")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Material genético atualizado"),
+            @ApiResponse(responseCode = "400", description = "Bad Request - Os dados informados não foram aceitos")
+    })
 	public ResponseEntity<Object> update(@Valid @RequestBody GeneticMaterialDTO newObjectDTO) {
 		try {
 			return ResponseEntity.ok(service.update(newObjectDTO));
@@ -87,6 +97,10 @@ public class GeneticMaterialController {
 	}
 
 	@GetMapping("/search")
+	@Operation(summary = "Busca um material genético pelo nome", description = "Retorna uma lista de materiais genéticos conforme os parâmetros especificados")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista retornada")
+    })
 	public ResponseEntity<List<GeneticMaterialDTO>> search(
 			@RequestParam("name") String name,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
