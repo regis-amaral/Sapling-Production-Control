@@ -164,9 +164,9 @@ O projeto desenvolvido pode muito bem se tornar uma aplicação para controle na
 
 Algum pontos que ainda precisam ser melhores explorados:
 
-- Implementação da MapStruct para mapeamento das models: Um dos problemas mais complicados que encontrei no desenvolvimento do projeto foi na resolução do relacionamento recursivos nas classes models do sistema utilizando a ModelMapper. Consegui resolver esse problema utilizando a anotação @JsonIgnoreProperties nos relacionamentos, porém essa solução só limita o relacionamento na dentro da subclasse relacionada, trazendo ainda informações dos demais objetos relacionados dentro dessa primeira relação. Esse problema pode ser resolvido com o uso do MapStruct, porém gera uma maior complexidade e escrita de códigos, logo acabei optando por aceitar os dados extras que são exibidos dentro dos objetos relacionados nas classes DTOs.
+- Implementação da MapStruct para mapeamento das models: Um dos problemas mais complicados que encontrei no desenvolvimento do projeto foi na resolução do relacionamento recursivos nas classes models do sistema utilizando a ModelMapper. Consegui resolver esse problema utilizando a anotação @JsonIgnoreProperties nos relacionamentos, porém essa solução só limita o relacionamento dentro da subclasse relacionada, trazendo ainda informações dos demais objetos relacionados dentro dessa primeira relação. Esse problema pode ser resolvido com o uso do MapStruct, porém gera uma maior complexidade e escrita de códigos, logo acabei optando por aceitar os dados extras que são exibidos dentro dos objetos relacionados nas classes DTOs.
 
-- Criação de exceptions personalizadas para alguns constextos específicos da API;
+- Criação de exceptions personalizadas para alguns contextos específicos da API;
 
 - Implementação de outros retornos HTTP especícos e personalização de mensagens de acordo com as validações e exeções personalizadas;
 
