@@ -30,7 +30,9 @@ Diagrama ER gerado automaticamente pelo DBeaver a partir do BD PostgreSQL:
 
 ## Execução e Testes Unitários
 
-Para rodar esse projeto é necessário ter instalado o JDK 17+ e o Maven 3.x
+- Para rodar esse projeto é necessário ter instalado o JDK 17+ e o Maven 3.x
+
+- Um banco de dados com o nome 'rest' deve ser criado no PostgreSQL.
 
 Comando para rodar o projeto:
 ```
@@ -157,7 +159,13 @@ O projeto desenvolvido pode muito bem se tornar uma aplicação para controle na
 
 Algum pontos que ainda precisam ser melhores explorados:
 
-- Documentação com o Swagger: Há muito mais opções que podem agregar informações úteis a documentação, melhorando assim o entendimento dos desenvolvedores das aplicações que forem consumir esta API.
+- Implementação da MapStruct para mapeamento das models: Um dos problemas mais complicados que encontrei no desenvolvimento do projeto foi na resolução do relacionamento recursivos nas classes models do sistema utilizando a ModelMapper. Consegui resolver esse problema utilizando a anotação @JsonIgnoreProperties nos relacionamentos, porém essa solução só limita o relacionamento na dentro da subclasse relacionada, trazendo ainda informações dos demais objetos relacionados dentro dessa primeira relação. Esse problema pode ser resolvido com o uso do MapStruct, porém gera uma maior complexidade e escrita de códigos, logo acabei optando por aceitar os dados extras que são exibidos dentro dos objetos relacionados nas classes DTOs.
+
+- Criação de exceptions personalizadas para alguns constextos específicos da API;
+
+- Implementação de outros retornos HTTP especícos e personalização de mensagens de acordo com as validações e exeções personalizadas;
+
+- Documentação com o Swagger: Há muito mais opções que podem agregar informações úteis a documentação, melhorando assim o entendimento dos desenvolvedores das aplicações que forem consumir esta API;
 
 - Testes: Para esse projeto foram utilizados testes unitários, para uma melhor qualidade do sistema será necessários implementar testes de integração com alguma aplicação que consuma esta API e testes de carga.
 

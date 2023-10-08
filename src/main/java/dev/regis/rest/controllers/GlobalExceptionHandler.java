@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import jakarta.validation.UnexpectedTypeException;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
  
@@ -28,4 +30,11 @@ public class GlobalExceptionHandler {
         String errorMsg = "Erro em variável esperada na url! \n" + ex.getMessage();
         return new ResponseEntity<>(errorMsg, HttpStatus.BAD_REQUEST);
     }
+
+    // @ExceptionHandler(UnexpectedTypeException.class)
+    // public ResponseEntity<String> handleHttpMessageNotReadable(UnexpectedTypeException ex) {
+    //     String errorMsg = "Ocorreu um erro no atendimento da solicitação pelo servidor \n" + ex.getMessage();
+    //     return new ResponseEntity<>(errorMsg, HttpStatus.BAD_REQUEST);
+    // }
+
 }
