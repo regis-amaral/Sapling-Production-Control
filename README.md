@@ -1,6 +1,6 @@
 # Trabalho Final do Módulo de Spring Boot na Turma de Java do Programa +Devs2Blu
 
-Este trabalho foi desenvolvido como atividade final para a conclusão do Módulo de Spring Boot na Turma de Java do Progama +Devs2Blu. 
+Este trabalho foi desenvolvido como atividade final para a conclusão do Módulo de Spring Boot na Turma de Java do Programa +Devs2Blu. 
 
 Para o tema a ser desenvolvido, escolhi criar uma API Rest para gerenciar o controle de produção de mudas em um viveiro florestal.
 
@@ -55,7 +55,7 @@ Com o projeto rodando é possível visualizar a documentação dos endpoints atr
 [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 
 
-## Requisitos funcionais/Requisitos não funcionais/Regras de negócio
+## Requisitos funcionais, não funcionais e Regras de negócio
 
 ### Requisitos Funcionais:
 
@@ -161,6 +161,9 @@ Algum pontos que ainda precisam ser melhores explorados:
 
 - Testes: Para esse projeto foram utilizados testes unitários, para uma melhor qualidade do sistema será necessários implementar testes de integração com alguma aplicação que consuma esta API e testes de carga.
 
+Embora tenha utilizado de abstrações comuns a todas as classes de serviço, reduzindo assim a necessidade de escrever mais linhas de códigos, acabei gerando um grande volume de códigos para um escopo que inicialmente pensei que seria bem reduzido. Acredito que muita coisa ainda pode ser aperfeiçoada e melhorada nesse projeto, há vários aspectos e alguns pontos que ignorei para que pudesse entregá-lo em tempo hábil.
 
+Enfim, foi uma experência gratificante desenvolvê-lo.
 
+Agradeço ao [Marcio Michelluzzi](https://github.com/marciomichelluzzi) que ministrou o módulo com excelência e me orientou no desenvolvimento do projeto.
 
