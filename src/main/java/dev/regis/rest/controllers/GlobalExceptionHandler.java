@@ -31,10 +31,10 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorMsg, HttpStatus.BAD_REQUEST);
     }
 
-    // @ExceptionHandler(UnexpectedTypeException.class)
-    // public ResponseEntity<String> handleHttpMessageNotReadable(UnexpectedTypeException ex) {
-    //     String errorMsg = "Ocorreu um erro no atendimento da solicitação pelo servidor \n" + ex.getMessage();
-    //     return new ResponseEntity<>(errorMsg, HttpStatus.BAD_REQUEST);
-    // }
+    @ExceptionHandler(UnexpectedTypeException.class)
+    public ResponseEntity<String> handleHttpMessageNotReadable(UnexpectedTypeException ex) {
+        String errorMsg = "Ocorreu um erro no atendimento da solicitação pelo servidor \n" + ex.getMessage();
+        return new ResponseEntity<>(errorMsg, HttpStatus.BAD_REQUEST);
+    }
 
 }
