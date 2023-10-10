@@ -30,7 +30,7 @@ Diagrama ER gerado automaticamente pelo DBeaver a partir do BD PostgreSQL:
 
 ## Execução e Testes Unitários
 
-- Para rodar esse projeto é necessário ter instalado o JDK 17+ e o Maven 3.x
+- Para rodar esse projeto é necessário ter instalado o JDK 17+, o Maven 3.x e o PostgreSQL 12+.
 
 - Um banco de dados com o nome 'rest' deve ser criado no PostgreSQL.
 
