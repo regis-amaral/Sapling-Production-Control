@@ -63,7 +63,7 @@ public class GeneticMaterialService extends AbstractService <GeneticMaterial, Ge
 		try{
 			super.deleteById(id);
 		}catch(ConstraintViolationException | DataIntegrityViolationException e){
-            throw new Exception("Dados informados violam restrições no BD.");
+            throw new Exception("Não é possível deletar o material genético com ID informado.");
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception("Um erro ocorreu!");
