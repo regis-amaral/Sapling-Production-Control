@@ -69,7 +69,7 @@ public class SpecieService{
         try{
             repository.deleteById(id);
         }catch(ConstraintViolationException | DataIntegrityViolationException e){
-            throw new Exception("Não é possível deletar a espécie com ID informado.");
+            throw new Exception("Não é possível deletar a espécie com o ID informado.");
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception("Um erro ocorreu!");
