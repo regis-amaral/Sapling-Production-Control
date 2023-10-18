@@ -66,7 +66,14 @@ public class SpecieService{
     }
 
     public void deleteById(Long id) throws Exception{
-        repository.deleteById(id);
+        try{
+            repository.deleteById(id);
+        }catch(ConstraintViolationException | DataIntegrityViolationException e){
+            throw new Exception("Dados informados violam restrições no BD.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Um erro ocorreu!");
+        }
     }
 
     public Long update(SpecieDTO newObjectDTO) throws Exception {

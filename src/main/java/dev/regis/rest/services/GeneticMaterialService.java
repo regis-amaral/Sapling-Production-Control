@@ -60,7 +60,14 @@ public class GeneticMaterialService extends AbstractService <GeneticMaterial, Ge
 	}
 
 	public void deleteById(Long id) throws Exception{
-		super.deleteById(id);
+		try{
+			super.deleteById(id);
+		}catch(ConstraintViolationException | DataIntegrityViolationException e){
+            throw new Exception("Dados informados violam restrições no BD.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Um erro ocorreu!");
+        }
 	}
 
 	public Long update(GeneticMaterialDTO newGeneticMaterialDTO) throws Exception {

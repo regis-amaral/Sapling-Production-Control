@@ -63,7 +63,7 @@ public class SpecieController {
         try {
             service.deleteById(id);
         } catch (Exception e) {
-            //
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
         return ResponseEntity.ok().build();
     }

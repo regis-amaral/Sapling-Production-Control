@@ -62,10 +62,10 @@ public class GeneticMaterialController {
 	public ResponseEntity<Object> delete(@PathVariable Long id) {
 		try{
             service.deleteById(id);
-            return ResponseEntity.ok().build();
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
+		return ResponseEntity.ok().build();
 	}
 
 	@PostMapping(value = "/create")
