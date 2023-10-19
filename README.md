@@ -168,7 +168,7 @@ Algum pontos que ainda precisam ser melhores explorados:
 
 - Criação de exceptions personalizadas para alguns contextos específicos da API;
 
-- Implementação de outros retornos HTTP especícos e personalização de mensagens de acordo com as validações e exeções personalizadas;
+- Implementação de outros retornos HTTP específicos e personalização de mensagens de acordo com as validações e exeções personalizadas;
 
 - Documentação com o Swagger: Há muito mais opções que podem agregar informações úteis a documentação, melhorando assim o entendimento dos desenvolvedores das aplicações que forem consumir esta API;
 
